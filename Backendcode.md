@@ -1,1 +1,1 @@
-Backend portion of code for Hotel Management System Project 
+Back-End portion of code for Hotel Management System Project 
