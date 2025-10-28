@@ -2,6 +2,7 @@ import java.io.*;
 import java.util.*;
 
 public class Hotel implements HotelSystem{
+    @Override
     public void Login(){
         Scanner input = new Scanner(System.in); 
         System.out.println("Welcome, please log into your account: "); 
@@ -36,21 +37,58 @@ public class Hotel implements HotelSystem{
         }
         return false;
     }
-    public void Payment(){
 
+    @Override
+    public void Payment(){
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Name: ");
+        String name = input.nextLine();
+        System.out.println("Amount: ");
+        double amount = input.nextDouble();
+        input.nextLine();
+        System.out.println("Payment method: ");
+        String method = input.nextLine();
+
+        String r = name + ", " + amount + "," + method;
+        try (FileWriter fw = new FileWriter("DataFiles/payments.txt", true)) {
+            fw.write(r + '\n');
+            System.out.println("Payment successful");
+        } catch (IOException e) {
+            System.out.println("Error writing in payments file");
+        }
     }
+
+    @Override
     public void Reservation(){
 
     }
+
+    @Override
     public boolean Rooms(){
-        return true; 
+        System.out.println("Rooms available: ");
+        try (BufferedReader r = new BufferedReader(new FileReader("DataFiles/rooms.txt"))) {
+            String l;
+
+            while((l = r.readLine()) != null) {
+                System.out.println(l);
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading rooms text file");
+        }
+        return true;
     }
+
+    @Override
     public void Employee(){
 
     }
-    public void Housekeeping(){
 
+    @Override
+    public void Housekeeping(){
+    
     }
+
     public void Manager(){
 
     }
