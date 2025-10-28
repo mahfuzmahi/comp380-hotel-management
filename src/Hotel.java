@@ -1,4 +1,5 @@
-import java.util.Scanner; 
+import java.util.*;
+
 public class Hotel implements HotelSystem{
     public void Login(){
         Scanner input = new Scanner(System.in); 
