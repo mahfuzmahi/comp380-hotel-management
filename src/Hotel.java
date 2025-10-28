@@ -81,7 +81,15 @@ public class Hotel implements HotelSystem{
 
     @Override
     public void Employee(){
-
+        System.out.println("Employees: ");
+        try (BufferedReader r = new BufferedReader(new FileReader("DataFiles/employees.txt"))) {
+            String l;
+            while((l = r.readLine()) != null) {
+                System.out.println(l);
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading employee file");
+        }
     }
 
     @Override
