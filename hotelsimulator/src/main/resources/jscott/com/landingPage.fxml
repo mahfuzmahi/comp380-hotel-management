@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.Region?>
+
+<HBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jscott.com.LandingPageController">
+    <children> 
+    
+        <HBox alignment="BOTTOM_LEFT" spacing="20.0" >
+            <children>
+               <Button fx:id="CreateAccountButton" text="Create Account" onAction="#switchToCreateAcc"/>
+            </children>
+            <padding>
+               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+        </HBox> 
+
+        <Region prefHeight="20" prefWidth="20" HBox.hgrow="ALWAYS" />
+        <HBox alignment="CENTER" spacing="10.0" >
+            <children>
+               <Label text="Landing Page" />
+            </children>
+        </HBox>      
+        
+        <Region prefHeight="20" prefWidth="20" HBox.hgrow="ALWAYS" />
+        <HBox alignment="BOTTOM_RIGHT" spacing="20.0" >
+            <children>
+               <Button fx:id="loginButton" text="Login" onAction="#switchToLogin"/>
+            </children>
+            <padding>
+               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+        </HBox>
+
+    </children>
+</HBox>
