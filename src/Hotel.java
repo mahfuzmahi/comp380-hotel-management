@@ -3,6 +3,17 @@ import java.util.*;
 
 public class Hotel implements HotelSystem{
     @Override
+    public void CreateAccount(){
+        Scanner input = new Scanner(System.in); 
+        System.out.println("Welcome, please create a username and password: "); 
+        System.out.println("Enter Username: "); 
+        String newUsername = input.nextLine(); 
+        System.out.println("Enter Password: "); 
+        String newPassword = input.nextLine(); 
+        String r = newUsername + "," + newPassword; 
+        System.out.println("Your username and password is" + r\t); 
+    }
+    @Override
     public void Login(){
         Scanner input = new Scanner(System.in); 
         System.out.println("Welcome, please log into your account: "); 
