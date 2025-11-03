@@ -1,4 +1,3 @@
-import java.util.*; 
 import java.util.Scanner; 
 
 
@@ -7,5 +6,7 @@ class Main{
         Scanner Userinput = new Scanner(System.in); 
         Hotel myHotel = new Hotel(); 
         myHotel.Login(); 
+        myHotel.Reservation(); 
+
     }
 }

@@ -1,5 +1,6 @@
 public interface HotelSystem {
     void Login(); 
+    void CreateAccount(); 
     void Payment(); 
     void Reservation(); 
     boolean Rooms(); 
