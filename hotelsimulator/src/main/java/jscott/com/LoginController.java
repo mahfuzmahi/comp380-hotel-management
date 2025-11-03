@@ -30,10 +30,10 @@ public class LoginController {
         
         //TODO this handles login, add actual auth here
         if(passwordInput.equals("password")) {
-            App.setRoot("primary");
+            App.setRoot("dashboard");
         }
         else if (passwordInput.equals("admin")) {
-            App.setRoot("secondary");
+            App.setRoot("adminDashboard");
         } 
         else{
             InstructionLabel.setText("login failed");
