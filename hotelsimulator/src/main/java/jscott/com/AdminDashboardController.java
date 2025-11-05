@@ -7,7 +7,7 @@ public class AdminDashboardController {
 
     @FXML
     private void switchToViewAccount() throws IOException {
-        App.setRoot("secondary");
+        App.setRoot("adminViewAccounts");
     }
 
         @FXML
@@ -17,17 +17,17 @@ public class AdminDashboardController {
 
         @FXML
     private void switchToViewRevenue() throws IOException {
-        App.setRoot("secondary");
+        App.setRoot("adminViewRevenue");
     }
 
             @FXML
     private void switchToStaffManager() throws IOException {
-        App.setRoot("manageStaff");
+        App.setRoot("adminManageStaff");
     }
 
         @FXML
     private void switchToReportManager() throws IOException {
-        App.setRoot("manageIssues");
+        App.setRoot("adminManageIssues");
     }
 
 }

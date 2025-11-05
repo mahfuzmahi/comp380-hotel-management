@@ -3,7 +3,7 @@ package jscott.com;
 import java.io.IOException;
 import javafx.fxml.FXML;
  
-public class ManageIssuesController {
+public class AdminManageStaffController {
 
     @FXML
     private void switchToAdminDashboard() throws IOException {
@@ -11,8 +11,8 @@ public class ManageIssuesController {
     }
 
         @FXML
-    private void switchToStaffManager() throws IOException {
-        App.setRoot("manageStaff");
+    private void switchToIssueManager() throws IOException {
+        App.setRoot("adminManageIssues");
     }
 
 }
