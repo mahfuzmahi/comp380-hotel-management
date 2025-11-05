@@ -1,5 +1,8 @@
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
 
 public class Hotel implements HotelSystem{
     @Override
@@ -11,7 +14,13 @@ public class Hotel implements HotelSystem{
         System.out.println("Enter Password: "); 
         String newPassword = input.nextLine(); 
         String r = newUsername + "," + newPassword; 
-        System.out.println("Your username and password is" + r\t); 
+        
+        try (FileWriter fw = new FileWriter("DataFiles/customers.txt", true)) {
+            fw.write(r);
+            System.out.println("Account created successfully.");
+        } catch (IOException e) {
+            System.out.println("Error writing to customers text file");
+        }
     }
     @Override
     public void Login(){
