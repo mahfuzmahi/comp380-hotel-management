@@ -22,6 +22,7 @@ public class Hotel implements HotelSystem{
             System.out.println("Error writing to customers text file");
         }
     }
+
     @Override
     public void Login(){
         Scanner input = new Scanner(System.in); 
@@ -80,7 +81,21 @@ public class Hotel implements HotelSystem{
     }
 
     @Override
-    public void Reservation(){
+    public void Reservation() {
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Enter customer name:");
+        String name = input.nextLine();
+
+        System.out.println("Enter room number:");
+        String room = input.nextLine();
+
+        try (FileWriter fw = new FileWriter("DataFiles/reservations.txt", true)) {
+            fw.write(name + ", " + room);
+            System.out.println("Reservation successfull");
+        } catch (IOException e) {
+            System.out.println("Error writing in reservation file");
+        }
 
     }
 
@@ -113,8 +128,8 @@ public class Hotel implements HotelSystem{
     }
 
     @Override
-    public void Housekeeping(){
-    
+    public void Housekeeping() {
+        
     }
 
     public void Manager(){
