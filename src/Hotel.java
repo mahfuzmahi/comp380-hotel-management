@@ -98,6 +98,20 @@ public class Hotel implements HotelSystem{
         }
     }
 
+    public void viewReservations() {
+        System.out.println("Current Resevations:");
+
+        try(BufferedReader r = new BufferedReader(new FileReader("DataFiles/reservations.txt"))) {
+            String l;
+
+            while((l = r.readLine()) != null) {
+                System.out.println(l);
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading reservations text file");
+        }
+    }
+
     @Override
     public boolean Rooms(){
         System.out.println("Rooms available: ");
@@ -145,6 +159,6 @@ public class Hotel implements HotelSystem{
     }
 
     public void Manager(){
-
+        
     }
 }
