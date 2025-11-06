@@ -96,7 +96,6 @@ public class Hotel implements HotelSystem{
         } catch (IOException e) {
             System.out.println("Error writing in reservation file");
         }
-
     }
 
     @Override
@@ -129,7 +128,20 @@ public class Hotel implements HotelSystem{
 
     @Override
     public void Housekeeping() {
-        
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Enter room number to update");
+        String room = input.nextLine();
+
+        System.out.println("Enter cleaning status:");
+        String status = input.nextLine();
+
+        try (FileWriter fw = new FileWriter("DataFiles/housekeeping.txt", true)) {
+            fw.write(room + ", " + status);
+            System.out.println("Houskeeping status updated");
+        } catch (IOException e) {
+            System.out.println("Error writing housekeeping file");
+        }
     }
 
     public void Manager(){
