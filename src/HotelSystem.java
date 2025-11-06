@@ -3,9 +3,9 @@ public interface HotelSystem {
     void CreateAccount(); 
     void Payment(); 
     void Reservation(); 
-    void viewResevations();
     boolean Rooms(); 
     void Employee(); 
     void Housekeeping(); 
-    void Manager(); 
+    void Manager();
+    void viewReservations(); 
 }
