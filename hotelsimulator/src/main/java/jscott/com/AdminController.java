@@ -3,7 +3,7 @@ package jscott.com;
 import java.io.IOException;
 import javafx.fxml.FXML;
  
-public class AdminDashboardController {
+public class AdminController {
 
     @FXML
     private void switchToViewAccount() throws IOException {
@@ -28,6 +28,11 @@ public class AdminDashboardController {
         @FXML
     private void switchToReportManager() throws IOException {
         App.setRoot("adminManageIssues");
+    }
+
+            @FXML
+    private void switchToLanding() throws IOException {
+        App.setRoot("landingPage");
     }
 
 }

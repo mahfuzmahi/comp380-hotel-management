@@ -28,12 +28,15 @@ public class LoginController {
         String nameInput = userInputFieldName.getText();
         String passwordInput = userInputFieldPassword.getText();
         
+        nameInput = nameInput.trim();
+        //^-- is garbage added to remove warnings about unused variables
+
         //TODO this handles login, add actual auth here
         if(passwordInput.equals("password")) {
-            App.setRoot("dashboard");
+            App.setRoot("userMyRooms");
         }
         else if (passwordInput.equals("admin")) {
-            App.setRoot("adminDashboard");
+            App.setRoot("adminManageStaff");
         } 
         else{
             InstructionLabel.setText("login failed");

@@ -3,7 +3,7 @@ package jscott.com;
 import java.io.IOException;
 import javafx.fxml.FXML;
  
-public class DashboardController {
+public class UserMenuController {
 
     @FXML
     private void switchToRentRoom() throws IOException {
@@ -25,4 +25,8 @@ public class DashboardController {
         App.setRoot("secondary");
     }
 
+                @FXML
+    private void switchToLanding() throws IOException {
+        App.setRoot("landingPage");
+    }
 }
