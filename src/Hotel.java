@@ -97,6 +97,33 @@ public class Hotel implements HotelSystem{
             System.out.println("Error writing in reservation file");
         }
     }
+    public void RoomOptions(){
+        int RoomFloors = 5;
+        Scanner input = new Scanner(System.in); 
+        System.out.println("Select Room Floor: "); 
+        int FloorChoice = input.nextInt(); 
+        switch(RoomFloors){
+            case 1: 
+                System.out.println("Rooms on Floor 1: "); 
+                // Add more about Reserved Rooms Later
+            case 2: 
+                System.out.println("Rooms on Floor 2: "); 
+                // Add more about Reserved Rooms Later
+            case 3: 
+                System.out.println("Rooms on Floor 3: "); 
+                // Add more about Reserved Rooms Later
+            case 4: 
+                System.out.println("Rooms on Floor 4: "); 
+                // Add more about Reserved Rooms Later
+            case 5: 
+                System.out.println("Rooms on Floor 5: "); 
+                // Add more about Reserved Rooms Later
+            default: 
+            System.out.println("Invalid Floor. Choose Again."); 
+        }
+        System.out.println("Room Types: "); 
+
+    }
 
     @Override
     public boolean Rooms(){
