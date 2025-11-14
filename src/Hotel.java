@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter; 
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -99,21 +100,6 @@ public class Hotel implements HotelSystem{
     }
 
     @Override
-    public boolean Rooms(){
-        System.out.println("Rooms available: ");
-        try (BufferedReader r = new BufferedReader(new FileReader("DataFiles/rooms.txt"))) {
-            String l;
-
-            while((l = r.readLine()) != null) {
-                System.out.println(l);
-            }
-        } catch (IOException e) {
-            System.out.println("Error reading rooms text file");
-        }
-        return true;
-    }
-
-    @Override
     public void Employee(){
         System.out.println("Employees: ");
         try (BufferedReader r = new BufferedReader(new FileReader("DataFiles/employees.txt"))) {
@@ -145,7 +131,15 @@ public class Hotel implements HotelSystem{
     }
 
     public void Manager(){
-        
+        Scanner input = new Scanner(System.in); 
+        System.out.println("Write Report: "); 
+        String WriteReport = input.nextLine(); 
+        try (BufferedWriter r = new BufferedWriter(new FileWriter("DataFiles/manager_report.txt", true))) {
+            r.write(WriteReport); 
+            System.out.println("Report saved successfully."); 
+        } catch (IOException e){
+            System.out.println("Error saving Manager Report."); 
+        } 
     }
 
     @Override
