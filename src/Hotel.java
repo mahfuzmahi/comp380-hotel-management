@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter; 
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -97,48 +98,6 @@ public class Hotel implements HotelSystem{
             System.out.println("Error writing in reservation file");
         }
     }
-    public void RoomOptions(){
-        int RoomFloors = 5;
-        Scanner input = new Scanner(System.in); 
-        System.out.println("Select Room Floor: "); 
-        int FloorChoice = input.nextInt(); 
-        switch(RoomFloors){
-            case 1: 
-                System.out.println("Rooms on Floor 1: "); 
-                // Add more about Reserved Rooms Later
-            case 2: 
-                System.out.println("Rooms on Floor 2: "); 
-                // Add more about Reserved Rooms Later
-            case 3: 
-                System.out.println("Rooms on Floor 3: "); 
-                // Add more about Reserved Rooms Later
-            case 4: 
-                System.out.println("Rooms on Floor 4: "); 
-                // Add more about Reserved Rooms Later
-            case 5: 
-                System.out.println("Rooms on Floor 5: "); 
-                // Add more about Reserved Rooms Later
-            default: 
-            System.out.println("Invalid Floor. Choose Again."); 
-        }
-        System.out.println("Room Types: "); 
-
-    }
-
-    @Override
-    public boolean Rooms(){
-        System.out.println("Rooms available: ");
-        try (BufferedReader r = new BufferedReader(new FileReader("DataFiles/rooms.txt"))) {
-            String l;
-
-            while((l = r.readLine()) != null) {
-                System.out.println(l);
-            }
-        } catch (IOException e) {
-            System.out.println("Error reading rooms text file");
-        }
-        return true;
-    }
 
     @Override
     public void Employee(){
@@ -172,7 +131,15 @@ public class Hotel implements HotelSystem{
     }
 
     public void Manager(){
-        
+        Scanner input = new Scanner(System.in); 
+        System.out.println("Write Report: "); 
+        String WriteReport = input.nextLine(); 
+        try (BufferedWriter r = new BufferedWriter(new FileWriter("DataFiles/manager_report.txt", true))) {
+            r.write(WriteReport); 
+            System.out.println("Report saved successfully."); 
+        } catch (IOException e){
+            System.out.println("Error saving Manager Report."); 
+        } 
     }
 
     @Override
