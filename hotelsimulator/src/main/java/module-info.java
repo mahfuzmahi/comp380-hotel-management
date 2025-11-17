@@ -4,4 +4,5 @@ module hotel {
 
     opens hotel.frontend to javafx.fxml;
     exports hotel.frontend;
+    exports hotel.backend;
 }

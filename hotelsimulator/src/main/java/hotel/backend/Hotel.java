@@ -25,8 +25,8 @@ public class Hotel implements HotelSystem {
     }
 
     @Override
-    public void Login(String username, String password) {
-        verifyLogin(username, password);
+    public boolean Login(String username, String password) {
+        return verifyLogin(username, password);
     }
 
     public boolean verifyLogin(String username, String password) {
