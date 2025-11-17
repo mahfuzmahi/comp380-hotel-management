@@ -1,7 +1,7 @@
-module jscott.com {
+module hotel {
     requires javafx.controls;
     requires javafx.fxml;
 
-    opens jscott.com to javafx.fxml;
-    exports jscott.com;
+    opens hotel.frontend to javafx.fxml;
+    exports hotel.frontend;
 }

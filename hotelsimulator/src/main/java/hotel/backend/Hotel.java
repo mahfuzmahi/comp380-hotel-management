@@ -1,0 +1,161 @@
+package hotel.backend;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter; 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
+public class Hotel implements HotelSystem{
+    @Override
+    public void CreateAccount(){
+        Scanner input = new Scanner(System.in); 
+        System.out.println("Welcome, please create a username and password: "); 
+        System.out.println("Enter Username: "); 
+        String newUsername = input.nextLine(); 
+        System.out.println("Enter Password: "); 
+        String newPassword = input.nextLine(); 
+        String r = newUsername + "," + newPassword; 
+        
+        try (FileWriter fw = new FileWriter("DataFiles/customers.txt", true)) {
+            fw.write(r);
+            System.out.println("Account created successfully.");
+        } catch (IOException e) {
+            System.out.println("Error writing to customers text file");
+        }
+    }
+
+    @Override
+    public void Login(){
+        Scanner input = new Scanner(System.in); 
+        System.out.println("Welcome, please log into your account: "); 
+        System.out.println("Username: ");
+        String username = input.nextLine();
+        System.out.println("Password: "); 
+        String password = input.nextLine();
+        // Must combine with Database to verify active account (.txt files) 
+
+        if(verifyLogin(username, password)) {
+            System.out.println("Login successful");
+        } else {
+            System.out.println("Invalid username or password.");
+        }
+    }
+
+    public boolean verifyLogin(String username, String password) {
+        try (BufferedReader r = new BufferedReader(new FileReader("DataFiles/customers.txt"))) {
+            String line;
+            // read from each lines of the file
+            while((line = r.readLine()) != null) {
+                // split each line using a comma
+                String[] d = line.split(",");
+
+                // checks if the username & passwords match
+                if(d.length >= 2 && d[0].equals(username) && d[1].equals(password)) {
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading customer file");
+        }
+        return false;
+    }
+
+    @Override
+    public void Payment(){
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Name: ");
+        String name = input.nextLine();
+        System.out.println("Amount: ");
+        double amount = input.nextDouble();
+        input.nextLine();
+        System.out.println("Payment method: ");
+        String method = input.nextLine();
+
+        String r = name + ", " + amount + "," + method;
+        try (FileWriter fw = new FileWriter("DataFiles/payments.txt", true)) {
+            fw.write(r + '\n');
+            System.out.println("Payment successful");
+        } catch (IOException e) {
+            System.out.println("Error writing in payments file");
+        }
+    }
+
+    @Override
+    public void Reservation() {
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Enter customer name:");
+        String name = input.nextLine();
+
+        System.out.println("Enter room number:");
+        String room = input.nextLine();
+
+        try (FileWriter fw = new FileWriter("DataFiles/reservations.txt", true)) {
+            fw.write(name + ", " + room);
+            System.out.println("Reservation successfull");
+        } catch (IOException e) {
+            System.out.println("Error writing in reservation file");
+        }
+    }
+
+    @Override
+    public void Employee(){
+        System.out.println("Employees: ");
+        try (BufferedReader r = new BufferedReader(new FileReader("DataFiles/employees.txt"))) {
+            String l;
+            while((l = r.readLine()) != null) {
+                System.out.println(l);
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading employee file");
+        }
+    }
+
+    @Override
+    public void Housekeeping() {
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Enter room number to update");
+        String room = input.nextLine();
+
+        System.out.println("Enter cleaning status:");
+        String status = input.nextLine();
+
+        try (FileWriter fw = new FileWriter("DataFiles/housekeeping.txt", true)) {
+            fw.write(room + ", " + status);
+            System.out.println("Houskeeping status updated");
+        } catch (IOException e) {
+            System.out.println("Error writing housekeeping file");
+        }
+    }
+
+    public void Manager(){
+        Scanner input = new Scanner(System.in); 
+        System.out.println("Write Report: "); 
+        String WriteReport = input.nextLine(); 
+        try (BufferedWriter r = new BufferedWriter(new FileWriter("DataFiles/manager_report.txt", true))) {
+            r.write(WriteReport); 
+            System.out.println("Report saved successfully."); 
+        } catch (IOException e){
+            System.out.println("Error saving Manager Report."); 
+        } 
+    }
+
+    @Override
+    public void viewReservations() {
+        System.out.println("Current Resevations:");
+
+        try(BufferedReader r = new BufferedReader(new FileReader("DataFiles/reservations.txt"))) {
+            String l;
+
+            while((l = r.readLine()) != null) {
+                System.out.println(l);
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading reservations text file");
+        }
+    }
+}

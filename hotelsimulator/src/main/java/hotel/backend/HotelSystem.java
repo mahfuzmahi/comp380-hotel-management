@@ -1,0 +1,12 @@
+package hotel.backend;
+
+public interface HotelSystem {
+    void Login(); 
+    void CreateAccount(); 
+    void Payment(); 
+    void Reservation(); 
+    void Employee(); 
+    void Housekeeping(); 
+    void Manager();
+    void viewReservations(); 
+}
