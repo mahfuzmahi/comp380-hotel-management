@@ -2,13 +2,15 @@ package hotel.frontend;
 
 import java.io.IOException;
 
+import hotel.backend.Hotel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
  
 public class LoginController {
-
+    
+    private Hotel hotel = new Hotel();
 
     @FXML
     //holds user input for name from login page
@@ -29,16 +31,16 @@ public class LoginController {
         String passwordInput = userInputFieldPassword.getText();
         
         nameInput = nameInput.trim();
+        
+        passwordInput = passwordInput.trim();
         //^-- is garbage added to remove warnings about unused variables
 
         //TODO this handles login, add actual auth here
-        if(passwordInput.equals("password")) {
-            App.setRoot("userMyRooms");
-        }
-        else if (passwordInput.equals("admin")) {
+        if(passwordInput.equals("admin")) {
             App.setRoot("adminManageStaff");
-        } 
-        else{
+        } else if (hotel.Login(nameInput, passwordInput)) {
+            App.setRoot("userMyRooms");
+        } else{
             InstructionLabel.setText("login failed");
         }
     }
