@@ -1,7 +1,14 @@
-C:\Users\Mahfuz Ahmed\Documents\GitHub\comp380-hotel-management\hotelsimulator\src\main\java\jscott\com\SecondaryController.java
-C:\Users\Mahfuz Ahmed\Documents\GitHub\comp380-hotel-management\hotelsimulator\src\main\java\jscott\com\LandingPageController.java
-C:\Users\Mahfuz Ahmed\Documents\GitHub\comp380-hotel-management\hotelsimulator\src\main\java\jscott\com\PrimaryController.java
-C:\Users\Mahfuz Ahmed\Documents\GitHub\comp380-hotel-management\hotelsimulator\src\main\java\jscott\com\LoginController.java
-C:\Users\Mahfuz Ahmed\Documents\GitHub\comp380-hotel-management\hotelsimulator\src\main\java\jscott\com\App.java
-C:\Users\Mahfuz Ahmed\Documents\GitHub\comp380-hotel-management\hotelsimulator\src\main\java\module-info.java
-C:\Users\Mahfuz Ahmed\Documents\GitHub\comp380-hotel-management\hotelsimulator\src\main\java\jscott\com\CreateAccController.java
+/Users/mahfuzahmed/Documents/GitHub/comp380-hotel-management/hotelsimulator/src/main/java/hotel/frontend/LandingPageController.java
+/Users/mahfuzahmed/Documents/GitHub/comp380-hotel-management/hotelsimulator/src/main/java/hotel/frontend/LoginController.java
+/Users/mahfuzahmed/Documents/GitHub/comp380-hotel-management/hotelsimulator/src/main/java/hotel/backend/HotelSystem.java
+/Users/mahfuzahmed/Documents/GitHub/comp380-hotel-management/hotelsimulator/src/main/java/hotel/frontend/UserMenuController.java
+/Users/mahfuzahmed/Documents/GitHub/comp380-hotel-management/hotelsimulator/src/main/java/module-info.java
+/Users/mahfuzahmed/Documents/GitHub/comp380-hotel-management/hotelsimulator/src/main/java/hotel/frontend/App.java
+/Users/mahfuzahmed/Documents/GitHub/comp380-hotel-management/hotelsimulator/src/main/java/hotel/frontend/PrimaryController.java
+/Users/mahfuzahmed/Documents/GitHub/comp380-hotel-management/hotelsimulator/src/main/java/hotel/frontend/SecondaryController.java
+/Users/mahfuzahmed/Documents/GitHub/comp380-hotel-management/hotelsimulator/src/main/java/hotel/backend/Room.java
+/Users/mahfuzahmed/Documents/GitHub/comp380-hotel-management/hotelsimulator/src/main/java/hotel/backend/RoomOptions.java
+/Users/mahfuzahmed/Documents/GitHub/comp380-hotel-management/hotelsimulator/src/main/java/hotel/frontend/CreateAccController.java
+/Users/mahfuzahmed/Documents/GitHub/comp380-hotel-management/hotelsimulator/src/main/java/hotel/backend/Main.java
+/Users/mahfuzahmed/Documents/GitHub/comp380-hotel-management/hotelsimulator/src/main/java/hotel/frontend/AdminController.java
+/Users/mahfuzahmed/Documents/GitHub/comp380-hotel-management/hotelsimulator/src/main/java/hotel/backend/Hotel.java
