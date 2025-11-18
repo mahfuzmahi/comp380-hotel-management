@@ -2,49 +2,55 @@ package hotel.backend;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter; 
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Scanner;
 
-public class Hotel implements HotelSystem{
+public class Hotel implements HotelSystem {
+
+    private String filePath(String fileName) {
+        String current = System.getProperty("user.dir");
+
+        File dataFiles = new File(current, "DataFiles");
+
+        if(dataFiles.isDirectory()) {
+            return new File(dataFiles, fileName).getPath();
+        }
+
+        File parentFiles = new File(current + "/../DataFiles");
+
+        if(parentFiles.isDirectory()) {
+            return new File(parentFiles, fileName).getPath();
+        }
+
+        // fallback
+        return "DataFiles/" + fileName;
+    }
+
     @Override
-    public void CreateAccount(){
-        Scanner input = new Scanner(System.in); 
-        System.out.println("Welcome, please create a username and password: "); 
-        System.out.println("Enter Username: "); 
-        String newUsername = input.nextLine(); 
-        System.out.println("Enter Password: "); 
-        String newPassword = input.nextLine(); 
-        String r = newUsername + "," + newPassword; 
-        
-        try (FileWriter fw = new FileWriter("DataFiles/customers.txt", true)) {
-            fw.write(r);
-            System.out.println("Account created successfully.");
+    public boolean CreateAccount(String username, String password) {
+        if(username == null || username.isEmpty() || password == null || password.isEmpty()) {
+            return false;
+        }
+
+        String r = username + ", " + password;
+        try (FileWriter fw = new FileWriter(filePath("customers.txt"), true)) {
+            fw.write(r + "\n");
+            return true;
         } catch (IOException e) {
             System.out.println("Error writing to customers text file");
+            return false;
         }
     }
 
     @Override
-    public void Login(){
-        Scanner input = new Scanner(System.in); 
-        System.out.println("Welcome, please log into your account: "); 
-        System.out.println("Username: ");
-        String username = input.nextLine();
-        System.out.println("Password: "); 
-        String password = input.nextLine();
-        // Must combine with Database to verify active account (.txt files) 
-
-        if(verifyLogin(username, password)) {
-            System.out.println("Login successful");
-        } else {
-            System.out.println("Invalid username or password.");
-        }
+    public boolean Login(String username, String password) {
+        return verifyLogin(username, password);
     }
 
     public boolean verifyLogin(String username, String password) {
-        try (BufferedReader r = new BufferedReader(new FileReader("DataFiles/customers.txt"))) {
+        try (BufferedReader r = new BufferedReader(new FileReader(filePath("customers.txt")))) {
             String line;
             // read from each lines of the file
             while((line = r.readLine()) != null) {
@@ -63,48 +69,41 @@ public class Hotel implements HotelSystem{
     }
 
     @Override
-    public void Payment(){
-        Scanner input = new Scanner(System.in);
+    public boolean Payment(String customer, double amount, String method) {
+        if(customer == null || customer.isEmpty() || method == null || method.isEmpty()) {
+            return false;
+        }
 
-        System.out.println("Name: ");
-        String name = input.nextLine();
-        System.out.println("Amount: ");
-        double amount = input.nextDouble();
-        input.nextLine();
-        System.out.println("Payment method: ");
-        String method = input.nextLine();
-
-        String r = name + ", " + amount + "," + method;
-        try (FileWriter fw = new FileWriter("DataFiles/payments.txt", true)) {
+        String r = customer + ", " + amount + "," + method;
+        try (FileWriter fw = new FileWriter(filePath("payments.txt"), true)) {
             fw.write(r + '\n');
-            System.out.println("Payment successful");
+            return true;
         } catch (IOException e) {
             System.out.println("Error writing in payments file");
+            return false;
         }
     }
 
     @Override
-    public void Reservation() {
-        Scanner input = new Scanner(System.in);
+    public boolean Reservation(String customer, String roomNumber) {
+        if(customer == null || customer.isEmpty() || roomNumber == null || roomNumber.isEmpty()) {
+            return false;
+        }
 
-        System.out.println("Enter customer name:");
-        String name = input.nextLine();
-
-        System.out.println("Enter room number:");
-        String room = input.nextLine();
-
-        try (FileWriter fw = new FileWriter("DataFiles/reservations.txt", true)) {
-            fw.write(name + ", " + room);
-            System.out.println("Reservation successfull");
+        try (FileWriter fw = new FileWriter(filePath("reservations.txt"), true)) {
+            fw.write(customer + ", " + roomNumber);
+            return true;
+            
         } catch (IOException e) {
             System.out.println("Error writing in reservation file");
+            return false;
         }
     }
 
     @Override
     public void Employee(){
         System.out.println("Employees: ");
-        try (BufferedReader r = new BufferedReader(new FileReader("DataFiles/employees.txt"))) {
+        try (BufferedReader r = new BufferedReader(new FileReader(filePath("employees.txt")))) {
             String l;
             while((l = r.readLine()) != null) {
                 System.out.println(l);
@@ -115,30 +114,31 @@ public class Hotel implements HotelSystem{
     }
 
     @Override
-    public void Housekeeping() {
-        Scanner input = new Scanner(System.in);
+    public boolean Housekeeping(String roomNumber, String status) {
+        if(roomNumber == null || roomNumber.isEmpty() || status == null || status.isEmpty()) {
+            return false;
+        }
 
-        System.out.println("Enter room number to update");
-        String room = input.nextLine();
-
-        System.out.println("Enter cleaning status:");
-        String status = input.nextLine();
-
-        try (FileWriter fw = new FileWriter("DataFiles/housekeeping.txt", true)) {
-            fw.write(room + ", " + status);
-            System.out.println("Houskeeping status updated");
+        try (FileWriter fw = new FileWriter(filePath("housekeeping.txt"), true)) {
+            fw.write(roomNumber + ", " + status);
+            return true;
         } catch (IOException e) {
             System.out.println("Error writing housekeeping file");
+            return false;
         }
     }
 
-    public void Manager(){
-        Scanner input = new Scanner(System.in); 
+    @Override
+    public void Manager(String report) {
+        if(report == null || report.isEmpty()) {
+            return;
+        }
+
         System.out.println("Write Report: "); 
-        String WriteReport = input.nextLine(); 
-        try (BufferedWriter r = new BufferedWriter(new FileWriter("DataFiles/manager_report.txt", true))) {
-            r.write(WriteReport); 
-            System.out.println("Report saved successfully."); 
+
+        try (BufferedWriter r = new BufferedWriter(new FileWriter(filePath("manager_report.txt"), true))) {
+            r.write(report); 
+            r.newLine();
         } catch (IOException e){
             System.out.println("Error saving Manager Report."); 
         } 
@@ -148,7 +148,7 @@ public class Hotel implements HotelSystem{
     public void viewReservations() {
         System.out.println("Current Resevations:");
 
-        try(BufferedReader r = new BufferedReader(new FileReader("DataFiles/reservations.txt"))) {
+        try(BufferedReader r = new BufferedReader(new FileReader(filePath("reservations.txt")))) {
             String l;
 
             while((l = r.readLine()) != null) {
