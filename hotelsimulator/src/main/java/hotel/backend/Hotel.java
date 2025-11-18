@@ -2,11 +2,31 @@ package hotel.backend;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter; 
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
 public class Hotel implements HotelSystem {
+
+    private String filePath(String fileName) {
+        String current = System.getProperty("user.dir");
+
+        File dataFiles = new File(current, "DataFiles");
+
+        if(dataFiles.isDirectory()) {
+            return new File(dataFiles, fileName).getPath();
+        }
+
+        File parentFiles = new File(current + "/../DataFiles");
+
+        if(parentFiles.isDirectory()) {
+            return new File(parentFiles, fileName).getPath();
+        }
+
+        // fallback
+        return "DataFiles/" + fileName;
+    }
 
     @Override
     public boolean CreateAccount(String username, String password) {
@@ -30,7 +50,7 @@ public class Hotel implements HotelSystem {
     }
 
     public boolean verifyLogin(String username, String password) {
-        try (BufferedReader r = new BufferedReader(new FileReader("DataFiles/customers.txt"))) {
+        try (BufferedReader r = new BufferedReader(new FileReader(filePath("DataFiles/customers.txt")))) {
             String line;
             // read from each lines of the file
             while((line = r.readLine()) != null) {
@@ -55,7 +75,7 @@ public class Hotel implements HotelSystem {
         }
 
         String r = customer + ", " + amount + "," + method;
-        try (FileWriter fw = new FileWriter("DataFiles/payments.txt", true)) {
+        try (FileWriter fw = new FileWriter(filePath("DataFiles/payments.txt"), true)) {
             fw.write(r + '\n');
             return true;
         } catch (IOException e) {
@@ -70,7 +90,7 @@ public class Hotel implements HotelSystem {
             return false;
         }
 
-        try (FileWriter fw = new FileWriter("DataFiles/reservations.txt", true)) {
+        try (FileWriter fw = new FileWriter(filePath("DataFiles/reservations.txt"), true)) {
             fw.write(customer + ", " + roomNumber);
             return true;
             
@@ -83,7 +103,7 @@ public class Hotel implements HotelSystem {
     @Override
     public void Employee(){
         System.out.println("Employees: ");
-        try (BufferedReader r = new BufferedReader(new FileReader("DataFiles/employees.txt"))) {
+        try (BufferedReader r = new BufferedReader(new FileReader(filePath("DataFiles/employees.txt")))) {
             String l;
             while((l = r.readLine()) != null) {
                 System.out.println(l);
@@ -99,7 +119,7 @@ public class Hotel implements HotelSystem {
             return false;
         }
 
-        try (FileWriter fw = new FileWriter("DataFiles/housekeeping.txt", true)) {
+        try (FileWriter fw = new FileWriter(filePath("DataFiles/housekeeping.txt"), true)) {
             fw.write(roomNumber + ", " + status);
             return true;
         } catch (IOException e) {
@@ -116,7 +136,7 @@ public class Hotel implements HotelSystem {
 
         System.out.println("Write Report: "); 
 
-        try (BufferedWriter r = new BufferedWriter(new FileWriter("DataFiles/manager_report.txt", true))) {
+        try (BufferedWriter r = new BufferedWriter(new FileWriter(filePath("DataFiles/manager_report.txt"), true))) {
             r.write(report); 
             r.newLine();
         } catch (IOException e){
@@ -128,7 +148,7 @@ public class Hotel implements HotelSystem {
     public void viewReservations() {
         System.out.println("Current Resevations:");
 
-        try(BufferedReader r = new BufferedReader(new FileReader("DataFiles/reservations.txt"))) {
+        try(BufferedReader r = new BufferedReader(new FileReader(filePath("DataFiles/reservations.txt")))) {
             String l;
 
             while((l = r.readLine()) != null) {
