@@ -30,6 +30,14 @@ public class Hotel implements HotelSystem {
 
     @Override
     public boolean CreateAccount(String username, String password) {
+        if(username != null) {
+            username = username.trim();
+        }
+
+        if(password != null) {
+            password = password.trim();
+        }
+
         if(username == null || username.isEmpty() || password == null || password.isEmpty()) {
             return false;
         }
@@ -46,11 +54,19 @@ public class Hotel implements HotelSystem {
 
     @Override
     public boolean Login(String username, String password) {
-        return verifyLogin(username, password);
+        return verifyCustomer(username, password);
     }
 
-    public boolean verifyLogin(String username, String password) {
-        try (BufferedReader r = new BufferedReader(new FileReader(filePath("customers.txt")))) {
+    public boolean verifyLoginInFile(String username, String password, String fileName) {
+        if(username != null) {
+            username = username.trim();
+        }
+
+        if(password != null) {
+            password = password.trim();
+        }
+
+        try (BufferedReader r = new BufferedReader(new FileReader(filePath(fileName)))) {
             String line;
             // read from each lines of the file
             while((line = r.readLine()) != null) {
@@ -58,7 +74,7 @@ public class Hotel implements HotelSystem {
                 String[] d = line.split(",");
 
                 // checks if the username & passwords match
-                if(d.length >= 2 && d[0].equals(username) && d[1].equals(password)) {
+                if(d.length >= 2 && d[0].trim().equals(username) && d[1].trim().equals(password)) {
                     return true;
                 }
             }
@@ -66,6 +82,14 @@ public class Hotel implements HotelSystem {
             System.out.println("Error reading customer file");
         }
         return false;
+    }
+
+    public boolean verifyCustomer(String username, String password) {
+        return verifyLoginInFile(username, password, "customers.txt");
+    }
+
+    public boolean verifyEmployee(String username, String password) {
+        return verifyLoginInFile(username, password, "employees.txt");
     }
 
     @Override
@@ -101,16 +125,8 @@ public class Hotel implements HotelSystem {
     }
 
     @Override
-    public void Employee(){
-        System.out.println("Employees: ");
-        try (BufferedReader r = new BufferedReader(new FileReader(filePath("employees.txt")))) {
-            String l;
-            while((l = r.readLine()) != null) {
-                System.out.println(l);
-            }
-        } catch (IOException e) {
-            System.out.println("Error reading employee file");
-        }
+    public boolean Employee(String username, String password){
+        return verifyEmployee(username, password);
     }
 
     @Override
