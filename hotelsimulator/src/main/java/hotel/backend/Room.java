@@ -9,7 +9,6 @@ public class Room {
         System.out.println("Rooms available: ");
         try (BufferedReader r = new BufferedReader(new FileReader("DataFiles/rooms.txt"))) {
             String l;
-
             while((l = r.readLine()) != null) {
                 System.out.println(l);
             }
