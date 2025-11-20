@@ -9,7 +9,7 @@
 <VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hotel.frontend.CreateAccController" style="-fx-background-color: lightblue;">
    <children>
    
-        <Label fx:id="InstructionLabel" text="Input username and password to create account"/>
+        <Label fx:id="InstructionLabel" text="Input username and password to create an account"/>
 
         <TextField fx:id="userInputFieldName" promptText="Enter your name"/>
 
