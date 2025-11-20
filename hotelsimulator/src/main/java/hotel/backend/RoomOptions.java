@@ -61,6 +61,7 @@ public class ReservedRooms{
         try (BufferedReader re = new BufferedReader(new FileReader("DataFiles/reservations.txt"))){
             String ReservedR; 
             while((ReservedR = re.readLine()) != null) {
+                System.out.println("List of Reserved Rooms: "); 
                 ReservedRoomList.add(ReservedR); // Adds Reserved Rooms from reservations.txt to Array List 
                 System.out.println(ReservedR); 
             }
