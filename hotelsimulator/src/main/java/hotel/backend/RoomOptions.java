@@ -4,7 +4,8 @@ import java.util.Scanner;
 
 public class RoomOptions {
     public void RoomOptions(){
-        int RoomFloors = 5;
+        int[] RoomFloors = {1,2,3,4,5};
+        int[] RoomNumbers = {}; 
         Scanner input = new Scanner(System.in); 
         System.out.println("Select Room Floor: "); 
         int FloorChoice = input.nextInt(); 
