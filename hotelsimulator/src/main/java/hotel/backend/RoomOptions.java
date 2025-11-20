@@ -1,7 +1,11 @@
 package hotel.backend;
 
-import java.util.Scanner; 
-import java.io.*; 
+import java.io.BufferedReader;
+import java.io.FileReader; 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class RoomOptions {
     public void RoomOptions(){
@@ -37,8 +41,7 @@ public class RoomOptions {
         System.out.println("Room Types: "); 
 
     }
-    }
-public class getRooms {
+
     public List<String> getRooms(){
     List<String> DisplayRoom = new ArrayList<>(); // Array List to show rooms offered by Hotel 
     System.out.println("Offered Room Types in Hotel: "); 
@@ -54,8 +57,7 @@ public class getRooms {
     }
     return DisplayRoom; 
     }
-}
-public class ReservedRooms{
+    
     public List<String> reservedRooms(){ 
         List<String> ReservedRoomList = new ArrayList<>(); // Array List to show rooms Reserved by Users 
         try (BufferedReader re = new BufferedReader(new FileReader("DataFiles/reservations.txt"))){
