@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class Hotel implements HotelSystem {
 
-    private String filePath(String fileName) {
+    public static String filePath(String fileName) {
         String current = System.getProperty("user.dir");
 
         File dataFiles = new File(current, "DataFiles");

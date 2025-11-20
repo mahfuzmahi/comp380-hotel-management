@@ -6,31 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import hotel.backend.Hotel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.VBox;
  
 public class AdminManageStaffController{
-
-    String filePath(String fileName) {
-        String current = System.getProperty("user.dir");
-
-        File dataFiles = new File(current, "DataFiles");
-
-        if(dataFiles.isDirectory()) {
-            return new File(dataFiles, fileName).getPath();
-        }
-
-        File parentFiles = new File(current + "/../DataFiles");
-
-        if(parentFiles.isDirectory()) {
-            return new File(parentFiles, fileName).getPath();
-        }
-
-        // fallback
-        return "DataFiles/" + fileName;
-    }
 
     @FXML
     private ListView<Button> listviewView;
@@ -48,7 +30,7 @@ public class AdminManageStaffController{
         buttonsAreaBoxStaff.getChildren().addAll(buttonlist);
         int i = 0;
         try {
-            Scanner s = new Scanner(new File(filePath("employees.txt"))).useDelimiter("\\R|,");
+            Scanner s = new Scanner(new File(Hotel.filePath("employees.txt"))).useDelimiter("\\R|,");
             while (s.hasNext()) {
                    //TODO change with employee file format changes
                     String buttonText = s.next(); 
