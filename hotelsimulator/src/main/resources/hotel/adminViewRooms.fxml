@@ -8,12 +8,25 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.ScrollPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hotel.frontend.AdminController">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hotel.frontend.AdminRoomsController">
    <VBox AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" style="-fx-background-color: lightblue;">
       <children> 
       
          <fx:include source="adminMenu.fxml"/>
+
+         <Pane VBox.vgrow="ALWAYS"/>
+
+         <ScrollPane fx:id="scrollPane" style="-fx-padding: 10 10 10 10;">
+            <content>
+               <VBox alignment="center" fx:id="buttonsAreaBox" style="-fx-padding: 20 20 20 20;">
+                  <children>
+                     <!-- Buttons will be added here dynamically -->
+                  </children>
+               </VBox>
+            </content>
+         </ScrollPane>
 
          <Pane VBox.vgrow="ALWAYS"/>
 
