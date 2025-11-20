@@ -10,27 +10,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.ListView;
+
+import hotel.backend.Hotel;
  
 public class AdminIssuesController {
-
-    String filePath(String fileName) {
-        String current = System.getProperty("user.dir");
-
-        File dataFiles = new File(current, "DataFiles");
-
-        if(dataFiles.isDirectory()) {
-            return new File(dataFiles, fileName).getPath();
-        }
-
-        File parentFiles = new File(current + "/../DataFiles");
-
-        if(parentFiles.isDirectory()) {
-            return new File(parentFiles, fileName).getPath();
-        }
-
-        // fallback
-        return "DataFiles/" + fileName;
-    }
 
     @FXML
     private ListView<Button> listviewView;
@@ -48,7 +31,7 @@ public class AdminIssuesController {
         buttonsAreaBoxIssues.getChildren().addAll(buttonlist);
         int i = 0;
         try {
-            Scanner s = new Scanner(new File(filePath("manager_report.txt"))).useDelimiter("\\R|,");
+            Scanner s = new Scanner(new File(Hotel.filePath("manager_report.txt"))).useDelimiter("\\R|,");
             while (s.hasNext()) {
                     String buttonText = s.next() + "\nAt Room" + s.next() + " Floor " + s.next() + "\nAssigned to: " + s.next(); 
                      buttonlist.add(new Button(buttonText));
