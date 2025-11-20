@@ -42,7 +42,7 @@ public class Hotel implements HotelSystem {
             return false;
         }
 
-        String r = username + ", " + password;
+        String r = username + "," + password;
         try (FileWriter fw = new FileWriter(filePath("customers.txt"), true)) {
             fw.write(r + "\n");
             return true;

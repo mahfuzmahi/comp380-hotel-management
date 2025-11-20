@@ -8,31 +8,20 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.control.TextArea?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hotel.frontend.AdminController">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hotel.frontend.AdminManageStaffDetailsController">
    <VBox AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" style="-fx-background-color: lightblue;">
       <children> 
-      
+
          <fx:include source="adminMenu.fxml"/>
 
          <Pane VBox.vgrow="ALWAYS"/>
 
          <HBox alignment="CENTER" spacing="20.0" >
-
-                  <Pane VBox.vgrow="ALWAYS"/>
-                  
-            <TextArea fx:id="paymentsTextArea"/>
-
-                  <Pane VBox.vgrow="ALWAYS"/>
-
-         </HBox>  
+              <Label fx:id="staffNameLabel"/>
+         </HBox>    
 
          <Pane VBox.vgrow="ALWAYS"/>
-
-         <HBox alignment="BOTTOM_CENTER" spacing="20.0" >
-            <Label text="view revenue" style="-fx-font-size: 24px;"/>
-         </HBox>    
 
       </children>
    </VBox>

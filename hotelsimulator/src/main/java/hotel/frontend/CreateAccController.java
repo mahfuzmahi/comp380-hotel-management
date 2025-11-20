@@ -30,19 +30,14 @@ public class CreateAccController {
         String nameInput = userInputFieldName.getText();
         String passwordInput = userInputFieldPassword.getText();
 
-
-        
         //TODO add new acc auth here
-        if(nameInput.isEmpty() || passwordInput.isEmpty()) {
-            InstructionLabel.setText("Invalid input");
+        boolean holder = hotel.CreateAccount(nameInput, passwordInput);
+
+        if(holder == false) {
+            InstructionLabel.setText("Unable to create account");
         }
         else {
-            if(hotel.CreateAccount(nameInput, passwordInput)) {
-                InstructionLabel.setText("Account created successfully");
-                App.setRoot("login");
-            } else {
-                InstructionLabel.setText("Unable to create account");
-            }
+                App.setRoot("login"); 
         }
     }
 }
