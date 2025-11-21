@@ -9,7 +9,7 @@ import java.util.Scanner;
 /** 
  * Class Name: RoomOptions
  * Date of Code: November 20, 2025
- * Programmer: Michael Garcia
+ * Programmer: Michael Garcia, Mahfuz Ahmed
  * Description: Hotel has a set number of floors and rooms per floor
  * The different room options that are shown via an array list taken from a 
  * text file whiich is read and written to. 
@@ -21,7 +21,7 @@ import java.util.Scanner;
  * read from file 
  * 
  * 
- * @author: Michael Garcia
+ * @author: Michael Garcia, Mahfuz Ahmed
  * @version: 1.0
  */
 public class RoomOptions{

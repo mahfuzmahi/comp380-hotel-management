@@ -8,6 +8,7 @@ import java.util.List;
 /** 
  * Class: Room
  * Date: November 21, 2025 
+ * Programmer: Michael Garcia, Mahfuz Ahmed
  * Description: Establishes the status of rooms in the hotel which can display 
  * as available or reserved.
  * Status of reserved rooms is retrieved and read from a text file of currently
@@ -17,7 +18,7 @@ import java.util.List;
  * File I/O: BufferedReader and FileReader are utilized when reading from lists in text files 
  * ArrayList: Specifically used for reserved rooms. List is updated with current reserved rooms 
  * 
- * @author: Michael Garcia 
+ * @author: Michael Garcia, Mahfuz Ahmed 
  * @version: 1.0
  */
 public class Room {
