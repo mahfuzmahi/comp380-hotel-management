@@ -10,6 +10,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
+/**
+ * Controller for displaying the rooms reserved by a specific user.
+ * This class reads the reservation file, filters entries by username,
+ * and shows the rooms in a list. It also provides simple user feedback
+ * for empty input, missing data, or successful loading.
+ *
+ * Author: Jose
+ * Version: 1.0
+ */
 public class ViewMyRoomsController {
 
     @FXML
@@ -21,6 +30,11 @@ public class ViewMyRoomsController {
     @FXML
     private Label statusLabel;
 
+    /**
+     * Loads and displays all rooms reserved by the entered username.
+     * Clears previous results, validates input, reads from reservations.txt,
+     * and updates the UI based on whether matching rooms are found.
+     */
     @FXML
     private void handleLoadRooms() {
         roomsList.getItems().clear();
@@ -63,6 +77,10 @@ public class ViewMyRoomsController {
         }
     }
 
+     /**
+     * Returns the user to the previous screen or main menu.
+     * This is triggered by the Back button on the UI.
+     */
     @FXML
     private void handleBack() throws Exception {
         App.setRoot("userMyRooms"); 

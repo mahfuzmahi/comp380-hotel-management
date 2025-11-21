@@ -13,6 +13,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+/**
+ * Controller that allows a user to update their account information.
+ * Validates credentials and writes updated data to the customers file.
+ *
+ * Author: Jose
+ * Version: 1.0
+ */
 public class UserUpdateInfoController {
 
     @FXML
@@ -29,6 +36,10 @@ public class UserUpdateInfoController {
 
     private Hotel hotel = new Hotel();
 
+    /**
+     * Saves updated user information after validating the current username and password.
+     * Reads from the customers file and writes changes to a temporary file before replacing it.
+     */
     @FXML
     private void handleSave() {
         String username = usernameField.getText();
@@ -86,7 +97,7 @@ public class UserUpdateInfoController {
             return;
         }
 
-        
+        // Replace original file with temporary updated file
         if (!customersFile.delete() || !tempFile.renameTo(customersFile)) {
             statusLabel.setText("Could not save changes.");
             return;
