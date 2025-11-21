@@ -7,11 +7,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 /** 
- * Hotel has a number of rooms per floor and different room options that are shown. 
- * @author: M. Garcia, M. Ahmed
+ * Class Name: RoomOptions
+ * Date of Code: November 20, 2025
+ * Programmer: Michael Garcia
+ * Description: Hotel has a set number of floors and rooms per floor
+ * The different room options that are shown via an array list taken from a 
+ * text file whiich is read and written to. 
+ * 
+ * Important Data Structures: 
+ * File I/O: BufferedReader and FileReader used to read from lists shown in 
+ * text files 
+ * ArrayList: Used to store and return the list of room types available in hotel 
+ * read from file 
+ * 
+ * 
+ * @author: Michael Garcia
  * @version: 1.0
  */
 public class RoomOptions{
+    /** 
+     * Holds a fixed list for both room floors and room numbers not seen by user
+     * Requests for user input to select room floor 
+     * Once floor is selected and input is received, more information regarding 
+     * rooms on that floor will be displayed
+     * 
+     */
 
     public void RoomOptions(){
         int[] RoomFloors = {1,2,3,4,5};
@@ -45,8 +65,10 @@ public class RoomOptions{
         }
     }
     /**
-     * Reads and updates room types from text file and displays options to user   
-     * @return list of room types in Hotel 
+     * Reads and updates room types from text file and displays options to user
+     * Each line in the text file represents a different room type 
+     * If file cannot be read, an error message is displayed 
+     * @return list of string representing room types in Hotel 
      */
 
     public List<String> RoomTypes(){
@@ -64,23 +86,4 @@ public class RoomOptions{
     }
     return DisplayRoom; 
     }
-    /**
-     * Reads updated list of reserved rooms from text file
-     * @return list of reserved rooms 
-     */
-    public List<String> reservedRooms(){ 
-        List<String> ReservedRoomList = new ArrayList<>(); // Array List to show rooms Reserved by Users 
-        try (BufferedReader re = new BufferedReader(new FileReader("DataFiles/reservations.txt"))){
-            String ReservedR; 
-            while((ReservedR = re.readLine()) != null) {
-                System.out.println("List of Reserved Rooms: "); 
-                ReservedRoomList.add(ReservedR); // Adds Reserved Rooms from reservations.txt to Array List 
-                System.out.println(ReservedR); 
-            }
-        }
-        catch(IOException e){
-            System.out.println("Error reading reservations.txt file");
-        }
-        return ReservedRoomList; 
-        }
     }
