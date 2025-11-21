@@ -12,16 +12,32 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
+/**
+ * Controller that loads and displays available rooms for users.
+ * Room data is read from a file and displayed as buttons that the user can select.
+ * Only rooms marked as unoccupied are shown.
+ *
+ * Author: Jose
+ * Version: 1.0
+ */
 public class UserRentRoomController implements Initializable {
 
     @FXML
-    private VBox roomsBox;   
+    private VBox roomsBox;
 
+    /**
+     * Initializes the screen by loading available rooms when the fxml is displayed.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadAvailableRooms();
     }
 
+    /**
+     * Loads available rooms from DataFiles/rooms.txt.
+     * Creates a button for each available room and adds it to the VBox.
+     * If no rooms are found or if an error occurs, a message is shown.
+     */
     private void loadAvailableRooms() {
         roomsBox.getChildren().clear();
 
@@ -55,7 +71,7 @@ public class UserRentRoomController implements Initializable {
                 Button roomButton = new Button(buttonText);
                 roomButton.setMaxWidth(Double.MAX_VALUE);
 
-                
+                // Placeholder action for room selection
                 roomButton.setOnAction(e -> {
                     // In the future we could navigate to a "room details" or "confirm booking" page.
                     System.out.println("User selected room " + roomNumber + " on floor " + floor);
