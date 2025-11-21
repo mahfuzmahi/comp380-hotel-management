@@ -1,3 +1,4 @@
 mahfuztest, test
 jim, pass
+jim2,pass2
 jose,jose
