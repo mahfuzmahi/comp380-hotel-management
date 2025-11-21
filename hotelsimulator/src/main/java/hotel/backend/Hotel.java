@@ -7,7 +7,55 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * Class: Hotel
+ * 
+ * Date: November 20, 2025
+ * Programmers: Mahfuz Ahmed, Michael Garcia
+ * 
+ * Description:
+ * This is the main implementation class for the hotel management system.
+ * It saves and loads information into text files in the DataFiles folder.
+ * It handles user/employee login, account management, payment, reservations, 
+ * employee tasks, housekeeping updates and manager reports.
+ * It follows the HotelSystem interface and manages all reading and writing to the files.
+ * 
+ * Important Data Structures:
+ * File I/O: Uses BufferedReader, BufferedWriter, FileReader, and FileWriter
+ * for reading from and writing to text files.
+ * String Arrays: Uses String.split() to parse comma-separated values from files
+ * 
+ * Algorithms:
+ * Linear Search: The verifyLoginInFile() method uses linear search through file lines
+ * to find matching information. This was chosen because the text files are not sorted.
+ * The files are simple and typical for a hotel system usage.
+ * File Path: The filePath() method uses a fall back system to find the DataFiles directory
+ * alongside the default path. This makes sure that the system works regardless of where the 
+ * application is being run from.
+ * All methods validate the input parameters such as null and empty string checks and trim() to ignore whitespaces
+ * This makes sure that valid data is being passed through. 
+ * 
+ * @author Mahfuz Ahmed
+ * @version 1.0
+ */
+
 public class Hotel implements HotelSystem {
+
+    /**
+     * Checks the file path for data files in the DataFiles folder/directory.
+     * Uses a fallback method to find the directory despite execution context.
+     * 
+     * The method checks three locations in order:
+     * DataFiles subdirectory of current working directory
+     * Datafiles directory in the parent of current directory
+     * Default path "DataFiles/" as a fallback technique
+     * 
+     * This makes sure the system works despite where the project is run from
+     * the hotelsimulator directort or any other location.
+     * 
+     * @param fileName the name of the text file that needs to be found
+     * @return the exact or relative path to the requested text file
+     */
 
     public static String filePath(String fileName) {
         String current = System.getProperty("user.dir");
@@ -28,6 +76,13 @@ public class Hotel implements HotelSystem {
         return "DataFiles/" + fileName;
     }
 
+    /**
+     * Creates a new customer account and saves it to the customer.txt file
+     * 
+     * @param username Any username the user choses
+     * @param password Any password the user choses
+     * @return true if account creation succeeds, false if validation fails
+     */
     @Override
     public boolean CreateAccount(String username, String password) {
         if(username != null) {
@@ -52,10 +107,27 @@ public class Hotel implements HotelSystem {
         }
     }
 
+    /**
+     * Authenticates a customer login by veryfing information in the customers.txt file
+     * 
+     * @param username The username to verify
+     * @param password The password to verify
+     * @return true if information matches the customer account in the text file, false otherwise
+     */
+
     @Override
     public boolean Login(String username, String password) {
         return verifyCustomer(username, password);
     }
+
+    /**
+     * Verifies login information by searching through a specific file
+     * 
+     * @param username The username to verify
+     * @param password The password to verify
+     * @param fileName The name of the file ot search
+     * @return true if matching information is found, false otherwise
+     */
 
     public boolean verifyLoginInFile(String username, String password, String fileName) {
         if(username != null) {
@@ -84,13 +156,38 @@ public class Hotel implements HotelSystem {
         return false;
     }
 
+    /**
+     * Verifies customer login information
+     * 
+     * @param username The customer username to verify
+     * @param password The customer password to verify
+     * @return true if information match a customer account in customers.txt, false otherwise
+     */
+
     public boolean verifyCustomer(String username, String password) {
         return verifyLoginInFile(username, password, "customers.txt");
     }
 
+    /**
+     * Verifies employee login information
+     * 
+     * @param username The employee username to verify
+     * @param password The employee password to verify
+     * @return true if infomration match an employee account in employees.txt, false otherwise
+     */
+
     public boolean verifyEmployee(String username, String password) {
         return verifyLoginInFile(username, password, "employees.txt");
     }
+
+    /**
+     * Records payment transactions in the payments.txt file
+     * 
+     * @param customer The username of the customer making the payment
+     * @param amount The amount the customer is paying
+     * @param method The payment method such as credit, debit, cash, etc.
+     * @return true if payment was successful, false otherwise
+     */
 
     @Override
     public boolean Payment(String customer, double amount, String method) {
@@ -108,6 +205,14 @@ public class Hotel implements HotelSystem {
         }
     }
 
+    /**
+     * Creates a reservation and saves it to the reservations.txt file
+     * 
+     * @param customer The username of the customer making a reservation
+     * @param roomNumber The room number to be reserved
+     * @return true if reservation was successful, false otherwise
+     */
+
     @Override
     public boolean Reservation(String customer, String roomNumber) {
         if(customer == null || customer.isEmpty() || roomNumber == null || roomNumber.isEmpty()) {
@@ -124,10 +229,26 @@ public class Hotel implements HotelSystem {
         }
     }
 
+    /**
+     * Authenticates an employee login by verifying informations in employees.txt file
+     * 
+     * @param username The username of employee to verify
+     * @param password The password of employee to verify
+     * @return true if information matches employee account on employee.txt file, false otherwise
+     */
+
     @Override
     public boolean Employee(String username, String password){
         return verifyEmployee(username, password);
     }
+
+    /**
+     * Updates housekeeping for a reom and records it in the housekeeping.txt file
+     * 
+     * @param roomNumber the room needed to be updated
+     * @param status the new houskeeping status such as clean, dirty, maintenence, etc.
+     * @return true if status was successfully updated, false otherwise
+     */
 
     @Override
     public boolean Housekeeping(String roomNumber, String status) {
@@ -144,6 +265,12 @@ public class Hotel implements HotelSystem {
         }
     }
 
+    /**
+     * Saves a manager report to the manager_report.txt file.
+     * 
+     * @param report The report text to be saved
+     */
+
     @Override
     public void Manager(String report) {
         if(report == null || report.isEmpty()) {
@@ -159,6 +286,13 @@ public class Hotel implements HotelSystem {
             System.out.println("Error saving Manager Report."); 
         } 
     }
+
+    /**
+     * Displays all current reservations by reading from the reservations.txt file.
+     * 
+     * Uses BufferedReader for line-by-line file reading.
+     * Output: Prints all the reservation records to the console/main customer page.
+     */
 
     @Override
     public void viewReservations() {
