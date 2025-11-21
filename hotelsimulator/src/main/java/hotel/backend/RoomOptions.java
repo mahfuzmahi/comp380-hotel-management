@@ -6,11 +6,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+/** 
+ * Hotel has a number of rooms per floor and different room options that are shown. 
+ * @author: M. Garcia, M. Ahmed
+ * @version: 1.0
+ */
+public class RoomOptions{
 
-public class RoomOptions {
     public void RoomOptions(){
         int[] RoomFloors = {1,2,3,4,5};
-        int[] RoomNumbers = {}; 
+        int[] RoomNumbers = {1,2,3,4,5,6,7,8,9,10}; 
         Scanner input = new Scanner(System.in); 
         System.out.println("Select Room Floor: "); 
         int FloorChoice = input.nextInt(); 
@@ -38,11 +43,13 @@ public class RoomOptions {
             default: 
             System.out.println("Invalid Floor. Choose Again."); 
         }
-        System.out.println("Room Types: "); 
-
     }
+    /**
+     * Reads and updates room types from text file and displays options to user   
+     * @return list of room types in Hotel 
+     */
 
-    public List<String> getRooms(){
+    public List<String> RoomTypes(){
     List<String> DisplayRoom = new ArrayList<>(); // Array List to show rooms offered by Hotel 
     System.out.println("Offered Room Types in Hotel: "); 
     try (BufferedReader r = new BufferedReader(new FileReader("DataFiles/rooms.txt"))){
@@ -57,7 +64,10 @@ public class RoomOptions {
     }
     return DisplayRoom; 
     }
-    
+    /**
+     * Reads updated list of reserved rooms from text file
+     * @return list of reserved rooms 
+     */
     public List<String> reservedRooms(){ 
         List<String> ReservedRoomList = new ArrayList<>(); // Array List to show rooms Reserved by Users 
         try (BufferedReader re = new BufferedReader(new FileReader("DataFiles/reservations.txt"))){
