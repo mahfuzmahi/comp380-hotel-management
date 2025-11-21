@@ -28,7 +28,7 @@
          <HBox alignment="BOTTOM_CENTER" spacing="20.0" >
                <children>
 
-                     <Button fx:id="CreateAccountButton" text="Create Account" onAction="#switchToCreateAcc"/>
+                     <Button fx:id="CreateAccountButton" text="Create Account" onAction="#switchToCreateAccount"/>
 
                      <Region prefHeight="5" prefWidth="5" HBox.hgrow="ALWAYS" />
                      <Button fx:id="GuestButton" text="Guest" onAction="#switchToGuest"/>

@@ -12,7 +12,7 @@ hotel/backend/RoomOptions.class
 hotel/backend/Main.class
 hotel/frontend/AdminManageStaffController.class
 hotel/backend/Hotel.class
-hotel/frontend/CreateAccController.class
+hotel/frontend/CreateAccountController.class
 hotel/frontend/AdminManageStaffDetailsController.class
 hotel/frontend/AdminIssuesController.class
 hotel/frontend/AdminController.class

@@ -12,39 +12,52 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
  
+/**
+ * AdminViewAccountController(Class): Controller class for the admin view account view. Contains methods to initialize the view by reading customers from file and displaying them as buttons in the defined VBox.
+ * @author Justin_Scott, 11/20/2025
+ */
 public class AdminViewAccountController {
+
+    /**
+    * buttonsAreaBoxUsers(Variable): Holds the list of buttons representing customers.
+    */
+    @FXML
+    private VBox buttonsAreaBoxUsers;
 
     @FXML
     private ListView<Button> listviewView;
 
-    @FXML
-    private VBox buttonsAreaBoxUsers;
-
     List<String> listOfRooms = null;
     
-    //*private ObservableList<Button> buttonlist = FXCollections.observableArrayList();
     List<Button> buttonlist = new ArrayList<>();
   
+    /**
+     * initialize(Method): initializer method for AdminViewAccountController to read customers from file and display them as buttons in the defined VBox.
+     */
     @FXML
     public void initialize() {
         buttonsAreaBoxUsers.getChildren().addAll(buttonlist);
         int i = 0;
         try {
+            //makes a scanner to read the customers file and uses \n and , as delimiters
             Scanner s = new Scanner(new File(Hotel.filePath("customers.txt"))).useDelimiter("\\R|,");
             while (s.hasNext()) {
-                    String accText = s.next();
+                    String accountText = s.next();
                     s.next();
-                     buttonlist.add(new Button("user: " + accText));
-                     buttonlist.get(i).setOnAction(e -> {
-                        App.setViewedUser(accText);
-                        try {
-                            App.setRoot("adminViewAccountDetails");
-                        } catch (Exception ex) {
-                            System.err.println(ex);
-                        }
-                     });
-                     i++;
+                    //adds a button for each line with ButtonText as the text and sends to adminViewAccountDetails when clicked
+                    buttonlist.add(new Button("user: " + accountText));
+                    buttonlist.get(i).setOnAction(e -> {
+                    //sets the last viewed account to the name of the selected account
+                    App.setViewedAccount(accountText);
+                    try {
+                        App.setRoot("adminViewAccountDetails");
+                    } catch (Exception ex) {
+                        System.err.println(ex);
+                    }
+                    });
+                    i++;
             }
+            // Clear existing buttons and add the newly created buttons to the VBox
             buttonsAreaBoxUsers.getChildren().clear();
             buttonsAreaBoxUsers.getChildren().addAll(buttonlist);
             s.close();
