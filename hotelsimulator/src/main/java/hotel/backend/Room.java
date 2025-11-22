@@ -18,8 +18,8 @@ import java.util.List;
  * File I/O: BufferedReader and FileReader are utilized when reading from lists in text files 
  * ArrayList: Specifically used for reserved rooms. List is updated with current reserved rooms 
  * 
- * @author: Michael Garcia, Mahfuz Ahmed 
- * @version: 1.0
+ * @author Michael Garcia, Mahfuz Ahmed 
+ * @version 1.0
  */
 public class Room {
     /** 
