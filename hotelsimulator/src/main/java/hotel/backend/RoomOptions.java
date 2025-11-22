@@ -21,8 +21,8 @@ import java.util.Scanner;
  * read from file 
  * 
  * 
- * @author Michael Garcia, Mahfuz Ahmed
- * @version 1.0
+ * @author: Michael Garcia, Mahfuz Ahmed
+ * @version: 1.0
  */
 public class RoomOptions{
     /** 
