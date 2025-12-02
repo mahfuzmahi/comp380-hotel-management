@@ -41,10 +41,12 @@ public class LoginController {
         String nameInput = userInputFieldName.getText();
         String passwordInput = userInputFieldPassword.getText();
 
-        //TODO this handles login, add actual auth here
-        if(passwordInput.equals("admin")) {
+
+        if(passwordInput.equals("admin")/*TODO hotel.AdminLogin(nameInput, passwordInput) */) {
+            App.setCurrentUser(nameInput);
             App.setRoot("adminManageStaff");
         } else if (hotel.Login(nameInput, passwordInput)) {
+            App.setCurrentUser(nameInput);
             App.setRoot("userMyRooms");
         } else{
             InstructionLabel.setText("login failed");

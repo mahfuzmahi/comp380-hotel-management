@@ -43,7 +43,10 @@ public class AdminViewAccountController {
             Scanner s = new Scanner(new File(Hotel.filePath("customers.txt"))).useDelimiter("\\R|,");
             while (s.hasNext()) {
                     String accountText = s.next();
-                    s.next();
+                    for (int j = 0; j < 4; j++){
+                                //skips the next 4 tokens (password, email, phone, bankinfo)
+                                s.next();
+                    }
                     //adds a button for each line with ButtonText as the text and sends to adminViewAccountDetails when clicked
                     buttonlist.add(new Button("user: " + accountText));
                     buttonlist.get(i).setOnAction(e -> {
@@ -66,3 +69,6 @@ public class AdminViewAccountController {
         }
     }
 }
+
+
+

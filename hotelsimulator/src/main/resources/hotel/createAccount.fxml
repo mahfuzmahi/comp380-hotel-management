@@ -1,19 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.geometry.Insets?>
 
+@@ -9,13 +10,25 @@
 <VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hotel.frontend.CreateAccountController" style="-fx-background-color: lightblue;">
    <children>
    
         <Label fx:id="InstructionLabel" text="Input username and password to create an account"/>
+      <Label fx:id="InstructionLabel" text="Input username and password to create an account"/>
 
         <TextField fx:id="userInputFieldName" promptText="Enter your name"/>
+      <TextField fx:id="userInputFieldName" promptText="Enter your name"/>
 
         <TextField fx:id="userInputFieldPassword" promptText="Enter your Password"/>
+      <TextField fx:id="userInputFieldPassword" promptText="Enter your Password"/>
+     
+      <TextField fx:id="userInputEmail" promptText="Enter your Email"/>
+
+      <TextField fx:id="userInputPhoneNumber" promptText="Enter your Phone Number"/>
+
+      <TextField fx:id="userInputBankInfo" promptText="Enter your Bank Information"/>
+      
+      <HBox spacing="10.0" alignment="CENTER">
+         <children>
+      <Button text="Create User Account" onAction="#handleUserButton"/>
+      <Button text="Create Admin Account" onAction="#handleAdminButton"/>
+         </children>
+      </HBox>
 
         <Button text="Submit" onAction="#handleSubmitButton"/>
 
@@ -23,3 +40,4 @@
    </padding>
 
 </VBox>
+
