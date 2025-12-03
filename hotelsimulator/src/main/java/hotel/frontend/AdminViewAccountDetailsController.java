@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 import hotel.backend.Hotel;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 /**
