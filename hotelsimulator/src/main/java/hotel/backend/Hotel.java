@@ -139,7 +139,7 @@ public class Hotel implements HotelSystem {
 
     @Override
     public boolean adminLogin(String employeeId, String password) {
-        return true;
+        return verifyAdmin(password, password);
     }
 
     /**
@@ -202,6 +202,10 @@ public class Hotel implements HotelSystem {
         return verifyLoginInFile(username, password, "employees.txt");
     }
 
+    public boolean verifyAdmin(String username, String password) {
+        return verifyLoginInFile(username, password, "admins.txt");
+    }
+
     /**
      * Records payment transactions in the payments.txt file
      * 
@@ -253,7 +257,31 @@ public class Hotel implements HotelSystem {
 
     @Override
     public boolean rentRoom(String customer, String roomNumber, String floor, String paymentMethod) {
-        return true;
+        if(customer == null || customer.isEmpty() || roomNumber == null || roomNumber.isEmpty() || 
+            floor == null || floor.isEmpty() || paymentMethod == null || paymentMethod.isEmpty()) {
+                return false;
+            }
+        
+        double base = 100.0;
+
+        try {
+            int floorNo = Integer.parseInt(floor.trim());
+            double roomPrice = base + (floorNo * 20.0);
+
+            /*
+            if(!Reservation(customer, roomNumber)) {
+                return false;
+            }
+
+            if(!Payment(customer, roomPrice, paymentMethod)) {
+                return false;
+            }
+            */
+            return true;
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid floor number");
+            return false;
+        }
     }
 
     /**
@@ -271,7 +299,35 @@ public class Hotel implements HotelSystem {
 
     @Override
     public boolean createEmployeeAccount(String username, String password, String name, String role) {
-        return true;
+        if(username != null) {
+            username = username.trim();
+        }
+
+        if(password != null) {
+            password = password.trim();
+        }
+
+        if(name != null) {
+            name = name.trim();
+        }
+
+        if(role != null) {
+            role = role.trim();
+        }
+
+        if(username == null || username.isEmpty() || password == null || password.isEmpty() ||
+           name == null || name.isEmpty() || role == null || role.isEmpty()) {
+            return false;
+        }
+
+        String r = username + "," + password + "," + name + "," + role;
+        try (FileWriter fw = new FileWriter(filePath("employees.txt"), true)) {
+            fw.write(r + "\n");
+            return true;
+        } catch (IOException e) {
+            System.out.println("Error writing to employees text file");
+            return false;
+        }
     }
 
     /**
