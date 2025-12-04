@@ -2,7 +2,7 @@ package hotel.backend;
 
 class Main{
   public static void main(String[] args){
-    /*
+   /* 
       Hotel myHotel = new Hotel();
       Scanner Userinput = new Scanner(System.in); 
       System.out.println("Are you a returning customer?"); 
