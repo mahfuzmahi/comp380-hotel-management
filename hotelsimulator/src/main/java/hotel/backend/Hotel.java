@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class: Hotel
@@ -120,8 +122,97 @@ public class Hotel implements HotelSystem {
         }
     }
 
+    @Override
     public boolean updateAccount(String username, String password, String email, String phone, String bankInfo) {
-        return true;
+        if(username != null) {
+            username = username.trim();
+        }
+
+        if(username == null || username.isEmpty()) {
+            return false;
+        }
+
+        try {
+            List<String> lines = new ArrayList<>();
+            File customers = new File(filePath("customers.txt"));
+            boolean accountFound = false;
+
+            try (BufferedReader r = new BufferedReader(new FileReader(customers))) {
+                String l;
+                while((l = r.readLine()) != null) {
+                    String[] p = l.split(",", 5);
+                    
+                    if(p.length >= 2) {
+                        String currentUsername = p[0].trim();
+
+                        // update the current matching account
+                        if(currentUsername.equals(username)) {
+                            accountFound = true;
+
+                            // keep current if new ones are not added
+                            String newPass;
+                            if(password != null && !password.trim().isEmpty()) {
+                                newPass = password.trim();
+                            } else {
+                                newPass = p[1].trim();
+                            }
+
+                            String newEmail;
+                            if(email != null && !email.trim().isEmpty()) {
+                                newEmail = email.trim();
+                            } else {
+                                if(p.length > 2) {
+                                    newEmail = p[2].trim();
+                                } else {
+                                    newEmail = "";
+                                }
+                            }
+
+                            String newPhone;
+                            if(phone != null && !phone.trim().isEmpty()) {
+                                newPhone = phone.trim();
+                            } else {
+                                if(p.length > 3) {
+                                    newPhone = p[3].trim();
+                                } else {
+                                    newPhone = "";
+                                }
+                            }
+
+                            String newBankInfo;
+                            if(bankInfo != null && !bankInfo.trim().isEmpty()) {
+                                newBankInfo = bankInfo.trim();
+                            } else {
+                                if(p.length > 4) {
+                                    newBankInfo = p[4].trim();
+                                } else {
+                                    newBankInfo = "";
+                                }
+                            }
+                            l = username + "," + newPass + "," + newEmail + "," + newPhone + "," + newBankInfo;
+                        }
+                    }
+                    lines.add(l);
+                }
+            }
+
+            if(!accountFound) {
+                System.out.println("Account not found for the username: " + username);
+                return false;
+            }
+
+            // write all the lines back again
+            try(FileWriter w = new FileWriter(customers)) {
+                for(int i = 0; i < lines.size(); i++) {
+                    String l = lines.get(i);
+                    w.write(l + "\n");
+                }
+            }
+            return true;
+        } catch (IOException e) {
+            System.out.println("Error updating account information");
+            return false;
+        }
     }
 
     /**
