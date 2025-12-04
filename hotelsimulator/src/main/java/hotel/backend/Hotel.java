@@ -84,7 +84,7 @@ public class Hotel implements HotelSystem {
      * @return true if account creation succeeds, false if validation fails
      */
     @Override
-    public boolean CreateAccount(String username, String password) {
+    public boolean CreateAccount(String username, String password, String email, String phone, String bankInfo) {
         if(username != null) {
             username = username.trim();
         }
@@ -93,11 +93,24 @@ public class Hotel implements HotelSystem {
             password = password.trim();
         }
 
-        if(username == null || username.isEmpty() || password == null || password.isEmpty()) {
+        if(email != null) {
+            email = email.trim();
+        }
+
+        if(phone != null) {
+            phone = phone.trim();
+        }
+
+        if(bankInfo != null) {
+            bankInfo = bankInfo.trim();
+        }
+
+        if(username == null || username.isEmpty() || password == null || password.isEmpty() || 
+            email == null || email.isEmpty() || phone == null || phone.isEmpty() || bankInfo == null || bankInfo.isEmpty()) {
             return false;
         }
 
-        String r = username + "," + password;
+        String r = username + "," + password + "," + email + "," + phone + "," + bankInfo;
         try (FileWriter fw = new FileWriter(filePath("customers.txt"), true)) {
             fw.write(r + "\n");
             return true;
@@ -105,6 +118,10 @@ public class Hotel implements HotelSystem {
             System.out.println("Error writing to customers text file");
             return false;
         }
+    }
+
+    public boolean updateAccount(String username, String password, String email, String phone, String bankInfo) {
+        return true;
     }
 
     /**
@@ -118,6 +135,11 @@ public class Hotel implements HotelSystem {
     @Override
     public boolean Login(String username, String password) {
         return verifyCustomer(username, password);
+    }
+
+    @Override
+    public boolean adminLogin(String employeeId, String password) {
+        return verifyAdmin(password, password);
     }
 
     /**
@@ -180,6 +202,10 @@ public class Hotel implements HotelSystem {
         return verifyLoginInFile(username, password, "employees.txt");
     }
 
+    public boolean verifyAdmin(String username, String password) {
+        return verifyLoginInFile(username, password, "admins.txt");
+    }
+
     /**
      * Records payment transactions in the payments.txt file
      * 
@@ -229,6 +255,35 @@ public class Hotel implements HotelSystem {
         }
     }
 
+    @Override
+    public boolean rentRoom(String customer, String roomNumber, String floor, String paymentMethod) {
+        if(customer == null || customer.isEmpty() || roomNumber == null || roomNumber.isEmpty() || 
+            floor == null || floor.isEmpty() || paymentMethod == null || paymentMethod.isEmpty()) {
+                return false;
+            }
+        
+        double base = 100.0;
+
+        try {
+            int floorNo = Integer.parseInt(floor.trim());
+            double roomPrice = base + (floorNo * 20.0);
+
+            /*
+            if(!Reservation(customer, roomNumber)) {
+                return false;
+            }
+
+            if(!Payment(customer, roomPrice, paymentMethod)) {
+                return false;
+            }
+            */
+            return true;
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid floor number");
+            return false;
+        }
+    }
+
     /**
      * Authenticates an employee login by verifying informations in employees.txt file
      * 
@@ -240,6 +295,39 @@ public class Hotel implements HotelSystem {
     @Override
     public boolean Employee(String username, String password){
         return verifyEmployee(username, password);
+    }
+
+    @Override
+    public boolean createEmployeeAccount(String username, String password, String name, String role) {
+        if(username != null) {
+            username = username.trim();
+        }
+
+        if(password != null) {
+            password = password.trim();
+        }
+
+        if(name != null) {
+            name = name.trim();
+        }
+
+        if(role != null) {
+            role = role.trim();
+        }
+
+        if(username == null || username.isEmpty() || password == null || password.isEmpty() ||
+           name == null || name.isEmpty() || role == null || role.isEmpty()) {
+            return false;
+        }
+
+        String r = username + "," + password + "," + name + "," + role;
+        try (FileWriter fw = new FileWriter(filePath("employees.txt"), true)) {
+            fw.write(r + "\n");
+            return true;
+        } catch (IOException e) {
+            System.out.println("Error writing to employees text file");
+            return false;
+        }
     }
 
     /**
@@ -293,6 +381,16 @@ public class Hotel implements HotelSystem {
      * Uses BufferedReader for line-by-line file reading.
      * Output: Prints all the reservation records to the console/main customer page.
      */
+
+    @Override
+    public boolean reportIssue(String username, String issue, String roomNumber, String floor, String assignedEmployee) {
+        return true;
+    }
+
+    @Override
+    public boolean assignEmployeeToIssue(int issueIndex, String assignedEmployee) {
+        return true;
+    }
 
     @Override
     public void viewReservations() {
