@@ -426,7 +426,7 @@ public class Hotel implements HotelSystem {
     }
 
     /**
-     * Updates housekeeping for a reom and records it in the housekeeping.txt file
+     * Updates housekeeping for a room and records it in the housekeeping.txt file
      * 
      * @param roomNumber the room needed to be updated
      * @param status the new houskeeping status such as clean, dirty, maintenence, etc.
@@ -470,22 +470,77 @@ public class Hotel implements HotelSystem {
         } 
     }
 
+    /** 
+     * Reports an issue written by customer and saves report to issues.txt file. 
+     * @param username The username of the customer reporting the issue 
+     * @param issue A description of the issue being reported 
+     * @param roomNumber The room number where the customer is staying 
+     * @param floor The floor in which the room number and customer are located 
+     * @param assignedEmployee The employee who is assigned to read and resolve the issue 
+     * @return true if issue report was successfully saved to file, false if not 
+     * 
+     */
+    @Override
+    public boolean reportIssue(String username, String issue, String roomNumber, String floor, String assignedEmployee) {
+        if (username == null || username.isEmpty() || issue == null || issue.isEmpty() || 
+            roomNumber == null || roomNumber.isEmpty() || floor == null || floor.isEmpty() ||
+            assignedEmployee == null || assignedEmployee.isEmpty()) {
+                return false; 
+            }
+        try (BufferedWriter reportissue = new BufferedWriter(new FileWriter(filePath("issues.txt"), true))){
+            reportissue.write("Username: " + username + "Room Number: " + roomNumber + "Floor: " + floor); 
+            reportissue.newLine(); 
+            reportissue.write("Issue: " + issue); 
+            reportissue.newLine(); 
+            reportissue.write("Assigned Employee: " + assignedEmployee); 
+            reportissue.newLine(); 
+            return true; 
+        }
+        catch (IOException e){
+            System.out.println("Error reporting and saving issue to file."); 
+            return false;
+        }
+    }
+
+    /**
+     * Assigns an employee to a specific issue based on the issue index.
+     * @param assignedEmployee The employee who is assigned to the issue
+     * @return true if the employee was successfully assigned, false otherwise
+     */
+    @Override
+    public boolean assignEmployeeToIssue(String assignedEmployee) {
+        if (assignedEmployee == null || assignedEmployee.isEmpty()){
+            return false; 
+        }
+        try {
+            File issues = new File(filePath("issues.txt"));
+            try (BufferedReader rf = new BufferedReader(new FileReader(issues))){
+            String line; 
+            while ((line = rf.readLine()) != null){
+            rf.readLine(); 
+            // inner try reads the issues.txt file line by line 
+            rf.close();  
+            }
+        } // end of inner try 
+        try (BufferedWriter wf = new BufferedWriter(new FileWriter("issues.txt", true))){
+            wf.write("Assigned Employee to issue: " + assignedEmployee); 
+            wf.newLine(); 
+            wf.close(); 
+        }
+        return true; // signifies that employee was successfully assigned to issue
+    }
+        catch (IOException e){
+            System.out.println("Error assigning an employee to an issue. "); 
+            return false; 
+        }
+    }
+
     /**
      * Displays all current reservations by reading from the reservations.txt file.
      * 
      * Uses BufferedReader for line-by-line file reading.
      * Output: Prints all the reservation records to the console/main customer page.
      */
-
-    @Override
-    public boolean reportIssue(String username, String issue, String roomNumber, String floor, String assignedEmployee) {
-        return true;
-    }
-
-    @Override
-    public boolean assignEmployeeToIssue(int issueIndex, String assignedEmployee) {
-        return true;
-    }
 
     @Override
     public void viewReservations() {
