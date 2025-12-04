@@ -33,6 +33,8 @@ public interface HotelSystem {
      */
     boolean Login(String username, String password);
 
+    boolean adminLogin(String username, String password);
+
     /**
      * Creates a new customer account in the system.
      * 
@@ -40,7 +42,9 @@ public interface HotelSystem {
      * @param password Any password of the customer's choice
      * @return true if the account was successfully created, false otherwise.
      */
-    boolean CreateAccount(String username, String password); 
+    boolean CreateAccount(String username, String password, String email, String phone, String bankInfo); 
+    
+    boolean updateAccount(String username, String password, String email, String phone, String bankInfo);
 
     /**
      * Records a payment transaction in the system.
@@ -61,6 +65,8 @@ public interface HotelSystem {
      */
     boolean Reservation(String customer, String roomNumber); 
 
+    boolean rentRoom(String customer, String roomNumber, String floor, String paymentMethod);
+
     /**
      * Authenticates employee login attempt.
      * 
@@ -69,6 +75,8 @@ public interface HotelSystem {
      * @return true is the username and password match a valid account in employees.txt file, false otherwise.
      */
     boolean Employee(String username, String password);
+
+    boolean createEmployeeAccount(String username, String password, String name, String role);
 
     /**
      * Updates the housekeeping status for a room.
@@ -86,6 +94,8 @@ public interface HotelSystem {
      */
     void Manager(String report);
 
+    boolean reportIssue(String username, String issue, String roomNumber, String floor, String assignedEmployee);
+    boolean assignEmployeeToIssue(int issueIndex, String assignedEmployee);
     /**
      * Displays all current reservations in the system.
      * Also outputs reservation information in the console.
