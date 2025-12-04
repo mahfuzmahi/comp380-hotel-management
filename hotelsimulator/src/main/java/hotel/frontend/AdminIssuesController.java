@@ -15,7 +15,7 @@ import hotel.backend.Hotel;
 
 /**
  * AdminIssuesController(Class): Controller class for the admin issues view. Contains methods to initialize the view by reading reported issues from file and displaying them as buttons in the defined VBox.
- * @author Justin_Scott, 11/20/2025
+ * @author Justin_Scott, 11/20/2025, 12/3/25
  */
 public class AdminIssuesController {
 
@@ -33,7 +33,7 @@ public class AdminIssuesController {
     List<Button> buttonlist = new ArrayList<>();
   
     /**
-     * initialize(Method): initializer method for AdminIssuesController to read reported issues from file and display them as buttons in the defined VBox.
+     * initializer method for AdminIssuesController to read reported issues from file and display them as buttons in the defined VBox.
      * uses a while(s.hasNext()) loop to run until the file is empty.
     */
     @FXML
@@ -44,13 +44,14 @@ public class AdminIssuesController {
             //makes a scanner to read the repot file and uses \n and , as delimiters
             Scanner s = new Scanner(new File(Hotel.filePath("manager_report.txt"))).useDelimiter("\\R|,");
             while (s.hasNext()) {
-                     String buttonText = s.next() + "\nAt Room" + s.next() + " Floor " + s.next() + "\nAssigned to: " + s.next(); 
+                     String buttonText = s.next() + "\nIssue at Room " + s.next() + ", Floor " + s.next() + ",\nAssigned to: " + s.next(); 
                      //adds a button for each line with ButtonText as the text and sends to adminManageIssues when clicked
                      buttonlist.add(new Button(buttonText));
+                     int iTemp = i;
                      buttonlist.get(i).setOnAction(e -> {
                         try {
-                            //TODO: Replace NONE with selected staff.
-                            App.setRoot("adminManageIssues");
+                            App.setCurrentRoom(iTemp);
+                            App.setRoot("adminManageIssuesDetails");
                         } catch (Exception ex) {
                             System.err.println(ex);
                         }

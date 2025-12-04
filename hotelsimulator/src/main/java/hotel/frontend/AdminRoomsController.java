@@ -57,8 +57,7 @@ public class AdminRoomsController {
                     s.next();
                     s.next();
                     //saves the room index to send to adminRoomDetails when clicked
-                    //TODO refactor to use room number directly, if possible
-                    String rIndex = String.valueOf(i);
+                    int rIndex = i;
                     //adds a button for each line with ButtonText as the text and sends to adminRoomDetails when clicked
                     buttonlist.add(new Button(buttonText));
                     buttonlist.get(i).setOnAction(e -> {

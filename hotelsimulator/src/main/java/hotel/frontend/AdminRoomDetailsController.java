@@ -47,8 +47,7 @@ public class AdminRoomDetailsController {
     public void initialize()
     {
         // Get the index of the current room being viewed
-        //TODO refcactor to use room number directly, if possible
-        int roomIndex = Integer.parseInt(App.getCurrentRoom());
+        int roomIndex = App.getCurrentRoom();
         String renter;
         try {
             //makes a scanner to read the rooms file and uses \n and , as delimiters

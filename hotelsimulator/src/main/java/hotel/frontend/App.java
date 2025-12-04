@@ -21,7 +21,7 @@ public class App extends Application {
     /**viewedUser(Variable): Stores the username of the account currently being viewed by the admin. */
     private static String viewedUser;
     /**currentRoomIndex(Variable): Stores the index of the room currently being viewed. */
-    private static String currentRoomIndex;
+    private static int currentRoomIndex;
     public static void main(String[] args) {
         launch();
     }
@@ -58,7 +58,7 @@ public class App extends Application {
      * setCurrentRoom(Method): Sets the index of the room currently being viewed.
      * @param room The index of the room to set as the current room.
      */
-    public static void setCurrentRoom(String room) {
+    public static void setCurrentRoom(int room) {
         currentRoomIndex = room;
     }
 
@@ -66,7 +66,7 @@ public class App extends Application {
      * getCurrentRoom(Method): Retrieves the index of the room currently being viewed.
      * @return The index of the current room.
      */
-    public static String getCurrentRoom() {
+    public static int getCurrentRoom() {
         return currentRoomIndex;
     }
 
