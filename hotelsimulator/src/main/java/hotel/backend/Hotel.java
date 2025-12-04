@@ -375,6 +375,10 @@ public class Hotel implements HotelSystem {
         }
     }
 
+    private boolean updateRoomStatus(String roomNumber, String floor, String customer) {
+        return true;
+    }
+
     /**
      * Authenticates an employee login by verifying informations in employees.txt file
      * 
