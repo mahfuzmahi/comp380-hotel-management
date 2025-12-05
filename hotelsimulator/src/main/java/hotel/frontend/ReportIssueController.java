@@ -23,6 +23,12 @@ public class ReportIssueController {
     private TextField usernameField;
 
     @FXML
+    private TextField roomNumberField;   // NEW
+
+    @FXML
+    private TextField floorNumberField;  // NEW
+
+    @FXML
     private TextArea issueField;
 
     @FXML
@@ -36,19 +42,28 @@ public class ReportIssueController {
      */
     @FXML
     private void handleSubmit() {
-        String username = usernameField.getText() == null ? "" : usernameField.getText().trim();
-        String issue = issueField.getText() == null ? "" : issueField.getText().trim();
+        String username    = usernameField.getText()    == null ? "" : usernameField.getText().trim();
+        String roomNumber  = roomNumberField.getText()  == null ? "" : roomNumberField.getText().trim();
+        String floorNumber = floorNumberField.getText() == null ? "" : floorNumberField.getText().trim();
+        String issue       = issueField.getText()       == null ? "" : issueField.getText().trim();
 
-        if (username.isEmpty() || issue.isEmpty()) {
-            statusLabel.setText("Please enter your username and describe the issue.");
+        if (username.isEmpty() || roomNumber.isEmpty() || floorNumber.isEmpty() || issue.isEmpty()) {
+            statusLabel.setText("Please fill out username, room, floor, and issue.");
             return;
         }
 
         String path = Hotel.filePath("issues.txt");
 
         try (FileWriter writer = new FileWriter(path, true)) {
-            
-            writer.write(username + ", " + issue.replaceAll("\\r?\\n", " ") + System.lineSeparator());
+            // Replace newlines in issue with spaces to keep each report on one line
+            String cleanIssue = issue.replaceAll("\\r?\\n", " ");
+
+            writer.write("User: " + username +
+                         ", Room: " + roomNumber +
+                         ", Floor: " + floorNumber +
+                         ", Issue: " + cleanIssue +
+                         System.lineSeparator());
+
         } catch (IOException e) {
             statusLabel.setText("Could not save issue.");
             e.printStackTrace();
@@ -56,6 +71,11 @@ public class ReportIssueController {
         }
 
         statusLabel.setText("Issue submitted. Thank you!");
+        // Clear fields after successful submission
+        usernameField.clear();
+        roomNumberField.clear();
+        floorNumberField.clear();
         issueField.clear();
     }
 }
+
