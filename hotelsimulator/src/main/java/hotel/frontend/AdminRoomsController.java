@@ -52,7 +52,8 @@ public class AdminRoomsController {
                     } else {    
                     buttonText += "Occupied by " + s.next() +" ";
                     } 
-                    // Skip the next three fields (leave date and time, room features)
+                    // Skip the next three fields (leave date and time, room features, cost per night)
+                    s.next();
                     s.next();
                     s.next();
                     s.next();

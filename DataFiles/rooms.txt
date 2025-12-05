@@ -1,16 +1,16 @@
-1,1,TRUE,mahfuztest,XX/XX/XX,XX:XX,Details of Room 1
-2,1,FALSE,#PERSON#,XX/XX/XX,XX:XX,Details of Room 2
-3,1,FALSE,#PERSON#,XX/XX/XX,XX:XX,Details of Room 3
-4,1,FALSE,#PERSON#,XX/XX/XX,XX:XX,Details of Room 4
-5,1,FALSE,#PERSON#,XX/XX/XX,XX:XX,Details of Room 5
-6,1,FALSE,#PERSON#,XX/XX/XX,XX:XX,Details of Room 6
-7,1,FALSE,#PERSON#,XX/XX/XX,XX:XX,Details of Room 7
-8,1,FALSE,#PERSON#,XX/XX/XX,XX:XX,Details of Room 8
-9,1,FALSE,#PERSON#,XX/XX/XX,XX:XX,Details of Room 9
-10,1,FALSE,#PERSON#,XX/XX/XX,XX:XX,Details of Room 10
-1,2,FALSE,#PERSON#,XX/XX/XX,XX:XX,Details of Room 1
-2,2,FALSE,#PERSON#,XX/XX/XX,XX:XX,Details of Room 2
-3,2,FALSE,#PERSON#,XX/XX/XX,XX:XX,Details of Room 3
-4,2,FALSE,#PERSON#,XX/XX/XX,XX:XX,Details of Room 4
-5,2,FALSE,#PERSON#,XX/XX/XX,XX:XX,Details of Room 5
-6,2,FALSE,#PERSON#,XX/XX/XX,XX:XX,Details of Room 6
+1,1,FALSE,#PERSON#,XX/XX/XX,XX:XX,Spacious 2 bed with bathroom and TV,100
+2,1,FALSE,#PERSON#,XX/XX/XX,XX:XX,Spacious 2 bed with bathroom and TV,100
+3,1,FALSE,#PERSON#,XX/XX/XX,XX:XX,Spacious 2 bed with bathroom and TV,100
+4,1,FALSE,#PERSON#,XX/XX/XX,XX:XX,Spacious 2 bed with bathroom and TV,100
+5,1,FALSE,#PERSON#,XX/XX/XX,XX:XX,Spacious 2 bed with bathroom - TV - and great window view,125
+6,1,FALSE,#PERSON#,XX/XX/XX,XX:XX,Spacious 2 bed with bathroom - TV - and great window view,125
+7,1,FALSE,#PERSON#,XX/XX/XX,XX:XX,Spacious 2 bed with bathroom and TV,100
+8,1,FALSE,#PERSON#,XX/XX/XX,XX:XX,Spacious 2 bed with bathroom and TV,100
+9,1,FALSE,#PERSON#,XX/XX/XX,XX:XX,Spacious 2 bed with bathroom and TV,100
+10,1,FALSE,#PERSON#,XX/XX/XX,XX:XX,Spacious 2 bed with bathroom and TV,100
+1,2,FALSE,#PERSON#,XX/XX/XX,XX:XX,Spacious 2 bed with bathroom and TV,100
+2,2,FALSE,#PERSON#,XX/XX/XX,XX:XX,Spacious 1 bed Penthouse with bathroom TV - Hot Tub - and great window view,150
+3,2,FALSE,#PERSON#,XX/XX/XX,XX:XX,Spacious 1 bed Penthouse with bathroom - TV - Hot Tub - and great window view,150
+4,2,FALSE,#PERSON#,XX/XX/XX,XX:XX,Spacious 4 bed Family room with 2 bathrooms and 2 TVs,150
+5,2,FALSE,#PERSON#,XX/XX/XX,XX:XX,Spacious 4 bed Family room with 2 bathrooms and 2 TVs,150
+6,2,FALSE,#PERSON#,XX/XX/XX,XX:XX,Spacious 1 bed exexutive suit with 1 bathroom w/ hot tub - kitchenette - workspace - TV - and great window view,200

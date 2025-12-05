@@ -9,7 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 /**
- * LoginController(Class): Controller class for the login view. Contains methods to handle user input for logging in and scene switching upon successful login.
+ * Controller class for the login view. Contains methods to handle user input for logging in and scene switching upon successful login.
  * @author Justin_Scott, 11/6/2025
  */
 public class LoginController {
@@ -18,26 +18,26 @@ public class LoginController {
     private Hotel hotel = new Hotel();
 
     @FXML
-    /**userInputFieldName(Variable): Holds user input for name from login page */
+    /**Holds user input for name from login page */
     private TextField userInputFieldName; 
 
     @FXML
-    /**userInputFieldPassword(Variable): Holds user input for password from login page */
+    /**Holds user input for password from login page */
     private TextField userInputFieldPassword; 
 
     @FXML
-    /**InstructionLabel(Variable): Holds the instruction label for login page */
+    /**Holds the instruction label for login page */
     private Label InstructionLabel;
 
     /**
-     * handleSubmitButton(Method): Handles the submit button action for logging in.
+     * Handles the submit button action for logging in.
      * Collects user input, attempts to log in, and switches to the appropriate view upon success.
      * @param event The ActionEvent triggered by clicking the submit button.
      * @throws IOException If there is an error switching scenes.
      */
     @FXML
     private void handleSubmitButton(ActionEvent event) throws IOException{
-        //TODO this is where the sign in data is collected
+        //this is where the sign in data is collected
         String nameInput = userInputFieldName.getText();
         String passwordInput = userInputFieldPassword.getText();
 
