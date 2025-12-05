@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -134,10 +136,9 @@ public class Hotel implements HotelSystem {
 
         try {
             List<String> lines = new ArrayList<>();
-            File customers = new File(filePath("customers.txt"));
             boolean accountFound = false;
 
-            try (BufferedReader r = new BufferedReader(new FileReader(customers))) {
+            try (BufferedReader r = new BufferedReader(new FileReader(filePath("customers.txt")))) {
                 String l;
                 while((l = r.readLine()) != null) {
                     String[] p = l.split(",", 5);
@@ -202,7 +203,7 @@ public class Hotel implements HotelSystem {
             }
 
             // write all the lines back again
-            try(FileWriter w = new FileWriter(customers)) {
+            try(FileWriter w = new FileWriter(filePath("customers.txt"))) {
                 for(int i = 0; i < lines.size(); i++) {
                     String l = lines.get(i);
                     w.write(l + "\n");
@@ -347,36 +348,121 @@ public class Hotel implements HotelSystem {
     }
 
     @Override
-    public boolean rentRoom(String customer, String roomNumber, String floor, String paymentMethod) {
+    public boolean rentRoomProcess(String customer, String roomNumber, String floor, String paymentMethod) {
         if(customer == null || customer.isEmpty() || roomNumber == null || roomNumber.isEmpty() || 
             floor == null || floor.isEmpty() || paymentMethod == null || paymentMethod.isEmpty()) {
                 return false;
             }
         
-        double base = 100.0;
-
+        double roomPrice = 0.0;
         try {
-            int floorNo = Integer.parseInt(floor.trim());
-            double roomPrice = base + (floorNo * 20.0);
+            boolean roomFound = false;
 
-            /*
-            if(!Reservation(customer, roomNumber)) {
+            try (BufferedReader r = new BufferedReader(new FileReader(filePath("rooms.txt")))) {
+                String l;
+                while((l = r.readLine()) != null) {
+                    String[] p = l.split(",", 8);
+                    if(p.length >= 3) {
+                        String roomNo = p[0].trim();
+                        String roomFloor = p[1].trim();
+
+                        if(roomNo.equals(roomNumber) && roomFloor.equals(floor)) {
+                            roomFound = true;
+
+                            if(p.length > 7) {
+                                try {
+                                 roomPrice = Double.parseDouble(p[7].trim());   
+                                } catch (NumberFormatException e) {
+                                    System.out.println("Invalid price format in rooms text file");
+                                    roomPrice = 100.0;
+                                }
+                            } else {
+                                roomPrice = 100.0;
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if(!roomFound) {
+                System.out.println("Room not found in rooms text file");
                 return false;
             }
 
-            if(!Payment(customer, roomPrice, paymentMethod)) {
+            if(roomPrice <= 0) {
+                System.out.println("Invalid room price");
                 return false;
             }
-            */
-            return true;
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid floor number");
+
+            if(!updateRoomStatus(roomNumber, floor, customer)) {
+                return false;
+            }
+
+            return Payment(customer, roomPrice, paymentMethod);
+        } catch (IOException e) {
+            System.out.println("Error reading rooms text file");
             return false;
         }
     }
 
     private boolean updateRoomStatus(String roomNumber, String floor, String customer) {
-        return true;
+        try {
+            List<String> lines = new ArrayList<>();
+            boolean roomFound = false;
+
+            try (BufferedReader r = new BufferedReader(new FileReader(filePath("rooms.txt")))) {
+                String l;
+                while((l = r.readLine()) != null) {
+                    String[] p = l.split(",", 7);
+                    if(p.length >= 3) {
+                        String roomNo = p[0].trim();
+                        String roomFloor = p[1].trim();
+
+                        if(roomNo.equals(roomNumber) && roomFloor.equals(floor)) {
+                            LocalDate today = LocalDate.now();
+                            LocalTime now = LocalTime.now();
+                            String date = today.toString();
+                            String time = now.toString().substring(0, 8);
+
+                            String description;
+
+                            if(p.length > 6) {
+                                description = p[6].trim();
+                            } else {
+                                description = "Details of Room " + roomNumber;
+                            }
+
+                            String price;
+                            if(p.length > 7) {
+                                price = p[7].trim();
+                            } else {
+                                price = "100";
+                            }
+
+                            l = roomNumber + "," + floor + "," + customer + "," + date + "," + time + "," + description + "," + price;
+                            roomFound = true;
+                        }
+                    }
+                    lines.add(l);
+                }
+            }
+
+            if(!roomFound) {
+                System.out.println("Room not found in rooms text file");
+                return false;
+            }
+
+            try(FileWriter w = new FileWriter(filePath("rooms.txt"))) {
+                for(int i = 0; i < lines.size(); i++) {
+                    w.write(lines.get(i) + '\n');
+                }
+            }
+            return true;
+        } catch (IOException e) {
+            System.out.println("Error updating room status");
+            return false;
+        }
     }
 
     /**

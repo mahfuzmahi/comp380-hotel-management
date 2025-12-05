@@ -65,7 +65,7 @@ public interface HotelSystem {
      */
     boolean Reservation(String customer, String roomNumber); 
 
-    boolean rentRoom(String customer, String roomNumber, String floor, String paymentMethod);
+    boolean rentRoomProcess(String customer, String roomNumber, String floor, String paymentMethod);
 
     /**
      * Authenticates employee login attempt.
