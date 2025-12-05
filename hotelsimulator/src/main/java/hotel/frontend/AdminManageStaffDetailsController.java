@@ -3,6 +3,7 @@ package hotel.frontend;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.lang.StringBuilder;
 
 import hotel.backend.Hotel;
 import javafx.fxml.FXML;
@@ -19,6 +20,12 @@ public class AdminManageStaffDetailsController {
      */
     @FXML
     private Label staffNameLabel;
+
+    @FXML
+    private Label staffEmailLabel;
+
+    @FXML
+    private Label staffPhoneLabel;
 
     /**
      * intialize(Method): initializer method for AdminManageStaffDetailsController to read and display details of the selected staff member.
@@ -38,7 +45,13 @@ public class AdminManageStaffDetailsController {
                 currentString = s.next();
             }
             staffNameLabel.setText("Staff Member: " + currentString);
-            //TODO add more staff details when file format is updated
+            s.next(); // skip password
+            staffEmailLabel.setText("Email: " + s.next());
+            staffPhoneLabel.setText("Phone: " + s.next());
+            StringBuilder tempBuilder = new StringBuilder(staffPhoneLabel.getText());
+            tempBuilder.insert(10, "-");
+            tempBuilder.insert(14, "-");
+            staffPhoneLabel.setText(tempBuilder.toString());
             s.close();
         } catch (FileNotFoundException ex) {
             System.err.println(ex);

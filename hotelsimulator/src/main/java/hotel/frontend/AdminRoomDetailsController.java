@@ -24,6 +24,11 @@ public class AdminRoomDetailsController {
     @FXML
     private Label roomPositionLabel;
 
+    @FXML
+    private Label detailsLabel;
+
+    @FXML
+    private Label costLabel;
     /**
      *  renterLabel(Variable): Label to display the renter information of the room.
      */
@@ -52,7 +57,7 @@ public class AdminRoomDetailsController {
         try {
             //makes a scanner to read the rooms file and uses \n and , as delimiters
             Scanner s = new Scanner(new File(Hotel.filePath("rooms.txt"))).useDelimiter("\\R|,");
-            for(int i = 0; i < roomIndex * 7/* TODO this is the number of fieds in rooms, curr 7, change if more is added or refactor */; i++) {
+            for(int i = 0; i < roomIndex * 8/* TODO this is the number of fieds in rooms, curr 7, change if more is added or refactor */; i++) {
                 s.next();
             }
             // Set roomPositionLabel, if not occupied skip unused fields
