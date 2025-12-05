@@ -1,7 +1,10 @@
 package hotel.backend; 
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeAll; 
+import org.junit.jupiter.api.DisplayName; 
+import org.junit.jupiter.api.BeforeEach; 
 import java.io.*; 
 import java.nio.file.*; 
 
@@ -38,9 +41,15 @@ public class hoteltest{
     private String readFile(String name) throws IOException{
         Path file = tempDir.resolve("DataFiles").resolve(name); 
         return Files.readString(file); 
-    }
+    } 
+
+    @DisplayName("Checking for Successful Account Creation") 
     @Test 
-    public void testExample(){
-        assertEquals(2,1 + 1); 
+    public void CreateAccount_Success() throws IOException {
+        boolean result = hotel.CreateAccount("John", "practicerun", "john123@gmail.com", 
+        "8181234567", "bank"); 
+        assertTrue(result); 
+        String file = readFile("customers.txt"); 
+        assertTrue(file.contains("John,practicerun,john123@gmail.com,8181234567,bank")); 
     }
 }
