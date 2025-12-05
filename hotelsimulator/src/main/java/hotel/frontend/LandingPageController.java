@@ -18,9 +18,4 @@ public class LandingPageController {
     private void switchToCreateAccount() throws IOException {
         App.setRoot("createAccount");
     } 
-
-        @FXML
-    private void switchToGuest() throws IOException {
-        App.setRoot("primary");
-    } 
 }

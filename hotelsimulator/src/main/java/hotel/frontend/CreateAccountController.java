@@ -34,7 +34,6 @@ public class CreateAccountController {
 
     @FXML
     /**Holds user input for bank information from create account page */
-    //TODO my be unnecessary
     private TextField userInputBankInfo; 
 
     @FXML
@@ -49,14 +48,14 @@ public class CreateAccountController {
      */
     @FXML
        private void handleUserButton(ActionEvent event) throws IOException{
-        //TODO this is where the new acc data is collected for user account
+        //this is where the new acc data is collected for user account
         String nameInput = userInputFieldName.getText();
         String passwordInput = userInputFieldPassword.getText();
         String emailInput = userInputEmail.getText();
         String phoneInput = userInputPhoneNumber.getText(); 
         String bankInfoInput = userInputBankInfo.getText();
 
-        boolean holder = hotel.CreateAccount(nameInput, passwordInput/*, emailInput, phoneInput, bankInfoInput*/);
+        boolean holder = hotel.CreateAccount(nameInput, passwordInput, emailInput, phoneInput, bankInfoInput);
 
         if(holder == false) {
             InstructionLabel.setText("Unable to create account");
@@ -68,17 +67,18 @@ public class CreateAccountController {
 
     @FXML
     private void handleAdminButton(ActionEvent event) throws IOException{
-        //TODO this is where the new acc data is collected for admin account
+        //this is where the new acc data is collected for admin account
         String nameInput = userInputFieldName.getText();
         String passwordInput = userInputFieldPassword.getText();
-
-        /*boolean holder = hotel.CreateAdminAccount(nameInput, passwordInput);
+        String emailInput = userInputEmail.getText();
+        String phoneInput = userInputPhoneNumber.getText(); 
+        boolean holder = hotel.createEmployeeAccount(nameInput, passwordInput, phoneInput, emailInput);
 
         if(holder == false) {
             InstructionLabel.setText("Unable to create account");
         }
         else {
                 App.setRoot("login"); 
-        }*/
+        }
     }
 }

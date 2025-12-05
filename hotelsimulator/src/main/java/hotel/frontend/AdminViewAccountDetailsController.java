@@ -3,6 +3,7 @@ package hotel.frontend;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.lang.StringBuilder;
 
 import hotel.backend.Hotel;
 import javafx.fxml.FXML;
@@ -47,6 +48,10 @@ public class AdminViewAccountDetailsController {
             s.next();
             userEmailLabel.setText("Email: " + s.next());
             userPhoneLabel.setText("Phone: " + s.next());
+            StringBuilder tempBuilder = new StringBuilder(userPhoneLabel.getText());
+            tempBuilder.insert(10, "-");
+            tempBuilder.insert(14, "-");
+            userPhoneLabel.setText(tempBuilder.toString());
             userBankInfoLabel.setText("Bank Info: " + s.next());
             s.close();;
         } catch (FileNotFoundException ex) {

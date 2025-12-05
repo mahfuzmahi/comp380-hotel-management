@@ -594,7 +594,7 @@ public class Hotel implements HotelSystem {
      * @return true if the employee was successfully assigned, false otherwise
      */
     @Override
-    public boolean assignEmployeeToIssue(String assignedEmployee) {
+    public boolean assignEmployeeToIssue(int issueIndex, String assignedEmployee) {
         if (assignedEmployee == null || assignedEmployee.isEmpty()){
             return false; 
         }

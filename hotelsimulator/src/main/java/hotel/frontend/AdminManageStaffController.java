@@ -56,6 +56,9 @@ public class AdminManageStaffController{
                         System.err.println(ex);
                     }
                     });
+                    for(int j = 0; j < 3; j++) {
+                        s.next(); //skip the next 3 tokens (password, email, phone)
+                    }
                     i++;
             }
             // Clear existing buttons and add the newly created buttons to the VBox
