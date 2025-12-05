@@ -120,6 +120,16 @@ public class Hotel implements HotelSystem {
         }
     }
 
+    /**
+     * A new administration account is created when an employee creates an account 
+     * This administration information is stored in admins.txt file
+     * @param username Any username that the administrator chooses 
+     * @param password Any password chosen by the administrator
+     * @param email Email the administrator provides 
+     * @param phone Phone number the administrator provides 
+     * Email and Phone are used as contact information to reach the administrator if needed
+     * @return true if admin account is successfully created and saved to file, false otherwise
+     */
     public boolean CreateAdmin(String username, String password, String email, String phone){
         if (username != null){
             username = username.trim();
@@ -133,7 +143,7 @@ public class Hotel implements HotelSystem {
         if (phone != null){
             phone = phone.trim(); 
         }
-        try (BufferedWriter aw = new BufferedWriter(new FileWriter("admins.txt"), true)){
+        try (BufferedWriter aw = new BufferedWriter(new FileWriter(filePath("admins.txt"), true))){
             String AdminInfo = username + ", " + password + ", " + email + ", " + phone; 
             aw.write(AdminInfo + "\n"); 
             return true; 
@@ -320,7 +330,16 @@ public class Hotel implements HotelSystem {
     public boolean Employee(String username, String password){
         return verifyEmployee(username, password);
     }
-
+  
+    /**
+     * Creates a new employee account which asks for username, password, name, and role 
+     * Information is saved and stored in employees.txt file 
+     * @param username Any username that employee chooses 
+     * @param password Password that employee chooses for login
+     * @param name Name of the employee logging in 
+     * @param role Role of the employee such as housekeeper, receptionist, manager
+     * @return true if account is successfully created and saved to file, false otherwise 
+     */
     @Override
     public boolean createEmployeeAccount(String username, String password, String name, String role) {
         if(username != null) {
@@ -405,23 +424,19 @@ public class Hotel implements HotelSystem {
      * @param issue A description of the issue being reported 
      * @param roomNumber The room number where the customer is staying 
      * @param floor The floor in which the room number and customer are located 
-     * @param assignedEmployee The employee who is assigned to read and resolve the issue 
      * @return true if issue report was successfully saved to file, false if not 
      * 
      */
     @Override
-    public boolean reportIssue(String username, String issue, String roomNumber, String floor, String assignedEmployee) {
+    public boolean reportIssue(String username, String issue, String roomNumber, String floor) {
         if (username == null || username.isEmpty() || issue == null || issue.isEmpty() || 
-            roomNumber == null || roomNumber.isEmpty() || floor == null || floor.isEmpty() ||
-            assignedEmployee == null || assignedEmployee.isEmpty()) {
+            roomNumber == null || roomNumber.isEmpty() || floor == null || floor.isEmpty()) {
                 return false; 
             }
         try (BufferedWriter reportissue = new BufferedWriter(new FileWriter(filePath("issues.txt"), true))){
-            reportissue.write("Username: " + username + "Room Number: " + roomNumber + "Floor: " + floor); 
+            reportissue.write("Username: " + username + ", " + " Room Number: " + roomNumber + ", " + " Floor: " + floor); 
             reportissue.newLine(); 
             reportissue.write("Issue: " + issue); 
-            reportissue.newLine(); 
-            reportissue.write("Assigned Employee: " + assignedEmployee); 
             reportissue.newLine(); 
             return true; 
         }
@@ -430,40 +445,33 @@ public class Hotel implements HotelSystem {
             return false;
         }
     }
-
     /**
      * Assigns an employee to a specific issue based on the issue index.
      * @param assignedEmployee The employee who is assigned to the issue
      * @return true if the employee was successfully assigned, false otherwise
      */
     @Override
-    public boolean assignEmployeeToIssue(String assignedEmployee) {
+    public boolean assignEmployeeToIssue(int IssueID, String assignedEmployee) {
         if (assignedEmployee == null || assignedEmployee.isEmpty()){
             return false; 
         }
-        try {
-            File issues = new File(filePath("issues.txt"));
-            try (BufferedReader rf = new BufferedReader(new FileReader(issues))){
+        File ReadIssue = new File(filePath("issues.txt"));
+        try (BufferedReader ri = new BufferedReader(new FileReader(ReadIssue))){
             String line; 
-            while ((line = rf.readLine()) != null){
-            rf.readLine(); 
-            // inner try reads the issues.txt file line by line 
-            rf.close();  
+            while ((line = ri.readLine()) != null){
+                ri.readLine(); 
             }
-        } // end of inner try 
-        try (BufferedWriter wf = new BufferedWriter(new FileWriter("issues.txt", true))){
-            wf.write("Assigned Employee to issue: " + assignedEmployee); 
-            wf.newLine(); 
-            wf.close(); 
+            try (BufferedWriter ai = new BufferedWriter(new FileWriter(filePath("issues.txt"), true))){
+                ai.write("Assigned Employee: " + assignedEmployee); 
+                ai.newLine(); 
+            }
+            return true; 
         }
-        return true; // signifies that employee was successfully assigned to issue
-    }
         catch (IOException e){
-            System.out.println("Error assigning an employee to an issue. "); 
+            System.out.println("Error assigning employee to issue. "); 
             return false; 
         }
     }
-
     /**
      * Displays all current reservations by reading from the reservations.txt file.
      * 
