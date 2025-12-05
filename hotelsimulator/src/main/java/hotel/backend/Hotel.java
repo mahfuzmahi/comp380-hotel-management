@@ -120,10 +120,34 @@ public class Hotel implements HotelSystem {
         }
     }
 
+    public boolean CreateAdmin(String username, String password, String email, String phone){
+        if (username != null){
+            username = username.trim();
+        }
+        if (password != null){
+            password = password.trim(); 
+        }
+        if (email != null){
+            email = email.trim(); 
+        }
+        if (phone != null){
+            phone = phone.trim(); 
+        }
+        try (BufferedWriter aw = new BufferedWriter(new FileWriter("admins.txt"), true)){
+            String AdminInfo = username + ", " + password + ", " + email + ", " + phone; 
+            aw.write(AdminInfo + "\n"); 
+            return true; 
+        }
+        catch (IOException e){
+            System.out.println("Error writing admin information to file. "); 
+            return false; 
+        }
+    }
+
+
     public boolean updateAccount(String username, String password, String email, String phone, String bankInfo) {
         return true;
     }
-
     /**
      * Authenticates a customer login by veryfing information in the customers.txt file
      * 
