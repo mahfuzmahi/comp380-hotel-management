@@ -427,17 +427,22 @@ public class Hotel implements HotelSystem {
      * @return true if issue report was successfully saved to file, false if not 
      * 
      */
+
     @Override
     public boolean reportIssue(String username, String issue, String roomNumber, String floor) {
         if (username == null || username.isEmpty() || issue == null || issue.isEmpty() || 
             roomNumber == null || roomNumber.isEmpty() || floor == null || floor.isEmpty()) {
                 return false; 
             }
+            int IssueID = generateIssueID(); 
         try (BufferedWriter reportissue = new BufferedWriter(new FileWriter(filePath("issues.txt"), true))){
+            reportissue.write("IssueID: " + IssueID);
             reportissue.write("Username: " + username + ", " + " Room Number: " + roomNumber + ", " + " Floor: " + floor); 
             reportissue.newLine(); 
             reportissue.write("Issue: " + issue); 
             reportissue.newLine(); 
+            reportissue.write("Assigned Employee: None"); 
+            reportissue.newLine();
             return true; 
         }
         catch (IOException e){
@@ -445,33 +450,28 @@ public class Hotel implements HotelSystem {
             return false;
         }
     }
+
     /**
      * Assigns an employee to a specific issue based on the issue index.
      * @param assignedEmployee The employee who is assigned to the issue
      * @return true if the employee was successfully assigned, false otherwise
      */
+
     @Override
     public boolean assignEmployeeToIssue(int IssueID, String assignedEmployee) {
-        if (assignedEmployee == null || assignedEmployee.isEmpty()){
+        if (assignedEmployee == null || assignedEmployee.isEmpty()) {
             return false; 
         }
-        File ReadIssue = new File(filePath("issues.txt"));
-        try (BufferedReader ri = new BufferedReader(new FileReader(ReadIssue))){
-            String line; 
-            while ((line = ri.readLine()) != null){
-                ri.readLine(); 
-            }
-            try (BufferedWriter ai = new BufferedWriter(new FileWriter(filePath("issues.txt"), true))){
-                ai.write("Assigned Employee: " + assignedEmployee); 
-                ai.newLine(); 
-            }
+        File file = new File(filePath("issues.txt")); 
+        try (BufferedReader rf = new BufferedReader(new FileReader(file))){
             return true; 
         }
         catch (IOException e){
-            System.out.println("Error assigning employee to issue. "); 
-            return false; 
+            System.out.println("Error assigning employee to issue."); 
+            return false;
         }
     }
+
     /**
      * Displays all current reservations by reading from the reservations.txt file.
      * 

@@ -43,6 +43,8 @@ public interface HotelSystem {
      * @return true if the account was successfully created, false otherwise.
      */
     boolean CreateAccount(String username, String password, String email, String phone, String bankInfo); 
+
+    boolean CreateAdmin(String username, String password, String email, String phone); 
     
     boolean updateAccount(String username, String password, String email, String phone, String bankInfo);
 
@@ -94,8 +96,9 @@ public interface HotelSystem {
      */
     void Manager(String report);
 
-    boolean reportIssue(String username, String issue, String roomNumber, String floor, String assignedEmployee);
-    boolean assignEmployeeToIssue(int issueIndex, String assignedEmployee);
+    boolean reportIssue(String username, String issue, String roomNumber, String floor);
+
+    boolean assignEmployeeToIssue(int issueID, String assignedEmployee);
     /**
      * Displays all current reservations in the system.
      * Also outputs reservation information in the console.
