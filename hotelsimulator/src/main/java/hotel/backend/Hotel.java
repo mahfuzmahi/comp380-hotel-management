@@ -127,6 +127,7 @@ public class Hotel implements HotelSystem {
     /**
      * A new administration account is created when an employee creates an account 
      * This administration information is stored in admins.txt file
+     * 
      * @param username Any username that the administrator chooses 
      * @param password Any password chosen by the administrator
      * @param email Email the administrator provides 
@@ -134,6 +135,7 @@ public class Hotel implements HotelSystem {
      * Email and Phone are used as contact information to reach the administrator if needed
      * @return true if admin account is successfully created and saved to file, false otherwise
      */
+    @Override
     public boolean CreateAdmin(String username, String password, String email, String phone){
         if (username != null){
             username = username.trim();
@@ -158,7 +160,20 @@ public class Hotel implements HotelSystem {
         }
     }
 
+    /**
+     * Updates customer account information in the customers.txt file 
+     * 
+     * To update the account information a customer must already have a valid account 
+     * @param username The username of the account that is being updated 
+     * @param password The password for the account 
+     * @param email The email attached to the account 
+     * @param phone The phone number attached to the account
+     * @param bankInfo The bank information attached to the account
+     * @return false if there is no account found with the given username 
+     * @return true if the account was successfully updated with new information, false otherwise
+     */
 
+    @Override 
     public boolean updateAccount(String username, String password, String email, String phone, String bankInfo) {
         if(username != null) {
             username = username.trim();
@@ -262,6 +277,15 @@ public class Hotel implements HotelSystem {
         return verifyCustomer(username, password);
     }
 
+    /**
+     * Authenticates an administrator login by verifying information 
+     * 
+     * Information is compared and verified in the admins.txt file 
+     * @param employeeId The username of the administrator attempting to log in
+     * @param password The password of the administrator attempting to log in
+     * @return true if the username and password successfully match an account in the admins.txt file,
+     * return false otherwise 
+     */
     @Override
     public boolean adminLogin(String employeeId, String password) {
         return verifyAdmin(password, password);
@@ -380,6 +404,10 @@ public class Hotel implements HotelSystem {
         }
     }
 
+    /**
+     * Records the process of renting a room including payment method and updating room status 
+     * 
+     */
     @Override
     public boolean rentRoomProcess(String customer, String roomNumber, String floor, String paymentMethod) {
         if(customer == null || customer.isEmpty() || roomNumber == null || roomNumber.isEmpty() || 
@@ -600,6 +628,7 @@ public class Hotel implements HotelSystem {
 
     /** 
      * Reports an issue written by customer and saves report to issues.txt file. 
+     * 
      * @param username The username of the customer reporting the issue 
      * @param issue A description of the issue being reported 
      * @param roomNumber The room number where the customer is staying 
@@ -614,9 +643,7 @@ public class Hotel implements HotelSystem {
             roomNumber == null || roomNumber.isEmpty() || floor == null || floor.isEmpty()) {
                 return false; 
             }
-            /*  int IssueID = generateIssueID(); */
         try (BufferedWriter reportissue = new BufferedWriter(new FileWriter(filePath("issues.txt"), true))){
-            /* reportissue.write("IssueID: " + IssueID); */
             reportissue.write("Username: " + username + ", " + " Room Number: " + roomNumber + ", " + " Floor: " + floor); 
             reportissue.newLine(); 
             reportissue.write("Issue: " + issue); 
@@ -633,23 +660,48 @@ public class Hotel implements HotelSystem {
 
     /**
      * Assigns an employee to a specific issue based on the issue index.
+     * The method reads the current issues.txt file, and updates the assigned employee to the issue
+     * using a list to store all lines temporarily.
+     * 
+     * @param issueIndex The number assigned to the issue using an array list 
      * @param assignedEmployee The employee who is assigned to the issue
      * @return true if the employee was successfully assigned, false otherwise
      */
 
     @Override
     public boolean assignEmployeeToIssue(int issueIndex, String assignedEmployee) {
-        if (assignedEmployee == null || assignedEmployee.isEmpty()){
+        if (assignedEmployee == null || assignedEmployee.isEmpty() || issueIndex < 0){
             return false; 
         }
         File file = new File(filePath("issues.txt")); 
+        List<String> lines = new ArrayList<>(); 
+
         try (BufferedReader rf = new BufferedReader(new FileReader(file))){
-            return true; 
+            String line; 
+            while ((line = rf.readLine()) != null){
+                lines.add(line); 
+            }
         }
         catch (IOException e){
-            System.out.println("Error assigning employee to issue."); 
+            System.out.println("Error reading issues.txt file"); 
             return false;
         }
+        int startLine = issueIndex * 3; 
+        int employeeLine = startLine + 2;
+        if (employeeLine >= lines.size()){
+            return false; 
+        }
+        lines.set(employeeLine, "Assigned Employee: " + assignedEmployee); 
+        try (BufferedWriter wb = new BufferedWriter(new FileWriter(file))){
+            for (String l : lines){
+                wb.write(l); 
+                wb.newLine(); 
+            }
+        } catch (IOException e){
+            System.out.println("Error writing to issues.txt file"); 
+            return false;
+        }
+        return true; 
     }
 
     /**
