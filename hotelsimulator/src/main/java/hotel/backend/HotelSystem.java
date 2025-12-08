@@ -115,7 +115,7 @@ public interface HotelSystem {
 
     boolean reportIssue(String username, String issue, String roomNumber, String floor);
 
-    boolean assignEmployeeToIssue(int issueIndex, String assignedEmployee);
+    boolean assignEmployeeToIssue(String username, String roomNumber, String floor, String assignedEmployee); 
  
     /**
      * Displays all current reservations in the system.
