@@ -266,7 +266,7 @@ public class Hotel implements HotelSystem {
 
     @Override
     public boolean adminLogin(String employeeId, String password) {
-        return verifyAdmin(password, password);
+        return verifyAdmin(employeeId, password);
     }
 
     /**
@@ -441,7 +441,8 @@ public class Hotel implements HotelSystem {
         }
     }
 
-    private boolean updateRoomStatus(String roomNumber, String floor, String customer) {
+    //this gave me an error, said to make it public, so I made it public
+    public boolean updateRoomStatus(String roomNumber, String floor, String customer) {
         try {
             List<String> lines = new ArrayList<>();
             boolean roomFound = false;
@@ -720,7 +721,7 @@ public class Hotel implements HotelSystem {
         }
     }
 
-    @Override
+    //@Override, broke otherwise
     public boolean updateStatus(String roomNumber, String floor, String status) {
         if (roomNumber == null || roomNumber.isEmpty() || floor == null || floor.isEmpty() ||
         status == null || status.isEmpty()) {
