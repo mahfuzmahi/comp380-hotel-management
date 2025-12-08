@@ -638,16 +638,62 @@ public class Hotel implements HotelSystem {
      */
 
     @Override
-    public boolean assignEmployeeToIssue(int issueIndex, String assignedEmployee) {
-        if (assignedEmployee == null || assignedEmployee.isEmpty()){
+    public boolean assignEmployeeToIssue(String username, String roomNumber, String floor, String assignedEmployee) {
+        if (username == null || username.isEmpty() || roomNumber == null || roomNumber.isEmpty() || 
+            floor == null || floor.isEmpty() || assignedEmployee == null || assignedEmployee.isEmpty()) {
             return false; 
         }
-        File file = new File(filePath("issues.txt")); 
-        try (BufferedReader rf = new BufferedReader(new FileReader(file))){
-            return true; 
-        }
-        catch (IOException e){
-            System.out.println("Error assigning employee to issue."); 
+
+        roomNumber = roomNumber.trim();
+        floor = floor.trim();
+        assignedEmployee = assignedEmployee.trim();
+
+        try {
+            List<String> lines = new ArrayList<>();
+            boolean issueFound = false;
+
+            try (BufferedReader r = new BufferedReader(new FileReader(filePath("issues.txt")))) {
+                String l;
+                while ((l = r.readLine()) != null) {
+                    if (l.trim().isEmpty()) {
+                        continue;
+                    }
+                    lines.add(l);
+                }
+            }
+
+            for (int i = 0; i < lines.size(); i++) {
+                String currLine = lines.get(i);
+                String[] p = currLine.split(",");
+                
+                if (p.length >= 3) {
+                    String currIssue = p[0].trim();
+                    String currRoomNo = p[1].trim();
+                    String currFloor = p[2].trim();
+                    
+                    if (currRoomNo.equals(roomNumber) && currFloor.equals(floor)) {
+                        issueFound = true;
+                        lines.set(i, currIssue + "," + currRoomNo + "," + currFloor + "," + assignedEmployee);
+                        break;
+                    }
+                }
+            }
+
+            if (!issueFound) {
+                System.out.println("Issue not found");
+                return false;
+            }
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath("issues.txt")))) {
+                for (int i = 0; i < lines.size(); i++) {
+                    writer.write(lines.get(i));
+                    writer.newLine();
+                }
+            }
+
+            return true;
+        } catch (IOException e) {
+            System.out.println("Error assigning employee to issue.");
             return false;
         }
     }
