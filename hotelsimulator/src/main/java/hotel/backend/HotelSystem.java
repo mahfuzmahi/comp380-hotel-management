@@ -78,6 +78,13 @@ public interface HotelSystem {
      */
     boolean Employee(String username, String password);
 
+    /**
+     * Creates an account for a new employee logging into the system
+     * @param username The username of the employee first logging in 
+     * @param password The password of the employee first logging in
+     * @param name The preferred name of the employee 
+     * @param role The role of the employee in the hotel, such as housekeeper, administrator, manager
+     */
     boolean createEmployeeAccount(String username, String password, String name, String role);
 
     /**
@@ -86,7 +93,8 @@ public interface HotelSystem {
      * @param roomNumber The room number to update
      * @param status The new housekeeping status such as clean, dirty, or maintenance
      * @return true is the status was successfully updated, false otherwise.
-     */ 
+     */
+
     boolean Housekeeping(String roomNumber, String status); 
 
     /**
@@ -96,9 +104,19 @@ public interface HotelSystem {
      */
     void Manager(String report);
 
+    /**
+     * Reports an issue within the hotel which was sent in by a customer 
+     * @param username The username of the customer filing the issue 
+     * @param issue A description of the issue being reported 
+     * @param roomNumber The room number associated with the issue/customer 
+     * @param floor The floor number where the room is located
+     * @return true if the issue was successfully reported, false otherwise 
+     */
+
     boolean reportIssue(String username, String issue, String roomNumber, String floor);
 
-    boolean assignEmployeeToIssue(int issueID, String assignedEmployee);
+    boolean assignEmployeeToIssue(int issueIndex, String assignedEmployee);
+ 
     /**
      * Displays all current reservations in the system.
      * Also outputs reservation information in the console.
