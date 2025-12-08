@@ -52,4 +52,15 @@ public class hoteltest{
         String file = readFile("customers.txt"); 
         assertTrue(file.contains("John,practicerun,john123@gmail.com,8181234567,bank")); 
     }
+    @DisplayName("Checking for Successful Update of Account Information")
+    @Test 
+    public void UpdateAccount_Success() throws IOException {
+        writeFile("customers.txt", "Alex,oldpassword,Arnold123@gmail.com,8187654321,debit"); 
+        // prepopulate customers.txt file with filler info to see if test will work
+        boolean result = hotel.updateAccount("Alex", "newpassword", "Alex123@gmail.com", 
+        "8181234657", "credit"); 
+        assertTrue(result); 
+        String file = readFile("customers.txt"); 
+        assertTrue(file.contains("Alex,newpassword,Alex123@gmail.com,8181234657,credit")); 
+    }
 }

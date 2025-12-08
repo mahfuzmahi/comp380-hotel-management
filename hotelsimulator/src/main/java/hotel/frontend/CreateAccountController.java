@@ -55,9 +55,7 @@ public class CreateAccountController {
         String phoneInput = userInputPhoneNumber.getText(); 
         String bankInfoInput = userInputBankInfo.getText();
 
-        boolean holder = hotel.CreateAccount(nameInput, passwordInput, emailInput, phoneInput, bankInfoInput);
-
-        if(holder == false) {
+        if(hotel.CreateAccount(nameInput, passwordInput, emailInput, phoneInput, bankInfoInput) == false) {
             InstructionLabel.setText("Unable to create account");
         }
         else {
@@ -72,9 +70,8 @@ public class CreateAccountController {
         String passwordInput = userInputFieldPassword.getText();
         String emailInput = userInputEmail.getText();
         String phoneInput = userInputPhoneNumber.getText(); 
-        boolean holder = hotel.createEmployeeAccount(nameInput, passwordInput, phoneInput, emailInput);
 
-        if(holder == false) {
+        if(hotel.createEmployeeAccount(nameInput, passwordInput, phoneInput, emailInput) == false) {
             InstructionLabel.setText("Unable to create account");
         }
         else {
