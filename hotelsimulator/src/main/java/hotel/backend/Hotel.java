@@ -127,7 +127,6 @@ public class Hotel implements HotelSystem {
     /**
      * A new administration account is created when an employee creates an account 
      * This administration information is stored in admins.txt file
-     * 
      * @param username Any username that the administrator chooses 
      * @param password Any password chosen by the administrator
      * @param email Email the administrator provides 
@@ -135,6 +134,7 @@ public class Hotel implements HotelSystem {
      * Email and Phone are used as contact information to reach the administrator if needed
      * @return true if admin account is successfully created and saved to file, false otherwise
      */
+
     @Override
     public boolean CreateAdmin(String username, String password, String email, String phone){
         if (username != null){
@@ -160,20 +160,7 @@ public class Hotel implements HotelSystem {
         }
     }
 
-    /**
-     * Updates customer account information in the customers.txt file 
-     * 
-     * To update the account information a customer must already have a valid account 
-     * @param username The username of the account that is being updated 
-     * @param password The password for the account 
-     * @param email The email attached to the account 
-     * @param phone The phone number attached to the account
-     * @param bankInfo The bank information attached to the account
-     * @return false if there is no account found with the given username 
-     * @return true if the account was successfully updated with new information, false otherwise
-     */
-
-    @Override 
+    @Override
     public boolean updateAccount(String username, String password, String email, String phone, String bankInfo) {
         if(username != null) {
             username = username.trim();
@@ -277,15 +264,6 @@ public class Hotel implements HotelSystem {
         return verifyCustomer(username, password);
     }
 
-    /**
-     * Authenticates an administrator login by verifying information 
-     * 
-     * Information is compared and verified in the admins.txt file 
-     * @param employeeId The username of the administrator attempting to log in
-     * @param password The password of the administrator attempting to log in
-     * @return true if the username and password successfully match an account in the admins.txt file,
-     * return false otherwise 
-     */
     @Override
     public boolean adminLogin(String employeeId, String password) {
         return verifyAdmin(password, password);
@@ -404,10 +382,6 @@ public class Hotel implements HotelSystem {
         }
     }
 
-    /**
-     * Records the process of renting a room including payment method and updating room status 
-     * 
-     */
     @Override
     public boolean rentRoomProcess(String customer, String roomNumber, String floor, String paymentMethod) {
         if(customer == null || customer.isEmpty() || roomNumber == null || roomNumber.isEmpty() || 
@@ -628,7 +602,6 @@ public class Hotel implements HotelSystem {
 
     /** 
      * Reports an issue written by customer and saves report to issues.txt file. 
-     * 
      * @param username The username of the customer reporting the issue 
      * @param issue A description of the issue being reported 
      * @param roomNumber The room number where the customer is staying 
@@ -660,10 +633,6 @@ public class Hotel implements HotelSystem {
 
     /**
      * Assigns an employee to a specific issue based on the issue index.
-     * The method reads the current issues.txt file, and updates the assigned employee to the issue
-     * using a list to store all lines temporarily.
-     * 
-     * @param issueIndex The number assigned to the issue using an array list 
      * @param assignedEmployee The employee who is assigned to the issue
      * @return true if the employee was successfully assigned, false otherwise
      */
@@ -750,4 +719,103 @@ public class Hotel implements HotelSystem {
             System.out.println("Error reading reservations text file");
         }
     }
-}
+
+    @Override
+    public boolean updateStatus(String roomNumber, String floor, String status) {
+        if (roomNumber == null || roomNumber.isEmpty() || floor == null || floor.isEmpty() ||
+        status == null || status.isEmpty()) {
+            return false; 
+        }
+        roomNumber = roomNumber.trim(); 
+        floor = floor.trim(); 
+        status = status.trim().toUpperCase(); 
+        if(!status.equals("TRUE") && !status.equals("FALSE")){
+            System.out.println("Invalid status value. Must be TRUE or FALSE"); 
+            return false; 
+        }
+        try{
+            List<String> lines = new ArrayList<>(); 
+            boolean roomFound = false; 
+
+            try(BufferedReader r = new BufferedReader(new FileReader(filePath("rooms.txt")))){
+                String line; 
+                while((line = r.readLine()) != null){
+                    String[] parts = line.split(",", 8); 
+                    if(parts.length >= 2){
+                        String currentRoomNum = parts[0].trim(); 
+                        String currentFloor = parts[1].trim(); 
+                        if(currentRoomNum.equals(roomNumber) && currentFloor.equals(floor)){
+                            roomFound = true; 
+                            String customer; 
+                            String date; 
+                            String time; 
+                            String description; 
+                            String price; 
+                            if (status.equals("TRUE")){
+                                customer = "#PERSON#"; 
+                                date = "XX/XX/XXXX"; 
+                                time = "XX:XX";
+                            } // end of inner inner if statement
+                            else {
+                                if (parts.length > 3){
+                                    customer = parts[3].trim(); 
+                                } // end of inner inner if statement
+                                else {
+                                    customer = "#PERSON#";
+                                } // end of inner else statement 2
+                                if (parts.length > 4){
+                                    date = parts[4].trim(); 
+                                }
+                                else {
+                                    date = "XX/XX/XXXX"; 
+                                }
+                                if (parts.length > 5){
+                                    time = parts[5].trim(); 
+                                }
+                                else {
+                                    time = "XX:XX"; 
+                                }
+                                }
+                            if (parts.length > 6){
+                                description = parts[6].trim(); 
+                            }
+                            else {
+                                description = "Details of Room " + roomNumber; 
+                            }
+                            if (parts.length > 7){
+                                price = parts[7].trim(); 
+                            }
+                            else {
+                                price = "100"; 
+                            }
+                            line = roomNumber + "," + floor + "," + customer + "," + date + "," + 
+                            time + "," + description; 
+                            if (parts.length > 7){
+                                line = line + "," + price; 
+                            }
+                            else {
+                                line = line + "," + "100"; 
+                            }
+                            } // end of else statement 1
+                        }
+                        lines.add(line); 
+                    } 
+                } 
+                if (!roomFound){
+                    System.out.println("Room not found. "); 
+                    return false; 
+                }
+                try(BufferedWriter w = new BufferedWriter(new FileWriter(filePath("rooms.txt")))){
+                    for (int i = 0; i < lines.size(); i++){
+                        w.write(lines.get(i)); 
+                        w.newLine(); 
+                    }
+                }
+                return true; 
+            } catch(IOException e){
+                System.out.println("Error updating room status"); 
+                return false; 
+            }
+        }  
+
+    }
