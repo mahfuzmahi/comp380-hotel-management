@@ -27,18 +27,24 @@ public class Room {
      * Displays error message if text file cannot be retrieved or read 
      * @return the current status of available rooms in hotel 
      */
-    public boolean Rooms(){
+    public List<String> Rooms() {
+        List<String> roomsAvailable = new ArrayList<>();
         System.out.println("Rooms available: ");
-        try (BufferedReader r = new BufferedReader(new FileReader("DataFiles/rooms.txt"))) {
+        try (BufferedReader r = new BufferedReader(new FileReader(Hotel.filePath("rooms.txt")))) {
             String l;
             while((l = r.readLine()) != null) {
+                if(l.trim().isEmpty()) {
+                    continue;
+                }
+                roomsAvailable.add(l);
                 System.out.println(l);
             }
         } catch (IOException e) {
             System.out.println("Error reading rooms text file");
         }
-        return true;
+        return roomsAvailable;
     }
+
     /**
      * Reads updated list of reserved rooms from text file
      * Displays error message if text file cannot be read
@@ -46,10 +52,10 @@ public class Room {
      */
     public List<String> reservedRooms(){ 
         List<String> ReservedRoomList = new ArrayList<>(); // Array List to show rooms Reserved by Users 
-        try (BufferedReader re = new BufferedReader(new FileReader("DataFiles/reservations.txt"))){
+        System.out.println("List of Reserved Rooms: "); 
+        try (BufferedReader re = new BufferedReader(new FileReader(Hotel.filePath("reservations.txt")))){
             String ReservedR; 
             while((ReservedR = re.readLine()) != null) {
-                System.out.println("List of Reserved Rooms: "); 
                 ReservedRoomList.add(ReservedR); // Adds Reserved Rooms from reservations.txt to Array List 
                 System.out.println(ReservedR); 
             }
