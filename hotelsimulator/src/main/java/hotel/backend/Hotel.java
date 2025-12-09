@@ -44,7 +44,6 @@ import java.util.List;
  */
 
 public class Hotel implements HotelSystem {
-
     /**
      * Checks the file path for data files in the DataFiles folder/directory.
      * Uses a fallback method to find the directory despite execution context.
@@ -436,7 +435,7 @@ public class Hotel implements HotelSystem {
                 return false;
             }
 
-            if(!updateRoomStatus(roomNumber, floor, customer)) {
+            if(!assignCustomerToRoom(roomNumber, floor, customer)) {
                 return false;
             }
 
@@ -448,8 +447,7 @@ public class Hotel implements HotelSystem {
     }
 
     //this gave me an error, said to make it public, so I made it public
-    @Override
-    public boolean updateRoomStatus(String roomNumber, String floor, String customer) {
+    public boolean assignCustomerToRoom(String roomNumber, String floor, String customer) {
         try {
             List<String> lines = new ArrayList<>();
             boolean roomFound = false;
@@ -725,7 +723,7 @@ public class Hotel implements HotelSystem {
     }
 
     //@Override, broke otherwise
-    public boolean updateStatus(String roomNumber, String floor, String status) {
+    private boolean updateStatus(String roomNumber, String floor, String status) {
         if (roomNumber == null || roomNumber.isEmpty() || floor == null || floor.isEmpty() ||
         status == null || status.isEmpty()) {
             return false; 
@@ -794,12 +792,6 @@ public class Hotel implements HotelSystem {
                             }
                             line = roomNumber + "," + floor + "," + customer + "," + date + "," + 
                             time + "," + description; 
-                            if (parts.length > 7){
-                                line = line + "," + price; 
-                            }
-                            else {
-                                line = line + "," + "100"; 
-                            }
                             } // end of else statement 1
                         }
                         lines.add(line); 
@@ -821,4 +813,11 @@ public class Hotel implements HotelSystem {
                 return false; 
             }
         }  
+
+    @Override
+    public boolean updateRoomStatus(String roomNumber, String floor, String status) {
+        return updateStatus(roomNumber, floor, status);
+    }
+
+
     }
