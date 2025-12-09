@@ -1,3 +1,7 @@
-mahfuztest, test
-jim, pass
-jose,jose
+mahfuztest, test,mahfuztest@gmail.com,1112223333,BANK
+jim, pass,jim@gmail.com,1112223333,BANK
+jim2,pass2,jim2@gmail.com,1112223333,BANK
+jose,jose,jose@gmail.com,1112223333,BANK
+john, word2,john@gmail.com,1112223333,BANK
+jacob,jacobPass,jacob@gmail.com,1112223333,BANK
+tom,tompass,tom@gmail.com,1112223333,BANK

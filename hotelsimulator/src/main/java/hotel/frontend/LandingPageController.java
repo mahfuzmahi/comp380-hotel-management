@@ -3,6 +3,10 @@ package hotel.frontend;
 import java.io.IOException;
 import javafx.fxml.FXML;
 
+/**
+ * LandingPageController(Class): Controller class for the landing page view. Contains methods to handle scene switching to login, create account, and guest views.
+ * @author Justin_Scott, 11/6/2025
+ */
 public class LandingPageController {
 
     @FXML
@@ -11,12 +15,7 @@ public class LandingPageController {
     }
     
     @FXML
-    private void switchToCreateAcc() throws IOException {
-        App.setRoot("createAcc");
-    } 
-
-        @FXML
-    private void switchToGuest() throws IOException {
-        App.setRoot("primary");
+    private void switchToCreateAccount() throws IOException {
+        App.setRoot("createAccount");
     } 
 }
