@@ -24,8 +24,7 @@ import javafx.scene.layout.VBox;
  * Room data is read from rooms.txt and displayed as buttons that the user can select.
  * Only rooms marked as unoccupied are shown.
  *
- * Author: Jose
- * Version: 2.0
+ * Author: Jose Mendiola
  */
 public class UserRentRoomController implements Initializable {
 

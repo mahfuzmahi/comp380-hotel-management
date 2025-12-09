@@ -10,8 +10,7 @@ import javafx.scene.control.TextField;
  * Controller that allows a user to update their account information.
  * Username cannot be changed. User can update password, email, phone, and bank info.
  *
- * Author: Jose
- * Version: 2.0
+ * Author: Jose Mendiola
  */
 public class UserUpdateInfoController {
 

@@ -1,4 +1,0 @@
---patch-module
-hotel=_
---add-reads
-hotel=ALL-UNNAMED

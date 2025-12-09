@@ -14,8 +14,7 @@ import javafx.scene.control.TextField;
  * This class allows a user to describe an issue and saves it to a text file.
  * Input validation is performed and user feedback is displayed on screen.
  * 
- * Author: Jose
- * Version: 1.0
+ * Author: Jose Mendiola
  */
 public class ReportIssueController {
 
