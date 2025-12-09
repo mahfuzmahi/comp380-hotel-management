@@ -1,10 +1,15 @@
 package hotel.frontend;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import hotel.backend.Hotel;
@@ -29,9 +34,6 @@ public class UserRentRoomController implements Initializable {
 
     private final Hotel hotel = new Hotel();
 
-    /**
-     * Initializes the screen by loading available rooms when the fxml is displayed.
-     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadAvailableRooms();
@@ -39,8 +41,7 @@ public class UserRentRoomController implements Initializable {
 
     /**
      * Loads available rooms from rooms.txt.
-     * Creates a button for each available room and adds it to the VBox.
-     * If no rooms are found or if an error occurs, a message is shown.
+     * Shows only rows where isOccupied == FALSE.
      */
     private void loadAvailableRooms() {
         roomsBox.getChildren().clear();
@@ -55,7 +56,7 @@ public class UserRentRoomController implements Initializable {
                     continue;
                 }
 
-                // Expected format in rooms.txt:
+                // Expected format:
                 // roomNumber,floor,isOccupied,person,date,time,description,price
                 String[] parts = line.split(",", 8);
                 if (parts.length < 7) {
@@ -65,11 +66,7 @@ public class UserRentRoomController implements Initializable {
                 String roomNumber = parts[0].trim();
                 String floor      = parts[1].trim();
                 String isOccupied = parts[2].trim();
-                String person     = parts[3].trim();
-                String date       = parts[4].trim();
-                String time       = parts[5].trim();
                 String description= parts[6].trim();
-                // price (parts[7]) is optional
 
                 // Only show rooms that are NOT occupied
                 if (!"FALSE".equalsIgnoreCase(isOccupied)) {
@@ -77,16 +74,14 @@ public class UserRentRoomController implements Initializable {
                 }
 
                 String buttonText = String.format(
-                    "Floor %s - Room %s  |  %s  |  %s",
-                    floor, roomNumber, description, "Available"
+                        "Floor %s - Room %s  |  %s  |  %s",
+                        floor, roomNumber, description, "Available"
                 );
 
                 Button roomButton = new Button(buttonText);
                 roomButton.setMaxWidth(Double.MAX_VALUE);
 
-                // When the user clicks this room:
                 roomButton.setOnAction(e -> {
-
                     String currentUser = App.getCurrentUser();
                     if (currentUser == null || currentUser.trim().isEmpty()) {
                         System.out.println("No user is currently logged in, cannot create reservation.");
@@ -94,18 +89,18 @@ public class UserRentRoomController implements Initializable {
                     }
                     currentUser = currentUser.trim();
 
-                    // 1) Append reservation: username,room,floor
+                    // 1) Save reservation: username,room,floor
                     try (FileWriter fw = new FileWriter(
                             Hotel.filePath("reservations.txt"), true)) {
                         fw.write(currentUser + "," + roomNumber + "," + floor
-                                 + System.lineSeparator());
+                                + System.lineSeparator());
                     } catch (IOException ex) {
                         ex.printStackTrace();
                         return;
                     }
 
-                    // 2) Mark room as occupied in rooms.txt
-                    boolean updated = hotel.updateRoomStatus(roomNumber, floor, currentUser);
+                    // 2) Mark this room as occupied by this user in rooms.txt
+                    boolean updated = markRoomAsOccupied(roomNumber, floor, currentUser);
                     if (!updated) {
                         System.out.println("Warning: reservation saved but room status not updated.");
                     }
@@ -124,8 +119,86 @@ public class UserRentRoomController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
             roomsBox.getChildren().add(
-                new Label("Error loading rooms from DataFiles/rooms.txt"));
+                    new Label("Error loading rooms from DataFiles/rooms.txt"));
         }
+    }
+
+    /**
+     * Updates rooms.txt so that the matching room line becomes:
+     * roomNumber,floor,TRUE,currentUser,date,time,description,price
+     */
+    private boolean markRoomAsOccupied(String roomNumber, String floor, String customer) {
+        List<String> lines = new ArrayList<>();
+        boolean found = false;
+
+        try (BufferedReader reader = new BufferedReader(
+                new FileReader(Hotel.filePath("rooms.txt")))) {
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+
+                if (line.trim().isEmpty()) {
+                    lines.add(line);
+                    continue;
+                }
+
+                String[] parts = line.split(",", 8);
+                if (parts.length < 2) {
+                    lines.add(line);
+                    continue;
+                }
+
+                String rNum   = parts[0].trim();
+                String rFloor = parts[1].trim();
+
+                if (rNum.equals(roomNumber) && rFloor.equals(floor)) {
+                    found = true;
+
+                    String description = (parts.length > 6) ? parts[6].trim()
+                                                            : "Details of Room " + roomNumber;
+                    String price = (parts.length > 7) ? parts[7].trim() : "100";
+
+                    String date = LocalDate.now().toString();
+                    String time = LocalTime.now().withNano(0).toString(); // HH:MM:SS
+
+                    // isOccupied = TRUE, person = customer
+                    String newLine = String.join(",",
+                            roomNumber,
+                            floor,
+                            "TRUE",
+                            customer,
+                            date,
+                            time,
+                            description,
+                            price
+                    );
+                    lines.add(newLine);
+                } else {
+                    lines.add(line);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        if (!found) {
+            System.out.println("Room " + roomNumber + " on floor " + floor + " not found in rooms.txt.");
+            return false;
+        }
+
+        try (BufferedWriter writer = new BufferedWriter(
+                new FileWriter(Hotel.filePath("rooms.txt")))) {
+            for (String l : lines) {
+                writer.write(l);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
     }
 }
 
