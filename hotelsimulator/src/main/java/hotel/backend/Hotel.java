@@ -482,7 +482,7 @@ public class Hotel implements HotelSystem {
                                 price = "100";
                             }
 
-                            l = roomNumber + "," + floor + "," + customer + "," + date + "," + time + "," + description + "," + price;
+                            l = roomNumber + "," + floor + ",TRUE," + customer + "," + date + "," + time + "," + description + "," + price;
                             roomFound = true;
                         }
                     }

@@ -1,4 +1,4 @@
-mahfuztest, test,mahfuztest@gmail.com,1112223333,BANK
+mahfuztest,test,mahfuztest@gmail.com,1112223333,BANK
 jim, pass,jim@gmail.com,1112223333,BANK
 jim2,pass2,jim2@gmail.com,1112223333,BANK
 jose,jose,jose12@gmail.com,8181234567,none
