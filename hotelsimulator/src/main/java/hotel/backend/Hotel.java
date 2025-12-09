@@ -755,6 +755,7 @@ public class Hotel implements HotelSystem {
                             String description; 
                             String price; 
                             if (status.equals("TRUE")){
+                                status = "FALSE";
                                 customer = "#PERSON#"; 
                                 date = "XX/XX/XXXX"; 
                                 time = "XX:XX";
@@ -791,8 +792,8 @@ public class Hotel implements HotelSystem {
                             else {
                                 price = "100"; 
                             }
-                            line = roomNumber + "," + floor + "," + customer + "," + date + "," + 
-                            time + "," + description; 
+                            line = roomNumber + "," + floor + "," + status + "," + customer + "," + date + "," + 
+                            time + "," + description + "," + price; 
                             } // end of else statement 1
                         }
                         lines.add(line); 

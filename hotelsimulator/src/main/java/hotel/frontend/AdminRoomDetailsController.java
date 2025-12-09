@@ -17,7 +17,7 @@ import javafx.scene.layout.HBox;
  * @author Justin_Scott, 11/20/2025
  */
 public class AdminRoomDetailsController {
-    
+        private Hotel hotel = new Hotel();
     /**
      * roomPositionLabel(Variable): Label to display the room position (number and floor).
      */
@@ -76,7 +76,10 @@ public class AdminRoomDetailsController {
                     buttonlist.get(0).setOnAction(e -> {
                         App.setViewedAccount(renter);
                         try {
-                            /*TODO Add backend to evict user */
+                          //TODO delete vthisv if moved to backend
+                          App appInstance = new App();
+                          hotel.updateRoomStatus(appInstance.lineToRoom(App.getCurrentRoom()), appInstance.lineToFloor(App.getCurrentRoom()), "TRUE");    
+                          App.setRoot("adminViewRooms");
                         } catch (Exception ex) {
                             System.err.println(ex);
                         }
