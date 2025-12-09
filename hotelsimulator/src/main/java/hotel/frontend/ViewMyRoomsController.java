@@ -10,12 +10,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 
 /**
- * Controller for displaying the rooms reserved by the current logged-in user.
- * Reads reservations.txt (username,room,floor) and lists "Room X (Floor Y)".
- *
- * Author: Jose
- * Version: 2.0
- */
+* Controller for displaying the rooms reserved by the current logged-in user.
+* Reads reservations.txt (username,room,floor) and cross-checks rooms.txt to
+* show only rooms that are STILL occupied by that user.
+*
+* Author: Jose Mendiola
+*/
 public class ViewMyRoomsController {
 
     @FXML
@@ -41,23 +41,33 @@ public class ViewMyRoomsController {
         }
         username = username.trim();
 
-        String path = Hotel.filePath("reservations.txt");
-        boolean found = false;
+        String reservationsPath = Hotel.filePath("reservations.txt");
+        boolean foundAnyActive = false;
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(reservationsPath))) {
             String line;
 
             while ((line = reader.readLine()) != null) {
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
+
                 String[] parts = line.split(",");
                 // expect: username,room,floor
                 if (parts.length >= 3) {
-                    String user = parts[0].trim();
-                    String room = parts[1].trim();
+                    String user  = parts[0].trim();
+                    String room  = parts[1].trim();
                     String floor = parts[2].trim();
 
-                    if (user.equals(username)) {
+                    // Only consider reservations belonging to this logged in user
+                    if (!user.equals(username)) {
+                        continue;
+                    }
+
+                    // Check rooms.txt to see if this room is STILL occupied by this user
+                    if (isRoomCurrentlyOccupiedByUser(room, floor, username)) {
                         roomsList.getItems().add("Room " + room + " (Floor " + floor + ")");
-                        found = true;
+                        foundAnyActive = true;
                     }
                 }
             }
@@ -66,11 +76,52 @@ public class ViewMyRoomsController {
             return;
         }
 
-        if (!found) {
-            statusLabel.setText("No rooms found for this user.");
+        if (!foundAnyActive) {
+            statusLabel.setText("No active rooms found for this user.");
         } else {
             statusLabel.setText("Rooms loaded.");
         }
+    }
+
+    /**
+     * Checks rooms.txt to confirm that:
+     *  - isOccupied == TRUE
+     *  - person == username
+     */
+    private boolean isRoomCurrentlyOccupiedByUser(String roomNumber, String floor, String username) {
+        String roomsPath = Hotel.filePath("rooms.txt");
+
+        try (BufferedReader br = new BufferedReader(new FileReader(roomsPath))) {
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
+
+                // Expected format:
+                // roomNumber,floor,isOccupied,person,date,time,description,price
+                String[] parts = line.split(",", 8);
+                if (parts.length < 4) {
+                    continue;
+                }
+
+                String rNum       = parts[0].trim();
+                String rFloor     = parts[1].trim();
+                String isOccupied = parts[2].trim();
+                String person     = parts[3].trim();
+
+                if (rNum.equals(roomNumber) && rFloor.equals(floor)) {
+                    // Only count it as "my room" if still occupied by THIS user
+                    return "TRUE".equalsIgnoreCase(isOccupied) && person.equals(username);
+                }
+            }
+        } catch (IOException e) {
+            // If error reading rooms.txt, treat as not occupied
+            System.err.println("Error checking room status: " + e.getMessage());
+        }
+
+        return false;
     }
 
     @FXML
@@ -78,5 +129,6 @@ public class ViewMyRoomsController {
         App.setRoot("userMyRooms");
     }
 }
+
 
 
