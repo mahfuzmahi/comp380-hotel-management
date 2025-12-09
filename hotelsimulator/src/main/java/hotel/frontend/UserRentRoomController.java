@@ -67,6 +67,20 @@ public class UserRentRoomController implements Initializable {
                 String isOccupied = parts[2].trim();
                 String description= parts[6].trim();
 
+                String price;
+                if(parts.length > 7) {
+                    price = parts[7].trim();
+                } else {
+                    price = "100";
+                }
+
+                double roomPrice;
+                try {
+                    roomPrice = Double.parseDouble(price);
+                } catch (NumberFormatException e) {
+                    roomPrice = 100.0;
+                }
+
                 // Only show rooms that are NOT occupied
                 if (!"FALSE".equalsIgnoreCase(isOccupied)) {
                     continue;
@@ -79,6 +93,8 @@ public class UserRentRoomController implements Initializable {
 
                 Button roomButton = new Button(buttonText);
                 roomButton.setMaxWidth(Double.MAX_VALUE);
+
+                final double finalRoomPrice = roomPrice;
 
                 roomButton.setOnAction(e -> {
                     String currentUser = App.getCurrentUser();
@@ -102,6 +118,13 @@ public class UserRentRoomController implements Initializable {
                     boolean updated = markRoomAsOccupied(roomNumber, floor, currentUser);
                     if (!updated) {
                         System.out.println("Warning: reservation saved but room status not updated.");
+                        return;
+                    }
+
+                    // record payments in payments.txt file
+                    boolean paymentRecord = hotel.Payment(currentUser, finalRoomPrice, floor);
+                    if(!paymentRecord) {
+                        System.out.println("Room rented, but payment not recorded");
                     }
 
                     // 3) Refresh list so this room disappears from "Rent a Room"
