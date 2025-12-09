@@ -23,10 +23,10 @@ public class ReportIssueController {
     private TextField usernameField;
 
     @FXML
-    private TextField roomNumberField;   // NEW
+    private TextField roomNumberField;  
 
     @FXML
-    private TextField floorNumberField;  // NEW
+    private TextField floorNumberField; 
 
     @FXML
     private TextArea issueField;
@@ -52,17 +52,21 @@ public class ReportIssueController {
             return;
         }
 
-        String path = Hotel.filePath("issues.txt");
+        String path = Hotel.filePath("manager_report.txt");
 
         try (FileWriter writer = new FileWriter(path, true)) {
             // Replace newlines in issue with spaces to keep each report on one line
             String cleanIssue = issue.replaceAll("\\r?\\n", " ");
 
-            writer.write("User: " + username +
-                         ", Room: " + roomNumber +
-                         ", Floor: " + floorNumber +
-                         ", Issue: " + cleanIssue +
-                         System.lineSeparator());
+            String employee = "NONE";
+
+            String line = cleanIssue + "," +
+                            roomNumber + "," +
+                            floorNumber + "," +
+                            employee +
+                            System.lineSeparator();
+
+            writer.write(line);
 
         } catch (IOException e) {
             statusLabel.setText("Could not save issue.");

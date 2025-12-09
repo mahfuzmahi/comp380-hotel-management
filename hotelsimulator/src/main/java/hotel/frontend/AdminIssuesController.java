@@ -6,12 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import hotel.backend.Hotel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
 import javafx.scene.control.ListView;
-
-import hotel.backend.Hotel;
+import javafx.scene.layout.VBox;
  
 public class AdminIssuesController {
 
@@ -33,7 +32,7 @@ public class AdminIssuesController {
         try {
             Scanner s = new Scanner(new File(Hotel.filePath("manager_report.txt"))).useDelimiter("\\R|,");
             while (s.hasNext()) {
-                    String buttonText = s.next() + "\nAt Room" + s.next() + " Floor " + s.next() + "\nAssigned to: " + s.next(); 
+                    String buttonText = s.next() + "\nAt Room " + s.next() + " Floor " + s.next() + "\nAssigned to: " + s.next(); 
                      buttonlist.add(new Button(buttonText));
                      buttonlist.get(i).setOnAction(e -> {
                         try {
