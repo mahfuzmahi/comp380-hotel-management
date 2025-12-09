@@ -8,21 +8,15 @@ import hotel.backend.Hotel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 
 /**
- * Controller for displaying the rooms reserved by a specific user.
- * This class reads the reservation file, filters entries by username,
- * and shows the rooms in a list. It also provides simple user feedback
- * for empty input, missing data, or successful loading.
+ * Controller for displaying the rooms reserved by the current logged-in user.
+ * Reads reservations.txt (username,room,floor) and lists "Room X (Floor Y)".
  *
  * Author: Jose
- * Version: 1.0
+ * Version: 2.0
  */
 public class ViewMyRoomsController {
-
-    @FXML
-    private TextField usernameField;
 
     @FXML
     private ListView<String> roomsList;
@@ -30,22 +24,22 @@ public class ViewMyRoomsController {
     @FXML
     private Label statusLabel;
 
-    /**
-     * Loads and displays all rooms reserved by the entered username.
-     * Clears previous results, validates input, reads from reservations.txt,
-     * and updates the UI based on whether matching rooms are found.
-     */
+    @FXML
+    private void initialize() {
+        handleLoadRooms();
+    }
+
     @FXML
     private void handleLoadRooms() {
         roomsList.getItems().clear();
         statusLabel.setText("");
 
-        String username = usernameField.getText().trim();
-
-        if (username.isEmpty()) {
-            statusLabel.setText("Enter your username.");
+        String username = App.getCurrentUser();
+        if (username == null || username.trim().isEmpty()) {
+            statusLabel.setText("No user is currently logged in.");
             return;
         }
+        username = username.trim();
 
         String path = Hotel.filePath("reservations.txt");
         boolean found = false;
@@ -55,12 +49,14 @@ public class ViewMyRoomsController {
 
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length >= 2) {
+                // expect: username,room,floor
+                if (parts.length >= 3) {
                     String user = parts[0].trim();
                     String room = parts[1].trim();
+                    String floor = parts[2].trim();
 
                     if (user.equals(username)) {
-                        roomsList.getItems().add("Room " + room);
+                        roomsList.getItems().add("Room " + room + " (Floor " + floor + ")");
                         found = true;
                     }
                 }
@@ -77,12 +73,10 @@ public class ViewMyRoomsController {
         }
     }
 
-     /**
-     * Returns the user to the previous screen or main menu.
-     * This is triggered by the Back button on the UI.
-     */
     @FXML
     private void handleBack() throws Exception {
-        App.setRoot("userMyRooms"); 
+        App.setRoot("userMyRooms");
     }
 }
+
+

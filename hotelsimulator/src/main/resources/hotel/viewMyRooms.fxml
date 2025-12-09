@@ -9,8 +9,11 @@
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="hotel.frontend.ViewMyRoomsController">
 
-    <VBox spacing="10" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
-          AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
+    <VBox spacing="10"
+          AnchorPane.topAnchor="0"
+          AnchorPane.bottomAnchor="0"
+          AnchorPane.leftAnchor="0"
+          AnchorPane.rightAnchor="0"
           style="-fx-background-color: lightblue; -fx-padding: 20;">
 
         <!-- Dropdown Menu -->
@@ -18,11 +21,7 @@
 
         <Label text="View My Rooms" style="-fx-font-size: 24px;"/>
 
-        <HBox spacing="10">
-            <Label text="Username:"/>
-            <TextField fx:id="usernameField" prefWidth="200"/>
-            <Button text="Load" onAction="#handleLoadRooms"/>
-        </HBox>
+        <Label text="These are the rooms you have booked:"/>
 
         <ListView fx:id="roomsList" prefHeight="300"/>
 
