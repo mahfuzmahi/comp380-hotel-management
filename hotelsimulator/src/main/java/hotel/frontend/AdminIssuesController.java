@@ -6,17 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import hotel.backend.Hotel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
 import javafx.scene.control.ListView;
-
-import hotel.backend.Hotel;
-
-/**
- * AdminIssuesController(Class): Controller class for the admin issues view. Contains methods to initialize the view by reading reported issues from file and displaying them as buttons in the defined VBox.
- * @author Justin_Scott, 11/20/2025, 12/3/25
- */
+import javafx.scene.layout.VBox;
+ 
 public class AdminIssuesController {
 
      /**
@@ -44,8 +39,7 @@ public class AdminIssuesController {
             //makes a scanner to read the repot file and uses \n and , as delimiters
             Scanner s = new Scanner(new File(Hotel.filePath("manager_report.txt"))).useDelimiter("\\R|,");
             while (s.hasNext()) {
-                     String buttonText = s.next() + "\nIssue at Room " + s.next() + ", Floor " + s.next() + ",\nAssigned to: " + s.next(); 
-                     //adds a button for each line with ButtonText as the text and sends to adminManageIssues when clicked
+                    String buttonText = s.next() + "\nAt Room " + s.next() + " Floor " + s.next() + "\nAssigned to: " + s.next(); 
                      buttonlist.add(new Button(buttonText));
                      int iTemp = i;
                      buttonlist.get(i).setOnAction(e -> {

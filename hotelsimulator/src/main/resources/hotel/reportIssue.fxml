@@ -29,6 +29,7 @@
                     <children>
                         <Label text="Report an Issue" style="-fx-font-size: 24px;"/>
 
+                        <!-- Username row -->
                         <HBox spacing="10.0">
                             <children>
                                 <Label text="Username:" prefWidth="120"/>
@@ -36,6 +37,23 @@
                             </children>
                         </HBox>
 
+                        <!-- Room number row (NEW) -->
+                        <HBox spacing="10.0">
+                            <children>
+                                <Label text="Room Number:" prefWidth="120"/>
+                                <TextField fx:id="roomNumberField" prefWidth="200"/>
+                            </children>
+                        </HBox>
+
+                        <!-- Floor number row (NEW) -->
+                        <HBox spacing="10.0">
+                            <children>
+                                <Label text="Floor Number:" prefWidth="120"/>
+                                <TextField fx:id="floorNumberField" prefWidth="200"/>
+                            </children>
+                        </HBox>
+
+                        <!-- Issue row -->
                         <HBox spacing="10.0">
                             <children>
                                 <Label text="Issue:" prefWidth="120"/>
@@ -46,12 +64,14 @@
                             </children>
                         </HBox>
 
+                        <!-- Submit button row -->
                         <HBox spacing="10.0">
                             <children>
                                 <Button text="Submit Issue" onAction="#handleSubmit"/>
                             </children>
                         </HBox>
 
+                        <!-- Status label -->
                         <Label fx:id="statusLabel" textFill="red"/>
 
                     </children>

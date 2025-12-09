@@ -14,54 +14,87 @@
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="hotel.frontend.UserUpdateInfoController">
 
-    <VBox AnchorPane.topAnchor="0.0"
-          AnchorPane.bottomAnchor="5.0"
-          AnchorPane.leftAnchor="0.0"
-          AnchorPane.rightAnchor="0.0"
-          style="-fx-background-color: lightblue;">
-        <children>
+    <children>
+        <VBox AnchorPane.topAnchor="0.0"
+              AnchorPane.bottomAnchor="5.0"
+              AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0"
+              style="-fx-background-color: lightblue;">
+            <children>
 
-            <!-- Top dropdown menu -->
-            <fx:include source="userMenu.fxml"/>
+                <!-- Top user menu -->
+                <fx:include source="userMenu.fxml"/>
 
-            <VBox spacing="10.0" style="-fx-padding: 20;">
-                <children>
-                    <Label text="Update Account Info" style="-fx-font-size: 20px;"/>
+                <VBox spacing="10.0" style="-fx-padding: 20;">
+                    <children>
+                        <Label text="Update My Account Information" style="-fx-font-size: 24px;"/>
 
-                    <HBox spacing="10.0">
-                        <children>
-                            <Label text="Username:" prefWidth="140"/>
-                            <TextField fx:id="usernameField" prefWidth="200"/>
-                        </children>
-                    </HBox>
+                        <!-- Username (Not able to change) -->
+                        <HBox spacing="10.0">
+                            <children>
+                                <Label text="Username:" prefWidth="140"/>
+                                <TextField fx:id="usernameField"
+                                           prefWidth="220"
+                                           editable="false"/>
+                            </children>
+                        </HBox>
 
-                    <HBox spacing="10.0">
-                        <children>
-                            <Label text="Current Password:" prefWidth="140"/>
-                            <PasswordField fx:id="oldPasswordField" prefWidth="200"/>
-                        </children>
-                    </HBox>
+                        <!-- Current password -->
+                        <HBox spacing="10.0">
+                            <children>
+                                <Label text="Current Password:" prefWidth="140"/>
+                                <PasswordField fx:id="oldPasswordField" prefWidth="220"/>
+                            </children>
+                        </HBox>
 
-                    <HBox spacing="10.0">
-                        <children>
-                            <Label text="New Password:" prefWidth="140"/>
-                            <PasswordField fx:id="newPasswordField" prefWidth="200"/>
-                        </children>
-                    </HBox>
+                        <!-- New password -->
+                        <HBox spacing="10.0">
+                            <children>
+                                <Label text="New Password:" prefWidth="140"/>
+                                <PasswordField fx:id="newPasswordField" prefWidth="220"/>
+                            </children>
+                        </HBox>
 
-                    <HBox spacing="10.0">
-                        <children>
-                            <Button text="Save" onAction="#handleSave"/>
-                        </children>
-                    </HBox>
+                        <!-- New email -->
+                        <HBox spacing="10.0">
+                            <children>
+                                <Label text="New Email:" prefWidth="140"/>
+                                <TextField fx:id="emailField" prefWidth="220"/>
+                            </children>
+                        </HBox>
 
-                    <Label fx:id="statusLabel" textFill="red"/>
+                        <!-- New phone -->
+                        <HBox spacing="10.0">
+                            <children>
+                                <Label text="New Phone:" prefWidth="140"/>
+                                <TextField fx:id="phoneField" prefWidth="220"/>
+                            </children>
+                        </HBox>
 
-                </children>
-            </VBox>
+                        <!-- New bank info -->
+                        <HBox spacing="10.0">
+                            <children>
+                                <Label text="New Bank Info:" prefWidth="140"/>
+                                <TextField fx:id="bankField" prefWidth="220"/>
+                            </children>
+                        </HBox>
 
-            <Pane VBox.vgrow="ALWAYS"/>
+                        <!-- Save button -->
+                        <HBox spacing="10.0">
+                            <children>
+                                <Button text="Save Changes" onAction="#handleSave"/>
+                            </children>
+                        </HBox>
 
-        </children>
-    </VBox>
+                        <!-- Status label -->
+                        <Label fx:id="statusLabel" textFill="red"/>
+
+                    </children>
+                </VBox>
+
+                <Pane VBox.vgrow="ALWAYS"/>
+
+            </children>
+        </VBox>
+    </children>
 </AnchorPane>
