@@ -1,12 +1,5 @@
 package hotel.frontend;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-
 import hotel.backend.Hotel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -15,15 +8,15 @@ import javafx.scene.control.TextField;
 
 /**
  * Controller that allows a user to update their account information.
- * Validates credentials and writes updated data to the customers file.
+ * Username cannot be changed. User can update password, email, phone, and bank info.
  *
  * Author: Jose
- * Version: 1.0
+ * Version: 2.0
  */
 public class UserUpdateInfoController {
 
     @FXML
-    private TextField usernameField;
+    private TextField usernameField;        // read-only
 
     @FXML
     private PasswordField oldPasswordField;
@@ -32,79 +25,98 @@ public class UserUpdateInfoController {
     private PasswordField newPasswordField;
 
     @FXML
+    private TextField emailField;
+
+    @FXML
+    private TextField phoneField;
+
+    @FXML
+    private TextField bankField;
+
+    @FXML
     private Label statusLabel;
 
     private Hotel hotel = new Hotel();
 
     /**
-     * Saves updated user information after validating the current username and password.
-     * Reads from the customers file and writes changes to a temporary file before replacing it.
+     * Initialize: show the currently logged-in user and lock the username field.
+     */
+    @FXML
+    private void initialize() {
+        String currentUser = App.getCurrentUser();  
+
+        if (currentUser != null && !currentUser.trim().isEmpty()) {
+            usernameField.setText(currentUser.trim());
+            usernameField.setEditable(false); // username cant be changed
+        } else {
+            usernameField.setText("");
+            statusLabel.setText("No user is currently logged in.");
+        }
+    }
+
+    /**
+     * Saves updated user information after entering the current password.
+     * Uses the Hotel.updateAccount class to update password, email, phone, and bank info.
      */
     @FXML
     private void handleSave() {
-        String username = usernameField.getText();
+        String username = App.getCurrentUser();
+        if (username == null || username.trim().isEmpty()) {
+            statusLabel.setText("No user is currently logged in.");
+            return;
+        }
+        username = username.trim();
+
         String oldPassword = oldPasswordField.getText();
         String newPassword = newPasswordField.getText();
+        String email = emailField.getText();
+        String phone = phoneField.getText();
+        String bank = bankField.getText();
 
-        if (username == null || username.isEmpty()
-                || oldPassword == null || oldPassword.isEmpty()
-                || newPassword == null || newPassword.isEmpty()) {
-            statusLabel.setText("Please fill in all fields.");
+        // current password has to be entered
+        if (oldPassword == null || oldPassword.trim().isEmpty()) {
+            statusLabel.setText("Please enter your current password.");
             return;
         }
 
-        // Check that current username/password is valid
+        // needs to change
+        boolean anyChange =
+            (newPassword != null && !newPassword.trim().isEmpty()) ||
+            (email != null && !email.trim().isEmpty()) ||
+            (phone != null && !phone.trim().isEmpty()) ||
+            (bank != null && !bank.trim().isEmpty());
+
+        if (!anyChange) {
+            statusLabel.setText("Please change at least one field (password, email, phone, or bank).");
+            return;
+        }
+
+        // Verify current password
         if (!hotel.Login(username, oldPassword)) {
-            statusLabel.setText("Current username/password is incorrect.");
+            statusLabel.setText("Current password is incorrect.");
             return;
         }
 
-        File customersFile = new File(Hotel.filePath("customers.txt"));
-        File tempFile = new File(customersFile.getParentFile(), "customers_tmp.txt");
+        // Only send non-empty values; null = keep existing value in Hotel.updateAccount
+        String newPassParam = (newPassword != null && !newPassword.trim().isEmpty())
+                ? newPassword.trim() : null;
+        String emailParam = (email != null && !email.trim().isEmpty())
+                ? email.trim() : null;
+        String phoneParam = (phone != null && !phone.trim().isEmpty())
+                ? phone.trim() : null;
+        String bankParam = (bank != null && !bank.trim().isEmpty())
+                ? bank.trim() : null;
 
-        boolean updated = false;
+        boolean success = hotel.updateAccount(username, newPassParam, emailParam, phoneParam, bankParam);
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(customersFile));
-             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String trimmed = line.trim();
-                if (trimmed.isEmpty()) {
-                    continue;
-                }
-
-                String[] parts = trimmed.split(",");
-                if (parts.length >= 2 && parts[0].trim().equals(username)) {
-                    // Replace with new password
-                    writer.write(username + ", " + newPassword);
-                    writer.newLine();
-                    updated = true;
-                } else {
-                    writer.write(line);
-                    writer.newLine();
-                }
-            }
-        } catch (IOException e) {
-            statusLabel.setText("Error updating file.");
-            e.printStackTrace();
-            return;
-        }
-
-        if (!updated) {
-            statusLabel.setText("User not found in file.");
-            tempFile.delete();
-            return;
-        }
-
-        // Replace original file with temporary updated file
-        if (!customersFile.delete() || !tempFile.renameTo(customersFile)) {
+        if (success) {
+            statusLabel.setText("Information updated successfully!");
+            oldPasswordField.clear();
+            newPasswordField.clear();
+            
+        } else {
             statusLabel.setText("Could not save changes.");
-            return;
         }
-
-        statusLabel.setText("Information updated successfully!");
-        oldPasswordField.clear();
-        newPasswordField.clear();
     }
 }
+
