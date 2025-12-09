@@ -111,7 +111,7 @@ public class App extends Application {
     //TODO make these a backend function
     String lineToFloor(int lineNumber) throws FileNotFoundException {
         Scanner s = new Scanner(new File(Hotel.filePath("rooms.txt"))).useDelimiter("\\R|,");
-        for(int i = 0; i < lineNumber * 7; i++) {
+        for(int i = 0; i < lineNumber * 8; i++) {
             s.next();
         }
         s.next(); //skip room number
@@ -122,7 +122,7 @@ public class App extends Application {
 
     String lineToRoom(int lineNumber) throws FileNotFoundException {
     Scanner s = new Scanner(new File(Hotel.filePath("rooms.txt"))).useDelimiter("\\R|,");
-    for(int i = 0; i < lineNumber * 7; i++) {
+    for(int i = 0; i < lineNumber * 8; i++) {
         s.next();
     }
     String room = s.next();
