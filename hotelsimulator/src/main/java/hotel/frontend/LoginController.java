@@ -42,7 +42,7 @@ public class LoginController {
         String passwordInput = userInputFieldPassword.getText();
 
 
-        if(passwordInput.equals("admin")/*TODO hotel.AdminLogin(nameInput, passwordInput) */) {
+        if( hotel.adminLogin(nameInput, passwordInput)) {
             App.setCurrentUser(nameInput);
             App.setRoot("adminManageStaff");
         } else if (hotel.Login(nameInput, passwordInput)) {
