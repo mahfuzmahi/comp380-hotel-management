@@ -5,15 +5,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-//import javafx.scene.layout.Region;
-//import javafx.stage.Stage;
-//import javafx.scene.control.Label;
+import java.util.Scanner;
+import java.io.FileNotFoundException;
+import java.io.File;
+
 import java.io.IOException;
+import hotel.backend.Hotel;
 
 /**
  * JavaFX App
  */
 public class App extends Application {
+
 
     private static Scene scene;
     /**currentUser(Variable): Stores the username of the currently logged-in user. */
@@ -105,6 +108,27 @@ public class App extends Application {
         return fxmlLoader.load();
     }
 
+    //TODO make these a backend function
+    String lineToFloor(int lineNumber) throws FileNotFoundException {
+        Scanner s = new Scanner(new File(Hotel.filePath("rooms.txt"))).useDelimiter("\\R|,");
+        for(int i = 0; i < lineNumber * 7; i++) {
+            s.next();
+        }
+        s.next(); //skip room number
+        String floor = s.next();
+        s.close();
+        return floor;
+    }
+
+    String lineToRoom(int lineNumber) throws FileNotFoundException {
+    Scanner s = new Scanner(new File(Hotel.filePath("rooms.txt"))).useDelimiter("\\R|,");
+    for(int i = 0; i < lineNumber * 7; i++) {
+        s.next();
+    }
+    String room = s.next();
+    s.close();
+    return room;
+    }
     
 
 }

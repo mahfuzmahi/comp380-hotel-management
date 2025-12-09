@@ -655,7 +655,7 @@ public class Hotel implements HotelSystem {
         try {
             List<String> lines = new ArrayList<>();
 
-            try (BufferedReader r = new BufferedReader(new FileReader(filePath("issues.txt")))) {
+            try (BufferedReader r = new BufferedReader(new FileReader(filePath("manager_report.txt")))) {
                 String l;
                 while ((l = r.readLine()) != null) {
                     lines.add(l);
@@ -669,24 +669,25 @@ public class Hotel implements HotelSystem {
             }
 
             // The "assignedEmployee" line is 2 lines after the first line of the issue
-            int assignedEmployeeLI = lineIndex + 2;
+           /*  int assignedEmployeeLI = lineIndex + 2;
             
             if (assignedEmployeeLI >= lines.size()) {
                 System.out.println("Line index " + lineIndex + " does not point to a complete issue");
                 return false;
-            }
+            }*/
 
             // Update the assigned employee line
-            String assignedEmployeeLine = lines.get(assignedEmployeeLI);
-            if (assignedEmployeeLine.startsWith("Assigned Employee:")) {
-                lines.set(assignedEmployeeLI, "Assigned Employee: " + assignedEmployee);
+            String assignedEmployeeLine = lines.get(lineIndex);
+            if (assignedEmployeeLine.endsWith("NONE")) {
+                String tempString = lines.get(lineIndex).substring(0, lines.get(lineIndex).length() - 4);
+                lines.set(lineIndex, tempString + assignedEmployee);
             } else {
-                System.out.println("Line " + assignedEmployeeLI + " does not contain 'Assigned Employee:'");
+                System.out.println("Line " + lineIndex + " does not contain 'NONE'");
                 return false;
             }
 
             // Write all lines back to the file
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath("issues.txt")))) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath("manager_report.txt")))) {
                 for (int i = 0; i < lines.size(); i++) {
                     writer.write(lines.get(i));
                     writer.newLine();
@@ -754,6 +755,7 @@ public class Hotel implements HotelSystem {
                             String description; 
                             String price; 
                             if (status.equals("TRUE")){
+                                status = "FALSE";
                                 customer = "#PERSON#"; 
                                 date = "XX/XX/XXXX"; 
                                 time = "XX:XX";
@@ -790,8 +792,8 @@ public class Hotel implements HotelSystem {
                             else {
                                 price = "100"; 
                             }
-                            line = roomNumber + "," + floor + "," + customer + "," + date + "," + 
-                            time + "," + description; 
+                            line = roomNumber + "," + floor + "," + status + "," + customer + "," + date + "," + 
+                            time + "," + description + "," + price; 
                             } // end of else statement 1
                         }
                         lines.add(line); 

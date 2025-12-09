@@ -18,6 +18,7 @@ import javafx.scene.layout.VBox;
  * @author Justin_Scott, 12/3/2025
  */
 public class AdminIssuesDetails2Controller {
+    private Hotel hotel = new Hotel();
     /**
     * Holds the list of buttons representing staff members.
     */
@@ -54,7 +55,7 @@ public class AdminIssuesDetails2Controller {
                     buttonlist.add(new Button("Assign " + empName));
                     buttonlist.get(i).setOnAction(e -> {
                     try {
-                        //TODO need a function to set the assigned staff here.
+                        hotel.assignEmployeeToIssue(App.getCurrentRoom(), empName);
                         App.setRoot("adminManageIssues");
                     } catch (Exception ex) {
                         System.err.println(ex);
