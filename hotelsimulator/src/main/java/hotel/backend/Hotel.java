@@ -44,7 +44,6 @@ import java.util.List;
  */
 
 public class Hotel implements HotelSystem {
-
     /**
      * Checks the file path for data files in the DataFiles folder/directory.
      * Uses a fallback method to find the directory despite execution context.
@@ -149,8 +148,14 @@ public class Hotel implements HotelSystem {
         if (phone != null){
             phone = phone.trim(); 
         }
+
+        if(username == null || username.isEmpty() || password == null || password.isEmpty() || 
+            email == null || email.isEmpty() || phone == null || phone.isEmpty()) {
+            return false;
+        }
+
         try (BufferedWriter aw = new BufferedWriter(new FileWriter(filePath("admins.txt"), true))){
-            String AdminInfo = username + ", " + password + ", " + email + ", " + phone; 
+            String AdminInfo = username + "," + password + "," + email + "," + phone; 
             aw.write(AdminInfo + "\n"); 
             return true; 
         }
@@ -348,7 +353,7 @@ public class Hotel implements HotelSystem {
             return false;
         }
 
-        String r = customer + ", " + amount + "," + method;
+        String r = customer + "," + amount + "," + method;
         try (FileWriter fw = new FileWriter(filePath("payments.txt"), true)) {
             fw.write(r + '\n');
             return true;
@@ -373,7 +378,7 @@ public class Hotel implements HotelSystem {
         }
 
         try (FileWriter fw = new FileWriter(filePath("reservations.txt"), true)) {
-            fw.write(customer + ", " + roomNumber);
+            fw.write(customer + "," + roomNumber + '\n');
             return true;
             
         } catch (IOException e) {
@@ -430,7 +435,7 @@ public class Hotel implements HotelSystem {
                 return false;
             }
 
-            if(!updateRoomStatus(roomNumber, floor, customer)) {
+            if(!assignCustomerToRoom(roomNumber, floor, customer)) {
                 return false;
             }
 
@@ -442,7 +447,7 @@ public class Hotel implements HotelSystem {
     }
 
     //this gave me an error, said to make it public, so I made it public
-    public boolean updateRoomStatus(String roomNumber, String floor, String customer) {
+    public boolean assignCustomerToRoom(String roomNumber, String floor, String customer) {
         try {
             List<String> lines = new ArrayList<>();
             boolean roomFound = false;
@@ -450,7 +455,8 @@ public class Hotel implements HotelSystem {
             try (BufferedReader r = new BufferedReader(new FileReader(filePath("rooms.txt")))) {
                 String l;
                 while((l = r.readLine()) != null) {
-                    String[] p = l.split(",", 7);
+                    String[] p = l.split(",", 8);
+
                     if(p.length >= 3) {
                         String roomNo = p[0].trim();
                         String roomFloor = p[1].trim();
@@ -571,7 +577,7 @@ public class Hotel implements HotelSystem {
         }
 
         try (FileWriter fw = new FileWriter(filePath("housekeeping.txt"), true)) {
-            fw.write(roomNumber + ", " + status);
+            fw.write(roomNumber + "," + status + '\n');
             return true;
         } catch (IOException e) {
             System.out.println("Error writing housekeeping file");
@@ -718,7 +724,7 @@ public class Hotel implements HotelSystem {
     }
 
     //@Override, broke otherwise
-    public boolean updateStatus(String roomNumber, String floor, String status) {
+    private boolean updateStatus(String roomNumber, String floor, String status) {
         if (roomNumber == null || roomNumber.isEmpty() || floor == null || floor.isEmpty() ||
         status == null || status.isEmpty()) {
             return false; 
@@ -787,12 +793,6 @@ public class Hotel implements HotelSystem {
                             }
                             line = roomNumber + "," + floor + "," + customer + "," + date + "," + 
                             time + "," + description; 
-                            if (parts.length > 7){
-                                line = line + "," + price; 
-                            }
-                            else {
-                                line = line + "," + "100"; 
-                            }
                             } // end of else statement 1
                         }
                         lines.add(line); 
@@ -814,5 +814,11 @@ public class Hotel implements HotelSystem {
                 return false; 
             }
         }  
+
+    @Override
+    public boolean updateRoomStatus(String roomNumber, String floor, String status) {
+        return updateStatus(roomNumber, floor, status);
+    }
+
 
     }
