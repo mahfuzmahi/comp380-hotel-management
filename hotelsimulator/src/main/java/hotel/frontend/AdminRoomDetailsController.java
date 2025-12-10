@@ -68,6 +68,7 @@ public class AdminRoomDetailsController {
                 renterLabel.setText("Available");
                 s.next();
                 s.next();
+                s.next();
             } else {   
                 renter = s.next();
                 renterLabel.setText("Occupied by " + renter + "\n" + "Leave Date: " + s.next() + " at " + s.next());
@@ -84,6 +85,7 @@ public class AdminRoomDetailsController {
                             System.err.println(ex);
                         }
                     });
+            
                     //adds button to view renter details
                     buttonlist.add(new Button("View " + renter));
                     buttonlist.get(1).setOnAction(e -> {
@@ -95,6 +97,8 @@ public class AdminRoomDetailsController {
                         }
                     });
              }
+            detailsLabel.setText(s.next());
+            costLabel.setText("Cost per Night: $" + s.next());
 
             //adds buttons to the HBox
             buttonsAreaBoxRooms.getChildren().clear();
