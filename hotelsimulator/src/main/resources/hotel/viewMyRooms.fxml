@@ -30,8 +30,7 @@
         <!-- Buttons row -->
         <HBox spacing="10">
             <Button text="Cancel Reservation" onAction="#handleCancelReservation"/>
-            <!-- Optional: Back button (you already have handleBack in controller) -->
-            <Button text="Back" onAction="#handleBack"/>
+            
         </HBox>
 
     </VBox>

@@ -307,11 +307,6 @@ public class ViewMyRoomsController {
             System.err.println("Error writing reservations.txt while cancelling: " + e.getMessage());
         }
     }
-
-    @FXML
-    private void handleBack() throws Exception {
-        App.setRoot("userMyRooms");
-    }
 }
 
 

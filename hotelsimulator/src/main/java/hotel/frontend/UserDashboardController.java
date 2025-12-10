@@ -105,7 +105,7 @@ public class UserDashboardController {
     private void handleViewMyRooms() {
         try {
             
-            App.setRoot("MyRooms");
+            App.setRoot("viewMyRooms");
         } catch (Exception e) {
             e.printStackTrace();
             statusLabel.setText("Could not open View My Rooms page.");

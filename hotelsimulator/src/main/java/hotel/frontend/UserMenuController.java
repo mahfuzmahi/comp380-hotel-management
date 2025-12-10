@@ -29,6 +29,10 @@ public class UserMenuController {
     private void switchToReport() throws IOException {
         App.setRoot("reportIssue");
     }
+        @FXML
+    private void switchToDashboard() throws IOException {
+        App.setRoot("UserDashboard");
+}
 
                 @FXML
     private void switchToLanding() throws IOException {
