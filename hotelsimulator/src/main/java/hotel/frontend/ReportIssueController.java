@@ -18,7 +18,7 @@ import javafx.scene.control.TextField;
 public class ReportIssueController {
 
     @FXML
-    private TextField usernameField;   
+    private TextField usernameField;   // read-only
 
     @FXML
     private TextField roomNumberField;
