@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.171"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="hotel.frontend.UserDashboardController">
+
+    <VBox spacing="15"
+          AnchorPane.topAnchor="0"
+          AnchorPane.bottomAnchor="0"
+          AnchorPane.leftAnchor="0"
+          AnchorPane.rightAnchor="0"
+          style="-fx-background-color: lightblue; -fx-padding: 20;">
+
+        <!-- Reuse the dropdown menu -->
+        <fx:include source="userMenu.fxml"/>
+
+        <!-- Title -->
+        <Label text="User Dashboard" style="-fx-font-size: 26px; -fx-font-weight: bold;"/>
+
+        <!-- Welcome text -->
+        <Label fx:id="welcomeLabel" style="-fx-font-size: 18px;"/>
+
+        <!-- Quick summary -->
+        <Label fx:id="activeRoomsLabel" style="-fx-font-size: 14px;"/>
+
+        <!-- Main actions -->
+        <TitledPane text="Quick Actions" expanded="true">
+            <VBox spacing="10" style="-fx-padding: 10;">
+                <Button text="🏠 Rent a Room" maxWidth="Infinity"
+                        onAction="#handleRentRoom"/>
+                <Button text="🛏 View My Rooms" maxWidth="Infinity"
+                        onAction="#handleViewMyRooms"/>
+                <Button text="📝 Update My Info" maxWidth="Infinity"
+                        onAction="#handleUpdateInfo"/>
+                <Button text="🚨 Report an Issue" maxWidth="Infinity"
+                        onAction="#handleReportIssue"/>
+            </VBox>
+        </TitledPane>
+
+        
+        <Label fx:id="statusLabel" textFill="red"/>
+
+    </VBox>
+</AnchorPane>

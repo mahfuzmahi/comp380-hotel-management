@@ -14,7 +14,7 @@ public class Toast {
 
     // Simple version with default duration
     public static void show(Window ownerWindow, String message) {
-        show(ownerWindow, message, 2500); // 2.5 seconds
+        show(ownerWindow, message, 2500); // means 2.5 seconds
     }
 
     // Full version where you can set duration in ms
