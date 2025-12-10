@@ -8,6 +8,9 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.ScrollPane?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hotel.frontend.AdminManageStaffDetailsController">
    <VBox AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" style="-fx-background-color: lightblue;">
@@ -17,24 +20,27 @@
 
          <Pane VBox.vgrow="ALWAYS"/>
 
-         <HBox alignment="CENTER" spacing="20.0" >
-              <Label fx:id="staffNameLabel"/>
-         </HBox>    
+         <ScrollPane fx:id="scrollPane" style="-fx-padding: 10 10 10 10;">
+            <content>
+               <VBox alignment="center" style="-fx-padding: 20 20 20 20;">
+                  <children>
+                     <Label alignment="center" fx:id="staffNameLabel" style="-fx-font-size: 24px;"/>
 
-         <Pane VBox.vgrow="ALWAYS"/>
+                     <Pane VBox.vgrow="ALWAYS"/>
 
-         <HBox alignment="CENTER" spacing="20.0" >
-              <Label fx:id="staffEmailLabel"/>
-         </HBox>    
+                     <Label alignment="center" fx:id="staffEmailLabel" style="-fx-font-size: 24px;"/>
 
-         <Pane VBox.vgrow="ALWAYS"/>
+                     <Pane VBox.vgrow="ALWAYS"/>
 
-         <HBox alignment="CENTER" spacing="20.0" >
-              <Label fx:id="staffPhoneLabel"/>
-         </HBox>    
-
-         <Pane VBox.vgrow="ALWAYS"/>
+                     <Label alignment="center" fx:id="staffPhoneLabel" style="-fx-font-size: 24px;"/>
+                  
+                  </children>
+               </VBox>
+            </content>
+         </ScrollPane>
          
+         <Pane VBox.vgrow="ALWAYS"/>
+
       </children>
    </VBox>
 </AnchorPane>
