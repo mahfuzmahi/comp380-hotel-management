@@ -32,8 +32,8 @@
                         <!-- Username row -->
                         <HBox spacing="10.0">
                             <children>
-                                <Label text="Username:" prefWidth="120"/>
-                                <TextField fx:id="usernameField" prefWidth="200"/>
+                                <Label text="Name:" prefWidth="120"/>
+                                <TextField fx:id="usernameField" editable="false" prefWidth="200"/>
                             </children>
                         </HBox>
 

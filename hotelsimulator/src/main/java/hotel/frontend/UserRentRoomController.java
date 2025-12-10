@@ -85,6 +85,10 @@ public class UserRentRoomController implements Initializable {
                     String currentUser = App.getCurrentUser();
                     if (currentUser == null || currentUser.trim().isEmpty()) {
                         System.out.println("No user is currently logged in, cannot create reservation.");
+                        if (roomsBox.getScene() != null) {
+                            Toast.show(roomsBox.getScene().getWindow(),
+                                       "❌ No user is logged in. Please log in to rent a room.");
+                        }
                         return;
                     }
                     currentUser = currentUser.trim();
@@ -93,6 +97,10 @@ public class UserRentRoomController implements Initializable {
                     Integer nights = promptForNights();
                     if (nights == null) {
                         // user cancelled or invalid input
+                        if (roomsBox.getScene() != null) {
+                            Toast.show(roomsBox.getScene().getWindow(),
+                                       "ℹ️ Reservation cancelled or invalid number of nights.");
+                        }
                         return;
                     }
 
@@ -103,6 +111,10 @@ public class UserRentRoomController implements Initializable {
                                 + System.lineSeparator());
                     } catch (IOException ex) {
                         ex.printStackTrace();
+                        if (roomsBox.getScene() != null) {
+                            Toast.show(roomsBox.getScene().getWindow(),
+                                       "❌ Failed to save reservation. Please try again.");
+                        }
                         return;
                     }
 
@@ -111,6 +123,15 @@ public class UserRentRoomController implements Initializable {
                     boolean updated = markRoomAsOccupied(roomNumber, floor, currentUser, nights);
                     if (!updated) {
                         System.out.println("Warning: reservation saved but room status not updated.");
+                        if (roomsBox.getScene() != null) {
+                            Toast.show(roomsBox.getScene().getWindow(),
+                                       "⚠️ Reservation saved, but room status could not be updated.");
+                        }
+                    } else {
+                        if (roomsBox.getScene() != null) {
+                            Toast.show(roomsBox.getScene().getWindow(),
+                                       "✅ Room " + roomNumber + " booked successfully for " + nights + " night(s)!");
+                        }
                     }
 
                     // 4) Refresh list so this room disappears from "Rent a Room"
@@ -128,6 +149,10 @@ public class UserRentRoomController implements Initializable {
             e.printStackTrace();
             roomsBox.getChildren().add(
                     new Label("Error loading rooms from DataFiles/rooms.txt"));
+            if (roomsBox.getScene() != null) {
+                Toast.show(roomsBox.getScene().getWindow(),
+                           "❌ Error loading rooms data.");
+            }
         }
     }
 
@@ -240,5 +265,6 @@ public class UserRentRoomController implements Initializable {
         return true;
     }
 }
+
 
 
