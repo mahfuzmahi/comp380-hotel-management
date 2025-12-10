@@ -15,6 +15,8 @@ import java.util.ResourceBundle;
 import hotel.backend.Hotel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
@@ -68,75 +70,115 @@ public class UserRentRoomController implements Initializable {
                 String isOccupied = parts[2].trim();
                 String description= parts[6].trim();
 
+                // parse price (index 7 if present)
+                String priceStr = (parts.length > 7) ? parts[7].trim() : "100";
+                double nightlyRate;
+                try {
+                    nightlyRate = Double.parseDouble(priceStr);
+                } catch (NumberFormatException ex) {
+                    nightlyRate = 100.0; // fallback
+                }
+
                 // Only show rooms that are NOT occupied
                 if (!"FALSE".equalsIgnoreCase(isOccupied)) {
                     continue;
                 }
 
                 String buttonText = String.format(
-                        "Floor %s - Room %s  |  %s  |  %s",
-                        floor, roomNumber, description, "Available"
+                        "Floor %s - Room %s  |  %s  |  $%.2f / night",
+                        floor, roomNumber, description, nightlyRate
                 );
 
                 Button roomButton = new Button(buttonText);
                 roomButton.setMaxWidth(Double.MAX_VALUE);
 
-                roomButton.setOnAction(e -> {
-                    String currentUser = App.getCurrentUser();
-                    if (currentUser == null || currentUser.trim().isEmpty()) {
-                        System.out.println("No user is currently logged in, cannot create reservation.");
-                        if (roomsBox.getScene() != null) {
-                            Toast.show(roomsBox.getScene().getWindow(),
-                                       "❌ No user is logged in. Please log in to rent a room.");
-                        }
-                        return;
-                    }
-                    currentUser = currentUser.trim();
+                // Make variables effectively final for the lambda
+                final String fRoomNumber  = roomNumber;
+                final String fFloor       = floor;
+                final double fNightlyRate = nightlyRate;
 
-                    // 1) Ask user how many nights they want to stay
-                    Integer nights = promptForNights();
-                    if (nights == null) {
-                        // user cancelled or invalid input
-                        if (roomsBox.getScene() != null) {
-                            Toast.show(roomsBox.getScene().getWindow(),
-                                       "ℹ️ Reservation cancelled or invalid number of nights.");
-                        }
-                        return;
-                    }
+    roomButton.setOnAction(e -> {
+        String currentUser = App.getCurrentUser();
+        if (currentUser == null || currentUser.trim().isEmpty()) {
+         System.out.println("No user is currently logged in, cannot create reservation.");
+            if (roomsBox.getScene() != null) {
+            Toast.show(roomsBox.getScene().getWindow(),
+                       "❌ No user is logged in. Please log in to rent a room.");
+        }
+        return;
+    }
+    currentUser = currentUser.trim();
 
-                    // 2) Save reservation: username,room,floor,nights
-                    try (FileWriter fw = new FileWriter(
-                            Hotel.filePath("reservations.txt"), true)) {
-                        fw.write(currentUser + "," + roomNumber + "," + floor + "," + nights
-                                + System.lineSeparator());
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                        if (roomsBox.getScene() != null) {
-                            Toast.show(roomsBox.getScene().getWindow(),
-                                       "❌ Failed to save reservation. Please try again.");
-                        }
-                        return;
-                    }
+    // 1) Ask user how many nights they want to stay
+    Integer nights = promptForNights();
+    if (nights == null) {
+        // user cancelled or invalid input
+        if (roomsBox.getScene() != null) {
+            Toast.show(roomsBox.getScene().getWindow(),
+                       "ℹ️ Reservation cancelled or invalid number of nights.");
+        }
+        return;
+    }
 
-                    // 3) Mark this room as occupied by this user in rooms.txt
-                    //    with LEAVE DATE = today + nights and TIME = 11:00 AM
-                    boolean updated = markRoomAsOccupied(roomNumber, floor, currentUser, nights);
-                    if (!updated) {
-                        System.out.println("Warning: reservation saved but room status not updated.");
-                        if (roomsBox.getScene() != null) {
-                            Toast.show(roomsBox.getScene().getWindow(),
-                                       "⚠️ Reservation saved, but room status could not be updated.");
-                        }
-                    } else {
-                        if (roomsBox.getScene() != null) {
-                            Toast.show(roomsBox.getScene().getWindow(),
-                                       "✅ Room " + roomNumber + " booked successfully for " + nights + " night(s)!");
-                        }
-                    }
+    // 2) Calculate total price
+    double total = fNightlyRate * nights;
 
-                    // 4) Refresh list so this room disappears from "Rent a Room"
-                    loadAvailableRooms();
-                });
+    // 3) Show confirmation dialog with total
+    Alert confirm = new Alert(AlertType.CONFIRMATION);
+    confirm.setTitle("Confirm Reservation");
+    confirm.setHeaderText("Confirm your stay");
+    confirm.setContentText(String.format(
+            "Room: %s (Floor %s)\nNights: %d\nPrice per night: $%.2f\n\nTOTAL: $%.2f\n\nDo you want to confirm this reservation?",
+            fRoomNumber, fFloor, nights, fNightlyRate, total
+    ));
+
+    Optional<javafx.scene.control.ButtonType> choice = confirm.showAndWait();
+    if (choice.isEmpty() || choice.get() != javafx.scene.control.ButtonType.OK) {
+        // user cancelled in confirmation
+        if (roomsBox.getScene() != null) {
+            Toast.show(roomsBox.getScene().getWindow(),
+                       "ℹ️ Reservation not confirmed.");
+        }
+        return;
+    }
+
+
+    // 4) Save reservation: username,room,floor,nights
+    try (FileWriter fw = new FileWriter(
+            Hotel.filePath("reservations.txt"), true)) {
+        fw.write(currentUser + "," + fRoomNumber + "," + fFloor + "," + nights
+                + System.lineSeparator());
+    } catch (IOException ex) {
+        ex.printStackTrace();
+        if (roomsBox.getScene() != null) {
+            Toast.show(roomsBox.getScene().getWindow(),
+                       "❌ Failed to save reservation. Please try again.");
+        }
+        return;
+    }
+
+    // 5) Mark this room as occupied by this user in rooms.txt
+    boolean updated = markRoomAsOccupied(fRoomNumber, fFloor, currentUser, nights);
+    if (!updated) {
+        System.out.println("Warning: reservation saved but room status not updated.");
+        if (roomsBox.getScene() != null) {
+            Toast.show(roomsBox.getScene().getWindow(),
+                       "⚠️ Reservation saved, but room status could not be updated.");
+        }
+    } else {
+        if (roomsBox.getScene() != null) {
+            Toast.show(roomsBox.getScene().getWindow(),
+                       String.format(
+                           "✅ Room %s booked for %d night(s).\nTotal: $%.2f ($%.2f/night)",
+                           fRoomNumber, nights, total, fNightlyRate
+                       ));
+        }
+    }
+
+    // 6) Refresh list so this room disappears from "Rent a Room"
+    loadAvailableRooms();
+});
+
 
                 roomsBox.getChildren().add(roomButton);
             }
@@ -265,6 +307,7 @@ public class UserRentRoomController implements Initializable {
         return true;
     }
 }
+
 
 
 
