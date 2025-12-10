@@ -7,9 +7,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import hotel.backend.Hotel;
@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.VBox;
 
 /**
@@ -67,20 +68,6 @@ public class UserRentRoomController implements Initializable {
                 String isOccupied = parts[2].trim();
                 String description= parts[6].trim();
 
-                String price;
-                if(parts.length > 7) {
-                    price = parts[7].trim();
-                } else {
-                    price = "100";
-                }
-
-                double roomPrice;
-                try {
-                    roomPrice = Double.parseDouble(price);
-                } catch (NumberFormatException e) {
-                    roomPrice = 100.0;
-                }
-
                 // Only show rooms that are NOT occupied
                 if (!"FALSE".equalsIgnoreCase(isOccupied)) {
                     continue;
@@ -94,8 +81,6 @@ public class UserRentRoomController implements Initializable {
                 Button roomButton = new Button(buttonText);
                 roomButton.setMaxWidth(Double.MAX_VALUE);
 
-                final double finalRoomPrice = roomPrice;
-
                 roomButton.setOnAction(e -> {
                     String currentUser = App.getCurrentUser();
                     if (currentUser == null || currentUser.trim().isEmpty()) {
@@ -104,30 +89,31 @@ public class UserRentRoomController implements Initializable {
                     }
                     currentUser = currentUser.trim();
 
-                    // 1) Save reservation: username,room,floor
+                    // 1) Ask user how many nights they want to stay
+                    Integer nights = promptForNights();
+                    if (nights == null) {
+                        // user cancelled or invalid input
+                        return;
+                    }
+
+                    // 2) Save reservation: username,room,floor,nights
                     try (FileWriter fw = new FileWriter(
                             Hotel.filePath("reservations.txt"), true)) {
-                        fw.write(currentUser + "," + roomNumber + "," + floor
+                        fw.write(currentUser + "," + roomNumber + "," + floor + "," + nights
                                 + System.lineSeparator());
                     } catch (IOException ex) {
                         ex.printStackTrace();
                         return;
                     }
 
-                    // 2) Mark this room as occupied by this user in rooms.txt
-                    boolean updated = markRoomAsOccupied(roomNumber, floor, currentUser);
+                    // 3) Mark this room as occupied by this user in rooms.txt
+                    //    with LEAVE DATE = today + nights and TIME = 11:00 AM
+                    boolean updated = markRoomAsOccupied(roomNumber, floor, currentUser, nights);
                     if (!updated) {
                         System.out.println("Warning: reservation saved but room status not updated.");
-                        return;
                     }
 
-                    // record payments in payments.txt file
-                    boolean paymentRecord = hotel.Payment(currentUser, finalRoomPrice, floor);
-                    if(!paymentRecord) {
-                        System.out.println("Room rented, but payment not recorded");
-                    }
-
-                    // 3) Refresh list so this room disappears from "Rent a Room"
+                    // 4) Refresh list so this room disappears from "Rent a Room"
                     loadAvailableRooms();
                 });
 
@@ -146,15 +132,46 @@ public class UserRentRoomController implements Initializable {
     }
 
     /**
-     * Updates rooms.txt so that the matching room line becomes:
-     * roomNumber,floor,TRUE,currentUser,date,time,description,price
+     * Prompts the user for how many nights they want to stay.
+     * Returns an Integer >= 1, or null if cancelled/invalid.
      */
-    private boolean markRoomAsOccupied(String roomNumber, String floor, String customer) {
+    private Integer promptForNights() {
+        TextInputDialog dialog = new TextInputDialog("1");
+        dialog.setTitle("Stay Duration");
+        dialog.setHeaderText("How many nights would you like to stay?");
+        dialog.setContentText("Nights:");
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isEmpty()) {
+            return null; // user cancelled
+        }
+
+        String input = result.get().trim();
+        try {
+            int nights = Integer.parseInt(input);
+            if (nights <= 0) {
+                return null;
+            }
+            return nights;
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
+
+    /**
+     * Updates rooms.txt so that the matching room line becomes:
+     * roomNumber,floor,TRUE,currentUser,leaveDate,leaveTime,description,price
+     *
+     * leaveDate = today + nights
+     * leaveTime = "11:00 AM"
+     */
+    private boolean markRoomAsOccupied(String roomNumber, String floor, String customer, int nights) {
+        String path = Hotel.filePath("rooms.txt");
         List<String> lines = new ArrayList<>();
         boolean found = false;
 
         try (BufferedReader reader = new BufferedReader(
-                new FileReader(Hotel.filePath("rooms.txt")))) {
+                new FileReader(path))) {
 
             String line;
             while ((line = reader.readLine()) != null) {
@@ -180,15 +197,16 @@ public class UserRentRoomController implements Initializable {
                                                             : "Details of Room " + roomNumber;
                     String price = (parts.length > 7) ? parts[7].trim() : "100";
 
-                    String date = LocalDate.now().toString();
-                    String time = LocalTime.now().withNano(0).toString(); // HH:MM:SS
+                    LocalDate today     = LocalDate.now();
+                    LocalDate leaveDate = today.plusDays(nights);
+                    String date = leaveDate.toString();   // Leave date shown on admin side
+                    String time = "11:00 AM";             // Checkout time
 
-                    // isOccupied = TRUE, person = customer
                     String newLine = String.join(",",
                             roomNumber,
                             floor,
-                            "TRUE",
-                            customer,
+                            "TRUE",      // isOccupied
+                            customer,    // person
                             date,
                             time,
                             description,
@@ -209,8 +227,7 @@ public class UserRentRoomController implements Initializable {
             return false;
         }
 
-        try (BufferedWriter writer = new BufferedWriter(
-                new FileWriter(Hotel.filePath("rooms.txt")))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
             for (String l : lines) {
                 writer.write(l);
                 writer.newLine();
@@ -223,4 +240,5 @@ public class UserRentRoomController implements Initializable {
         return true;
     }
 }
+
 
