@@ -70,13 +70,13 @@ public class UserRentRoomController implements Initializable {
                 String isOccupied = parts[2].trim();
                 String description= parts[6].trim();
 
-                // parse price (index 7 if present)
+                // parse price 
                 String priceStr = (parts.length > 7) ? parts[7].trim() : "100";
                 double nightlyRate;
                 try {
                     nightlyRate = Double.parseDouble(priceStr);
                 } catch (NumberFormatException ex) {
-                    nightlyRate = 100.0; // fallback
+                    nightlyRate = 100.0; 
                 }
 
                 // Only show rooms that are NOT occupied
