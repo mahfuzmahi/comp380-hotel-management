@@ -1,6 +1,7 @@
 hotel/frontend/App.class
 hotel/frontend/LandingPageController.class
 hotel/frontend/LoginController.class
+hotel/frontend/Toast.class
 hotel/frontend/AdminRoomsController.class
 hotel/frontend/AdminViewAccountController.class
 hotel/frontend/AdminViewAccountDetailsController.class
@@ -14,6 +15,7 @@ hotel/backend/RoomOptions.class
 hotel/backend/Main.class
 hotel/frontend/AdminManageStaffController.class
 hotel/backend/Hotel.class
+hotel/frontend/UserDashboardController.class
 hotel/frontend/UserUpdateInfoController.class
 hotel/frontend/AdminIssuesDetails2Controller.class
 hotel/frontend/AdminManageStaffDetailsController.class
