@@ -47,7 +47,7 @@ public class LoginController {
             App.setRoot("adminManageStaff");
         } else if (hotel.Login(nameInput, passwordInput)) {
             App.setCurrentUser(nameInput);
-            App.setRoot("viewMyRooms");
+            App.setRoot("userDashboard");
         } else{
             InstructionLabel.setText("login failed");
         }
