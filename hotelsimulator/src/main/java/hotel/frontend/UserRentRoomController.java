@@ -27,7 +27,7 @@ import javafx.scene.layout.VBox;
  * Room data is read from rooms.txt and displayed as buttons that the user can select.
  * Only rooms marked as unoccupied are shown.
  *
- * Author: Jose Mendiola
+ * Author: Jose Mendiola, Mahfuz Ahmed
  */
 public class UserRentRoomController implements Initializable {
 
@@ -157,6 +157,21 @@ public class UserRentRoomController implements Initializable {
         return;
     }
 
+    // DO NOT REMOVE
+    // this is to record the payments in the payments.txt file
+    String paymentMethod = promptPaymentMethod();
+    if (paymentMethod == null || paymentMethod.trim().isEmpty()) {
+        paymentMethod = "credit";
+    }
+
+    boolean paymentRecorded = hotel.Payment(currentUser, total, paymentMethod);
+    if (!paymentRecorded) {
+        System.out.println("reservation saved but payment not recorded.");
+        if (roomsBox.getScene() != null) {
+            Toast.show(roomsBox.getScene().getWindow(), "reservation saved but payment could not be recorded.");
+        }
+    }
+
     // 5) Mark this room as occupied by this user in rooms.txt
     boolean updated = markRoomAsOccupied(fRoomNumber, fFloor, currentUser, nights);
     if (!updated) {
@@ -223,6 +238,37 @@ public class UserRentRoomController implements Initializable {
         } catch (NumberFormatException e) {
             return null;
         }
+    }
+
+    // DO NOT REMOVE
+    // prompts the user for their payment method
+    private String promptPaymentMethod() {
+        TextInputDialog dialog = new TextInputDialog("credit");
+        dialog.setTitle("Payment Method");
+        dialog.setHeaderText("Select payment method");
+        dialog.setContentText("Payment method (credit/debit/cash):");
+        
+        Optional<String> result = dialog.showAndWait();
+        if (result.isEmpty()) {
+            return null; // user cancelled the prompt
+        }
+
+        String input = result.get().trim().toLowerCase();
+        if (input.isEmpty()) {
+            return null;
+        }
+        
+        // common payment method inputs
+        if (input.equals("credit") || input.equals("credit card") || input.equals("cc")) {
+            return "credit";
+        } else if (input.equals("debit") || input.equals("debit card") || input.equals("dc")) {
+            return "debit";
+        } else if (input.equals("cash")) {
+            return "cash";
+        }
+        
+        // Return the input as it current is if it doesn't match any of the common patterns added
+        return input;
     }
 
     /**

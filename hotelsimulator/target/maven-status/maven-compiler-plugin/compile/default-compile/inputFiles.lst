@@ -5,8 +5,10 @@
 /Users/mahfuzahmed/Documents/GitHub/comp380-hotel-management/hotelsimulator/src/main/java/hotel/frontend/AdminManageStaffController.java
 /Users/mahfuzahmed/Documents/GitHub/comp380-hotel-management/hotelsimulator/src/main/java/hotel/frontend/UserRentRoomController.java
 /Users/mahfuzahmed/Documents/GitHub/comp380-hotel-management/hotelsimulator/src/main/java/hotel/frontend/ReportIssueController.java
+/Users/mahfuzahmed/Documents/GitHub/comp380-hotel-management/hotelsimulator/src/main/java/hotel/frontend/Toast.java
 /Users/mahfuzahmed/Documents/GitHub/comp380-hotel-management/hotelsimulator/src/main/java/hotel/frontend/AdminManageStaffDetailsController.java
 /Users/mahfuzahmed/Documents/GitHub/comp380-hotel-management/hotelsimulator/src/main/java/hotel/frontend/AdminViewAccountController.java
+/Users/mahfuzahmed/Documents/GitHub/comp380-hotel-management/hotelsimulator/src/main/java/hotel/frontend/UserDashboardController.java
 /Users/mahfuzahmed/Documents/GitHub/comp380-hotel-management/hotelsimulator/src/main/java/hotel/frontend/ViewMyRoomsController.java
 /Users/mahfuzahmed/Documents/GitHub/comp380-hotel-management/hotelsimulator/src/main/java/hotel/frontend/LoginController.java
 /Users/mahfuzahmed/Documents/GitHub/comp380-hotel-management/hotelsimulator/src/main/java/hotel/backend/HotelSystem.java

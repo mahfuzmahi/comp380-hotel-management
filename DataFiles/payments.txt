@@ -1,1 +1,3 @@
 
+mahfuztest,500.0,credit
+mahfuztest,200.0,credit
