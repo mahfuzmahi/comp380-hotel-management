@@ -19,6 +19,7 @@
                 <MenuItem text="View my Rooms"  onAction="#switchToViewRooms"/>
                 <MenuItem text="Update Info" onAction="#switchToUpdateInfo"/>
                 <MenuItem text="Report Issue"  onAction="#switchToReport"/>
+                <MenuItem text="Dashboard" onAction="#switchToDashboard"/>
                 <MenuItem text="Log Out"  onAction="#switchToLanding"/>
             </Menu>
     </MenuBar>

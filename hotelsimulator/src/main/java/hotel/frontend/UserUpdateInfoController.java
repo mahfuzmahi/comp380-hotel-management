@@ -42,7 +42,7 @@ public class UserUpdateInfoController {
      */
     @FXML
     private void initialize() {
-        String currentUser = App.getCurrentUser();  
+        String currentUser = App.getCurrentUser();
 
         if (currentUser != null && !currentUser.trim().isEmpty()) {
             usernameField.setText(currentUser.trim());
@@ -50,6 +50,7 @@ public class UserUpdateInfoController {
         } else {
             usernameField.setText("");
             statusLabel.setText("No user is currently logged in.");
+            // ⚠️ Don't use Toast here: scene/window may not be attached yet in initialize()
         }
     }
 
@@ -62,6 +63,10 @@ public class UserUpdateInfoController {
         String username = App.getCurrentUser();
         if (username == null || username.trim().isEmpty()) {
             statusLabel.setText("No user is currently logged in.");
+            if (statusLabel.getScene() != null) {
+                Toast.show(statusLabel.getScene().getWindow(),
+                           "❌ No user is logged in. Please log in first.");
+            }
             return;
         }
         username = username.trim();
@@ -75,6 +80,10 @@ public class UserUpdateInfoController {
         // current password has to be entered
         if (oldPassword == null || oldPassword.trim().isEmpty()) {
             statusLabel.setText("Please enter your current password.");
+            if (statusLabel.getScene() != null) {
+                Toast.show(statusLabel.getScene().getWindow(),
+                           "⚠️ Please enter your current password.");
+            }
             return;
         }
 
@@ -87,12 +96,20 @@ public class UserUpdateInfoController {
 
         if (!anyChange) {
             statusLabel.setText("Please change at least one field (password, email, phone, or bank).");
+            if (statusLabel.getScene() != null) {
+                Toast.show(statusLabel.getScene().getWindow(),
+                           "ℹ️ Change at least one field before saving.");
+            }
             return;
         }
 
         // Verify current password
         if (!hotel.Login(username, oldPassword)) {
             statusLabel.setText("Current password is incorrect.");
+            if (statusLabel.getScene() != null) {
+                Toast.show(statusLabel.getScene().getWindow(),
+                           "❌ Current password is incorrect.");
+            }
             return;
         }
 
@@ -112,10 +129,19 @@ public class UserUpdateInfoController {
             statusLabel.setText("Information updated successfully!");
             oldPasswordField.clear();
             newPasswordField.clear();
-            
+
+            if (statusLabel.getScene() != null) {
+                Toast.show(statusLabel.getScene().getWindow(),
+                           "✅ Your information has been updated.");
+            }
         } else {
             statusLabel.setText("Could not save changes.");
+            if (statusLabel.getScene() != null) {
+                Toast.show(statusLabel.getScene().getWindow(),
+                           "❌ Could not save your changes.");
+            }
         }
     }
 }
+
 

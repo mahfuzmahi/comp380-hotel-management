@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
@@ -20,12 +19,20 @@
         <fx:include source="userMenu.fxml"/>
 
         <Label text="View My Rooms" style="-fx-font-size: 24px;"/>
-
         <Label text="These are the rooms you have booked:"/>
 
+        <!-- List of user's rooms -->
         <ListView fx:id="roomsList" prefHeight="300"/>
 
+        <!-- Status / messages -->
         <Label fx:id="statusLabel" textFill="red"/>
+
+        <!-- Buttons row -->
+        <HBox spacing="10">
+            <Button text="Cancel Reservation" onAction="#handleCancelReservation"/>
+            
+        </HBox>
 
     </VBox>
 </AnchorPane>
+
