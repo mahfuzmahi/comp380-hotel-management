@@ -10,13 +10,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
  
 /**
- * AdminManageStaffDetailsController(Class): Controller class for the admin manage staff details view. Contains methods to initialize the view by reading and displaying details of the selected staff member.
+ * Controller class for the admin manage staff details view. Contains methods to initialize the view by reading and displaying details of the selected staff member.
  * @author Justin_Scott, 11/20/2025
  */
 public class AdminManageStaffDetailsController {
 
     /**
-     * staffNameLabel(Variable): Label to display the info of the staff member whose details are being viewed.
+     * Label to display the info of the staff member whose details are being viewed.
      */
     @FXML
     private Label staffNameLabel;
@@ -28,7 +28,7 @@ public class AdminManageStaffDetailsController {
     private Label staffPhoneLabel;
 
     /**
-     * intialize(Method): initializer method for AdminManageStaffDetailsController to read and display details of the selected staff member.
+     * initializer method for AdminManageStaffDetailsController to read and display details of the selected staff member.
      * uses a while loop with s.hasNext() and a current employee != person we want to find check to safely find the first staff member that matches the viewed account.
      */
     @FXML

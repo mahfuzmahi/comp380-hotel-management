@@ -14,8 +14,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 
 /**
- * Controller class for the admin issues view.  Shows a list of staff to assign Contains methods to initialize the view by reading reported issues from file and displaying them as buttons in the defined VBox.
- * @author Justin_Scott, 12/3/2025
+ * Controller class for the admin issues view.  Show a list of staff members to assign to the issue.
+ * @author Justin_Scott, 12/2/2025
  */
 public class AdminIssuesDetails2Controller {
     private Hotel hotel = new Hotel();
@@ -49,7 +49,6 @@ public class AdminIssuesDetails2Controller {
             //makes a scanner to read the employees file and uses \n and , as delimiters
             Scanner s = new Scanner(new File(Hotel.filePath("employees.txt"))).useDelimiter("\\R|,");
             while (s.hasNext()) {
-                    //TODO change with employee file format changes
                     String empName = s.next();
                     //adds a button for each line with ButtonText as the text and sends to adminManageStaffDetails when clicked
                     buttonlist.add(new Button("Assign " + empName));

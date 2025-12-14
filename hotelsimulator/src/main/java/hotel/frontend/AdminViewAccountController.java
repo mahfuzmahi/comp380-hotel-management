@@ -13,13 +13,13 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
  
 /**
- * AdminViewAccountController(Class): Controller class for the admin view account view. Contains methods to initialize the view by reading customers from file and displaying them as buttons in the defined VBox.
+ * Controller class for the admin view account view. Contains methods to initialize the view by reading customers from file and displaying them as buttons in the defined VBox.
  * @author Justin_Scott, 11/20/2025
  */
 public class AdminViewAccountController {
 
     /**
-    * buttonsAreaBoxUsers(Variable): Holds the list of buttons representing customers.
+    * Holds the list of buttons representing customers.
     */
     @FXML
     private VBox buttonsAreaBoxUsers;
@@ -32,7 +32,7 @@ public class AdminViewAccountController {
     List<Button> buttonlist = new ArrayList<>();
   
     /**
-     * initialize(Method): initializer method for AdminViewAccountController to read customers from file and display them as buttons in the defined VBox.
+     * initializer method for AdminViewAccountController to read customers from file and display them as buttons in the defined VBox.
      */
     @FXML
     public void initialize() {
