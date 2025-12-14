@@ -36,14 +36,17 @@ import java.util.List;
  * File Path: The filePath() method uses a fall back system to find the DataFiles directory
  * alongside the default path. This makes sure that the system works regardless of where the 
  * application is being run from.
+ * File re-writing: Read an entire file into memory, modify specific lines, and 
+ * then rewrite the whole file (BufferedReader, BufferedWriter, and FileWriter).
+
  * All methods validate the input parameters such as null and empty string checks and trim() to ignore whitespaces
  * This makes sure that valid data is being passed through. 
  * 
- * @author Mahfuz Ahmed
- * @version 1.0
+ * @author Mahfuz Ahmed, Michael Garcia
+ * @version 2.0
  */
-
 public class Hotel implements HotelSystem {
+
     /**
      * Checks the file path for data files in the DataFiles folder/directory.
      * Uses a fallback method to find the directory despite execution context.
@@ -54,12 +57,11 @@ public class Hotel implements HotelSystem {
      * Default path "DataFiles/" as a fallback technique
      * 
      * This makes sure the system works despite where the project is run from
-     * the hotelsimulator directort or any other location.
+     * the hotelsimulator directory or any other location, in general.
      * 
      * @param fileName the name of the text file that needs to be found
      * @return the exact or relative path to the requested text file
      */
-
     public static String filePath(String fileName) {
         String current = System.getProperty("user.dir");
 
@@ -80,10 +82,13 @@ public class Hotel implements HotelSystem {
     }
 
     /**
-     * Creates a new customer account and saves it to the customer.txt file
+     * Creates a new customer account and saves it to the customer.txt file.
      * 
-     * @param username Any username the user choses
-     * @param password Any password the user choses
+     * @param username Any username the user chooses
+     * @param password Any password the user chooses
+     * @param email The email address of the customer
+     * @param phone The phone number of the customer
+     * @param bankInfo The bank information of the customer
      * @return true if account creation succeeds, false if validation fails
      */
     @Override
@@ -125,15 +130,15 @@ public class Hotel implements HotelSystem {
 
     /**
      * A new administration account is created when an employee creates an account 
-     * This administration information is stored in admins.txt file
+     * This administration information is stored in admins.txt file.
+     * Email and Phone are used as contact information to reach the administrator if needed.
+     * 
      * @param username Any username that the administrator chooses 
      * @param password Any password chosen by the administrator
      * @param email Email the administrator provides 
      * @param phone Phone number the administrator provides 
-     * Email and Phone are used as contact information to reach the administrator if needed
      * @return true if admin account is successfully created and saved to file, false otherwise
      */
-
     @Override
     public boolean CreateAdmin(String username, String password, String email, String phone){
         if (username != null){
@@ -165,6 +170,18 @@ public class Hotel implements HotelSystem {
         }
     }
 
+    /**
+     * Updates an existing customer account with new information.
+     * Only non-empty parameters will be updated.
+     * Empty or null parameters will keep their existing values.
+     * 
+     * @param username The username of the account to update (required, cannot be null or empty)
+     * @param password The new password (optional, empty string keeps current password)
+     * @param email The new email address (optional, empty string keeps current email)
+     * @param phone The new phone number (optional, empty string keeps current phone)
+     * @param bankInfo The new bank information (optional, empty string keepss current bank info)
+     * @return true if the account was successfully updated, false otherwise. 
+     */
     @Override
     public boolean updateAccount(String username, String password, String email, String phone, String bankInfo) {
         if(username != null) {
@@ -256,19 +273,26 @@ public class Hotel implements HotelSystem {
             return false;
         }
     }
+
     /**
-     * Authenticates a customer login by veryfing information in the customers.txt file
+     * Authenticates a customer login by veryfing information in the customers.txt file.
      * 
      * @param username The username to verify
      * @param password The password to verify
-     * @return true if information matches the customer account in the text file, false otherwise
+     * @return true if information matches the customer account in the text file, false otherwise.
      */
-
     @Override
     public boolean Login(String username, String password) {
         return verifyCustomer(username, password);
     }
 
+    /**
+     * Authenticates an administrator login by verifying information in the admins.txt file.
+     * 
+     * @param employeeId The administrator username to verify
+     * @param password The administrator password to verify
+     * @return true if the credentials match an administrator account in admins.txt, false otherwise.
+     */
     @Override
     public boolean adminLogin(String employeeId, String password) {
         return verifyAdmin(employeeId, password);
@@ -279,10 +303,9 @@ public class Hotel implements HotelSystem {
      * 
      * @param username The username to verify
      * @param password The password to verify
-     * @param fileName The name of the file ot search
+     * @param fileName The name of the file to search
      * @return true if matching information is found, false otherwise
      */
-
     public boolean verifyLoginInFile(String username, String password, String fileName) {
         if(username != null) {
             username = username.trim();
@@ -323,17 +346,23 @@ public class Hotel implements HotelSystem {
     }
 
     /**
-     * Verifies employee login information
+     * Verifies employee login information by checking against the employees.txt file.
      * 
      * @param username The employee username to verify
      * @param password The employee password to verify
-     * @return true if infomration match an employee account in employees.txt, false otherwise
+     * @return true if information match an employee account in employees.txt, false otherwise
      */
-
     public boolean verifyEmployee(String username, String password) {
         return verifyLoginInFile(username, password, "employees.txt");
     }
 
+    /**
+     * Verifies administrator login information by checking against the admins.txt file.
+     * 
+     * @param username The admin username to verify
+     * @param password The admin password to verify
+     * @return true if the information match an admin account in admins.txt, false otherwise
+     */
     public boolean verifyAdmin(String username, String password) {
         return verifyLoginInFile(username, password, "admins.txt");
     }
@@ -346,7 +375,6 @@ public class Hotel implements HotelSystem {
      * @param method The payment method such as credit, debit, cash, etc.
      * @return true if payment was successful, false otherwise
      */
-
     @Override
     public boolean Payment(String customer, double amount, String method) {
         if(customer == null || customer.isEmpty() || method == null || method.isEmpty()) {
@@ -370,7 +398,6 @@ public class Hotel implements HotelSystem {
      * @param roomNumber The room number to be reserved
      * @return true if reservation was successful, false otherwise
      */
-
     @Override
     public boolean Reservation(String customer, String roomNumber) {
         if(customer == null || customer.isEmpty() || roomNumber == null || roomNumber.isEmpty()) {
@@ -387,6 +414,17 @@ public class Hotel implements HotelSystem {
         }
     }
 
+    /**
+     * Processes a room rental transaction that includes a room assignment and a payment.
+     * This method finds the room price from the rooms.txt file, then assigns the customer
+     * to the room, and also records the payment transaction
+     * 
+     * @param customer The username of the customer renting the room
+     * @param roomNumber The room number to be rented
+     * @param floor The floor number where the room is located at
+     * @param paymentMethod The payment method such as credit, debit or cash
+     * @return true if the room rental and payment were successfully processed, false otherwise
+     */
     @Override
     public boolean rentRoomProcess(String customer, String roomNumber, String floor, String paymentMethod) {
         if(customer == null || customer.isEmpty() || roomNumber == null || roomNumber.isEmpty() || 
@@ -446,7 +484,15 @@ public class Hotel implements HotelSystem {
         }
     }
 
-    //this gave me an error, said to make it public, so I made it public
+    /**
+     * Assigns a customer to a specific room and updates the room status in rooms.txt file.
+     * The room status is "TRUE" if occupied, and the current date and time are recorded.
+     * 
+     * @param roomNumber The room number to assign
+     * @param floor The floor number where the room is located
+     * @param customer The username of the customer to assign to the current room
+     * @return true if the customer was successfully assigned to the room, false otherwise
+     */
     public boolean assignCustomerToRoom(String roomNumber, String floor, String customer) {
         try {
             List<String> lines = new ArrayList<>();
@@ -508,13 +554,12 @@ public class Hotel implements HotelSystem {
     }
 
     /**
-     * Authenticates an employee login by verifying informations in employees.txt file
+     * Authenticates an employee login by verifying informations in employees.txt file.
      * 
      * @param username The username of employee to verify
      * @param password The password of employee to verify
-     * @return true if information matches employee account on employee.txt file, false otherwise
+     * @return true if information matches employee account on employees.txt file, false otherwise
      */
-
     @Override
     public boolean Employee(String username, String password){
         return verifyEmployee(username, password);
@@ -566,10 +611,9 @@ public class Hotel implements HotelSystem {
      * Updates housekeeping for a room and records it in the housekeeping.txt file
      * 
      * @param roomNumber the room needed to be updated
-     * @param status the new houskeeping status such as clean, dirty, maintenence, etc.
+     * @param status the new houskeeping status such as clean, dirty, maintenance, etc.
      * @return true if status was successfully updated, false otherwise
      */
-
     @Override
     public boolean Housekeeping(String roomNumber, String status) {
         if(roomNumber == null || roomNumber.isEmpty() || status == null || status.isEmpty()) {
@@ -590,7 +634,6 @@ public class Hotel implements HotelSystem {
      * 
      * @param report The report text to be saved
      */
-
     @Override
     public void Manager(String report) {
         if(report == null || report.isEmpty()) {
@@ -608,15 +651,14 @@ public class Hotel implements HotelSystem {
     }
 
     /** 
-     * Reports an issue written by customer and saves report to issues.txt file. 
+     * Reports an issue written by customer and saves report to managers_report.txt file. 
+     * 
      * @param username The username of the customer reporting the issue 
      * @param issue A description of the issue being reported 
      * @param roomNumber The room number where the customer is staying 
      * @param floor The floor in which the room number and customer are located 
      * @return true if issue report was successfully saved to file, false if not 
-     * 
      */
-
     @Override
     public boolean reportIssue(String username, String issue, String roomNumber, String floor) {
         if (username == null || username.isEmpty() || issue == null || issue.isEmpty() || 
@@ -640,10 +682,11 @@ public class Hotel implements HotelSystem {
 
     /**
      * Assigns an employee to a specific issue based on the issue index.
+     * 
+     * @param lineIndex the line index in the issues file where the "Assigned Employee" field currently is
      * @param assignedEmployee The employee who is assigned to the issue
      * @return true if the employee was successfully assigned, false otherwise
      */
-
     @Override
     public boolean assignEmployeeToIssue(int lineIndex, String assignedEmployee) {
         if (assignedEmployee == null || assignedEmployee.isEmpty()) {
@@ -667,14 +710,6 @@ public class Hotel implements HotelSystem {
                 System.out.println("Invalid line index: " + lineIndex);
                 return false;
             }
-
-            // The "assignedEmployee" line is 2 lines after the first line of the issue
-           /*  int assignedEmployeeLI = lineIndex + 2;
-            
-            if (assignedEmployeeLI >= lines.size()) {
-                System.out.println("Line index " + lineIndex + " does not point to a complete issue");
-                return false;
-            }*/
 
             // Update the assigned employee line
             String assignedEmployeeLine = lines.get(lineIndex);
@@ -707,7 +742,6 @@ public class Hotel implements HotelSystem {
      * Uses BufferedReader for line-by-line file reading.
      * Output: Prints all the reservation records to the console/main customer page.
      */
-
     @Override
     public void viewReservations() {
         System.out.println("Current Resevations:");
@@ -723,7 +757,18 @@ public class Hotel implements HotelSystem {
         }
     }
 
-    //@Override, broke otherwise
+    /**
+     * Updates the current occupancy status of a room in the rooms.txt file/
+     * When setting the status to "FALSE" (available), the customer, date, 
+     * and time fields are reset to placeholder values.
+     * When setting the status to "TRUE" (occupied), existing customer, date, 
+     * and time values are preserved if available.
+     * 
+     * @param roomNumber The room number to update
+     * @param floor The floor number where the room is located
+     * @param status The new status value, must be "TRUE" (occupied) or "FALSE" (available)
+     * @return true if the room status was successfully updated, false otherwise
+     */
     private boolean updateStatus(String roomNumber, String floor, String status) {
         if (roomNumber == null || roomNumber.isEmpty() || floor == null || floor.isEmpty() ||
         status == null || status.isEmpty()) {
@@ -815,11 +860,18 @@ public class Hotel implements HotelSystem {
                 return false; 
             }
         }  
-
+    
+    /**
+     * Updates the occupancy status of a room in the rooms.txt file.
+     * This is the public wrapper method that calls the private updateStatus method.
+     * 
+     * @param roomNumber The room number to update
+     * @param floor The flor number where the room currently is located
+     * @param status The new status value, must either be "TRUE" or "FALSE"
+     * @return true if the room status was sucessfully updated, false otherwise
+     */
     @Override
     public boolean updateRoomStatus(String roomNumber, String floor, String status) {
         return updateStatus(roomNumber, floor, status);
     }
-
-
-    }
+}

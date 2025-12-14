@@ -240,8 +240,12 @@ public class UserRentRoomController implements Initializable {
         }
     }
 
-    // DO NOT REMOVE
-    // prompts the user for their payment method
+    /**
+     * Prompts the user for payment method.
+     * DO NOT REMOVE
+     * 
+     * @return the payment method string or null, if cancelled.
+     */
     private String promptPaymentMethod() {
         TextInputDialog dialog = new TextInputDialog("credit");
         dialog.setTitle("Payment Method");
