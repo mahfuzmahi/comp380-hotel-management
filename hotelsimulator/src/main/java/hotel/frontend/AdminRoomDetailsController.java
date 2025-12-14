@@ -13,13 +13,13 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
  
 /**
- * AdminRoomDetailsController(Class): Controller class for the admin room details view. Contains methods to initialize the view by reading and displaying details of the selected room.
+ * Controller class for the admin room details view. Contains methods to initialize the view by reading and displaying details of the selected room.
  * @author Justin_Scott, 11/20/2025
  */
 public class AdminRoomDetailsController {
         private Hotel hotel = new Hotel();
     /**
-     * roomPositionLabel(Variable): Label to display the room position (number and floor).
+     *Label to display the room position (number and floor).
      */
     @FXML
     private Label roomPositionLabel;
@@ -30,13 +30,13 @@ public class AdminRoomDetailsController {
     @FXML
     private Label costLabel;
     /**
-     *  renterLabel(Variable): Label to display the renter information of the room.
+     *Label to display the renter information of the room.
      */
     @FXML
     private Label renterLabel;
 
     /**
-     * buttonsAreaBoxRooms(Variable): Holds the list of buttons representing actions related to the room (evicting or viewing renter).
+     *Holds the list of buttons representing actions related to the room (evicting or viewing renter).
      */
     @FXML
     private HBox buttonsAreaBoxRooms;
@@ -46,7 +46,7 @@ public class AdminRoomDetailsController {
     List<Button> buttonlist = new ArrayList<>();
 
     /**
-     * initialize(method):  initializer method for AdminRoomDetailsController to read and display details of the selected room.
+     *initializer method for AdminRoomDetailsController to read and display details of the selected room.
      */
     @FXML
     public void initialize()
@@ -57,7 +57,7 @@ public class AdminRoomDetailsController {
         try {
             //makes a scanner to read the rooms file and uses \n and , as delimiters
             Scanner s = new Scanner(new File(Hotel.filePath("rooms.txt"))).useDelimiter("\\R|,");
-            for(int i = 0; i < roomIndex * 8/* TODO this is the number of fieds in rooms, curr 7, change if more is added or refactor */; i++) {
+            for(int i = 0; i < roomIndex * 8; i++) {
                 s.next();
             }
             // Set roomPositionLabel, if not occupied skip unused fields
@@ -77,7 +77,6 @@ public class AdminRoomDetailsController {
                     buttonlist.get(0).setOnAction(e -> {
                         App.setViewedAccount(renter);
                         try {
-                          //TODO delete vthisv if moved to backend
                           App appInstance = new App();
                           hotel.updateRoomStatus(appInstance.lineToRoom(App.getCurrentRoom()), appInstance.lineToFloor(App.getCurrentRoom()), "TRUE");    
                           App.setRoot("adminViewRooms");

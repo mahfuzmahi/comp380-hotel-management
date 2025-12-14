@@ -12,10 +12,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
  
+/**
+ * Controller class for the first issues view and create the list of issues reported by guests.
+ * @author Justin_Scott, 11/10/2025
+ */
 public class AdminIssuesController {
 
      /**
-     * buttonsAreaBoxIssues(Variable): holds the list of buttons representing issues reported by guests. 
+     * holds the list of buttons representing issues reported by guests. 
      */
     @FXML
     private VBox buttonsAreaBoxIssues;

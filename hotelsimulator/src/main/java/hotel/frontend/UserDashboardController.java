@@ -25,8 +25,6 @@ public class UserDashboardController {
     @FXML
     private Label statusLabel;
 
-    private final Hotel hotel = new Hotel();
-
     @FXML
     private void initialize() {
         String currentUser = App.getCurrentUser();

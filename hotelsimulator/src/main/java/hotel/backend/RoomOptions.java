@@ -34,8 +34,6 @@ public class RoomOptions{
      */
 
     public void RoomOptions(){
-        int[] RoomFloors = {1,2,3,4,5};
-        int[] RoomNumbers = {1,2,3,4,5,6,7,8,9,10}; 
         Scanner input = new Scanner(System.in); 
         System.out.println("Select Room Floor: "); 
         int FloorChoice = input.nextInt(); 
@@ -63,6 +61,7 @@ public class RoomOptions{
             default: 
             System.out.println("Invalid Floor. Choose Again."); 
         }
+        input.close();
     }
     /**
      * Reads and updates room types from text file and displays options to user

@@ -43,7 +43,6 @@ public class AdminManageStaffController{
             //makes a scanner to read the employees file and uses \n and , as delimiters
             Scanner s = new Scanner(new File(Hotel.filePath("employees.txt"))).useDelimiter("\\R|,");
             while (s.hasNext()) {
-                    //TODO change with employee file format changes
                     String buttonText = s.next(); 
                     //adds a button for each line with ButtonText as the text and sends to adminManageStaffDetails when clicked
                     buttonlist.add(new Button(buttonText));

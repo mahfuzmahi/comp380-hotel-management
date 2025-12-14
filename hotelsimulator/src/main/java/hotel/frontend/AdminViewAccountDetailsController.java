@@ -10,13 +10,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 /**
- * AdminViewAccountDetailsController(Class): Controller class for the admin view account view. Contains methods to initialize the view by reading and displaying details of the selected account.
+ * Controller class for the admin view account view. Contains methods to initialize the view by reading and displaying details of the selected account.
  * @author Justin_Scott, 11/20/2025
  */
 public class AdminViewAccountDetailsController {
 
     /**
-     * userDetailsLabel(Variable): Label to display the info of the account whose details are being viewed.
+     *Label to display the info of the account whose details are being viewed.
      */
     @FXML
     private Label userNameLabel = new Label();
@@ -28,13 +28,11 @@ public class AdminViewAccountDetailsController {
     private Label userBankInfoLabel = new Label();
   
     /**
-     * initialize(Method): initializer method for AdminViewAccountDetailsController to display details of the selected account.
-     * //TODO if anyone wants to refatcor the entire page away, feel free.
+     * initializer method for AdminViewAccountDetailsController to display details of the selected account.
      */
     @FXML
     public void initialize() {
         // Get the index of the current room being viewed
-        //TODO refcactor to use room number directly, if possible
         String nameHolder = App.getViewedAccount();
         userNameLabel.setText("Username: " + nameHolder); 
         try {

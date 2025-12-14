@@ -5,7 +5,7 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 
 /**
- * UserMenuController(Class): Controller class for the user dropdown menu. Contains methods to handle scene switching to various user functionalities.
+ * Controller class for the user dropdown menu. Contains methods to handle scene switching to various user functionalities.
  * @author Justin_Scott, 11/11/2025
  */
 public class UserMenuController {

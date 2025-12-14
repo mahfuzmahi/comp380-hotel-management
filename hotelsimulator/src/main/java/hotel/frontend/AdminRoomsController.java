@@ -13,13 +13,13 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
  
 /**
- * AdminRoomsController(Class): Controller class for the admin rooms view. Contains methods to initialize the view by reading rooms from file and displaying them as buttons in the defined VBox.
+ * Controller class for the admin rooms view. Contains methods to initialize the view by reading rooms from file and displaying them as buttons in the defined VBox.
  * @author Justin_Scott, 11/19/2025
  */
 public class AdminRoomsController {
 
     /**
-    * buttonsAreaBox(variable): Holds the list of buttons representing rooms.
+    *Holds the list of buttons representing rooms.
     */
     @FXML
     private VBox buttonsAreaBox;
@@ -33,7 +33,7 @@ public class AdminRoomsController {
   
 
     /**
-     * initialize(Method): initializer method for AdminRoomsController to read rooms from file and display them as buttons in the defined VBox.
+     *initializer method for AdminRoomsController to read rooms from file and display them as buttons in the defined VBox.
      */
     @FXML
     public void initialize() {
