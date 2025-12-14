@@ -7,6 +7,13 @@ import hotel.backend.Hotel;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test Class for Frontend Class Methods 
+ * Specifically Testing CreateAccountController Methods 
+ * 
+ * @author Jose Mendiola, Justin Scott
+ */
+
 public class CreateAccountControllerTest {
     @Test
     public void handleAdminButtonTest_False() {

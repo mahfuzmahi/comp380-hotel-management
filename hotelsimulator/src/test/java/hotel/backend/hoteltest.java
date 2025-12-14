@@ -8,6 +8,13 @@ import org.junit.jupiter.api.BeforeEach;
 import java.io.*; 
 import java.nio.file.*; 
 
+/**
+ * Test Class for Hotel Class Methods 
+ * Specifically Testing Account Creation and Account Information Update Methods 
+ * 
+ * @author Michael Garcia, Mahfuz Ahmed 
+ */
+
 public class hoteltest{
     private static Path tempDir; 
     private Hotel hotel; 
@@ -38,6 +45,7 @@ public class hoteltest{
      * Helper method to read contents of fake file being used for testing 
      * @param name name of file to be read
      */
+
     private String readFile(String name) throws IOException{
         Path file = tempDir.resolve("DataFiles").resolve(name); 
         return Files.readString(file); 
