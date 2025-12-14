@@ -15,6 +15,7 @@ import hotel.backend.Hotel;
 /**
  * JavaFX App
  */
+
 public class App extends Application {
 
 
@@ -29,11 +30,13 @@ public class App extends Application {
         launch();
     }
 
-    @Override
-    /**start(Method): Sets up the initial scene of the application to the landing page.
+    /**
+     * start(Method): Sets up the initial scene of the application to the landing page.
      * @param stage The primary stage for this application.
      * @throws IOException If the FXML file cannot be loaded.
      */
+
+    @Override
     public void start(Stage stage) throws IOException {
        //Scene scene = new Scene(createContent());
         scene = new Scene(loadFXML("landingPage"), 640, 480);
@@ -45,6 +48,7 @@ public class App extends Application {
      * setCurrentUser(Method): Sets the username of the currently logged-in user.
      * @param username The username to set as the current user.
      */
+
     public static void setCurrentUser(String username) {
         currentUser = username;
     }
@@ -53,6 +57,7 @@ public class App extends Application {
      * getCurrentUser(Method): Retrieves the username of the currently logged-in user.
      * @return The username of the current user.
      */
+
     public static String getCurrentUser() {
         return  currentUser;
     }
@@ -61,6 +66,7 @@ public class App extends Application {
      * setCurrentRoom(Method): Sets the index of the room currently being viewed.
      * @param room The index of the room to set as the current room.
      */
+
     public static void setCurrentRoom(int room) {
         currentRoomIndex = room;
     }
@@ -69,6 +75,7 @@ public class App extends Application {
      * getCurrentRoom(Method): Retrieves the index of the room currently being viewed.
      * @return The index of the current room.
      */
+
     public static int getCurrentRoom() {
         return currentRoomIndex;
     }
@@ -77,6 +84,7 @@ public class App extends Application {
      * setViewedAccount(Method): Sets the username of the account currently being viewed by the admin.
      * @param username The username to set as the viewed account.
      */
+
     public static void setViewedAccount(String username) {
         viewedUser = username;
     }
@@ -85,6 +93,7 @@ public class App extends Application {
      * getViewedAccount(Method): Retrieves the username of the account currently being viewed by the admin.
      * @return The username of the viewed account.
      */
+
     public static String getViewedAccount() {
         return viewedUser;
     }
@@ -94,15 +103,18 @@ public class App extends Application {
      * @param fxml The name of the FXML file (without extension) to load as the new root.
      * @throws IOException If the FXML file cannot be loaded.
      */
+
     static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
 
-    /**loadFXML(Method): Loads an FXML file and returns its root node.
+    /**
+     * loadFXML(Method): Loads an FXML file and returns its root node.
      * @param fxml The name of the FXML file (without extension) to load.
      * @return The root node of the loaded FXML file.
      * @throws IOException If the FXML file cannot be loaded.
      */
+
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/hotel/" + fxml + ".fxml"));
         return fxmlLoader.load();

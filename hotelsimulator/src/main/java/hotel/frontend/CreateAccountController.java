@@ -7,10 +7,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+
 /**
  * Controller class for the create account view. Contains methods to handle user input for creating a new account and scene switching upon successful account creation.
  * @author Justin_Scott, 11/6/2025, 12/2/25
  */
+
 public class CreateAccountController {
 
     //instance of hotel to access backend methods
@@ -46,6 +48,7 @@ public class CreateAccountController {
      * @param event The ActionEvent triggered by clicking the submit button.
      * @throws IOException If there is an error switching scenes.
      */
+    
     @FXML
        private void handleUserButton(ActionEvent event) throws IOException{
         //this is where the new acc data is collected for user account

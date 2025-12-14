@@ -13,6 +13,7 @@ import hotel.backend.Hotel;
  * Controller class for the admin issues view.  Shows details on a specific issue.  Contains methods to initialize the view by reading reported issues from file and displaying them as buttons in the defined VBox.
  * @author Justin_Scott, 12/3/2025
  */
+
 public class AdminIssuesDetailsController {
 
     @FXML

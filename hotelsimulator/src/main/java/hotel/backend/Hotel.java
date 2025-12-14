@@ -62,6 +62,7 @@ public class Hotel implements HotelSystem {
      * @param fileName the name of the text file that needs to be found
      * @return the exact or relative path to the requested text file
      */
+
     public static String filePath(String fileName) {
         String current = System.getProperty("user.dir");
 
@@ -91,6 +92,7 @@ public class Hotel implements HotelSystem {
      * @param bankInfo The bank information of the customer
      * @return true if account creation succeeds, false if validation fails
      */
+
     @Override
     public boolean CreateAccount(String username, String password, String email, String phone, String bankInfo) {
         if(username != null) {
@@ -139,6 +141,7 @@ public class Hotel implements HotelSystem {
      * @param phone Phone number the administrator provides 
      * @return true if admin account is successfully created and saved to file, false otherwise
      */
+
     @Override
     public boolean CreateAdmin(String username, String password, String email, String phone){
         if (username != null){
@@ -182,6 +185,7 @@ public class Hotel implements HotelSystem {
      * @param bankInfo The new bank information (optional, empty string keepss current bank info)
      * @return true if the account was successfully updated, false otherwise. 
      */
+
     @Override
     public boolean updateAccount(String username, String password, String email, String phone, String bankInfo) {
         if(username != null) {
@@ -281,6 +285,7 @@ public class Hotel implements HotelSystem {
      * @param password The password to verify
      * @return true if information matches the customer account in the text file, false otherwise.
      */
+
     @Override
     public boolean Login(String username, String password) {
         return verifyCustomer(username, password);
@@ -293,6 +298,7 @@ public class Hotel implements HotelSystem {
      * @param password The administrator password to verify
      * @return true if the credentials match an administrator account in admins.txt, false otherwise.
      */
+
     @Override
     public boolean adminLogin(String employeeId, String password) {
         return verifyAdmin(employeeId, password);
@@ -306,6 +312,7 @@ public class Hotel implements HotelSystem {
      * @param fileName The name of the file to search
      * @return true if matching information is found, false otherwise
      */
+
     public boolean verifyLoginInFile(String username, String password, String fileName) {
         if(username != null) {
             username = username.trim();
@@ -352,6 +359,7 @@ public class Hotel implements HotelSystem {
      * @param password The employee password to verify
      * @return true if information match an employee account in employees.txt, false otherwise
      */
+
     public boolean verifyEmployee(String username, String password) {
         return verifyLoginInFile(username, password, "employees.txt");
     }
@@ -363,6 +371,7 @@ public class Hotel implements HotelSystem {
      * @param password The admin password to verify
      * @return true if the information match an admin account in admins.txt, false otherwise
      */
+
     public boolean verifyAdmin(String username, String password) {
         return verifyLoginInFile(username, password, "admins.txt");
     }
@@ -375,6 +384,7 @@ public class Hotel implements HotelSystem {
      * @param method The payment method such as credit, debit, cash, etc.
      * @return true if payment was successful, false otherwise
      */
+
     @Override
     public boolean Payment(String customer, double amount, String method) {
         if(customer == null || customer.isEmpty() || method == null || method.isEmpty()) {
@@ -398,6 +408,7 @@ public class Hotel implements HotelSystem {
      * @param roomNumber The room number to be reserved
      * @return true if reservation was successful, false otherwise
      */
+
     @Override
     public boolean Reservation(String customer, String roomNumber) {
         if(customer == null || customer.isEmpty() || roomNumber == null || roomNumber.isEmpty()) {
@@ -425,6 +436,7 @@ public class Hotel implements HotelSystem {
      * @param paymentMethod The payment method such as credit, debit or cash
      * @return true if the room rental and payment were successfully processed, false otherwise
      */
+
     @Override
     public boolean rentRoomProcess(String customer, String roomNumber, String floor, String paymentMethod) {
         if(customer == null || customer.isEmpty() || roomNumber == null || roomNumber.isEmpty() || 
@@ -493,6 +505,7 @@ public class Hotel implements HotelSystem {
      * @param customer The username of the customer to assign to the current room
      * @return true if the customer was successfully assigned to the room, false otherwise
      */
+
     public boolean assignCustomerToRoom(String roomNumber, String floor, String customer) {
         try {
             List<String> lines = new ArrayList<>();
@@ -560,6 +573,7 @@ public class Hotel implements HotelSystem {
      * @param password The password of employee to verify
      * @return true if information matches employee account on employees.txt file, false otherwise
      */
+
     @Override
     public boolean Employee(String username, String password){
         return verifyEmployee(username, password);
@@ -614,6 +628,7 @@ public class Hotel implements HotelSystem {
      * @param status the new houskeeping status such as clean, dirty, maintenance, etc.
      * @return true if status was successfully updated, false otherwise
      */
+
     @Override
     public boolean Housekeeping(String roomNumber, String status) {
         if(roomNumber == null || roomNumber.isEmpty() || status == null || status.isEmpty()) {
@@ -659,6 +674,7 @@ public class Hotel implements HotelSystem {
      * @param floor The floor in which the room number and customer are located 
      * @return true if issue report was successfully saved to file, false if not 
      */
+
     @Override
     public boolean reportIssue(String username, String issue, String roomNumber, String floor) {
         if (username == null || username.isEmpty() || issue == null || issue.isEmpty() || 
@@ -687,6 +703,7 @@ public class Hotel implements HotelSystem {
      * @param assignedEmployee The employee who is assigned to the issue
      * @return true if the employee was successfully assigned, false otherwise
      */
+
     @Override
     public boolean assignEmployeeToIssue(int lineIndex, String assignedEmployee) {
         if (assignedEmployee == null || assignedEmployee.isEmpty()) {
@@ -742,6 +759,7 @@ public class Hotel implements HotelSystem {
      * Uses BufferedReader for line-by-line file reading.
      * Output: Prints all the reservation records to the console/main customer page.
      */
+
     @Override
     public void viewReservations() {
         System.out.println("Current Resevations:");
@@ -769,6 +787,7 @@ public class Hotel implements HotelSystem {
      * @param status The new status value, must be "TRUE" (occupied) or "FALSE" (available)
      * @return true if the room status was successfully updated, false otherwise
      */
+
     private boolean updateStatus(String roomNumber, String floor, String status) {
         if (roomNumber == null || roomNumber.isEmpty() || floor == null || floor.isEmpty() ||
         status == null || status.isEmpty()) {
@@ -870,6 +889,7 @@ public class Hotel implements HotelSystem {
      * @param status The new status value, must either be "TRUE" or "FALSE"
      * @return true if the room status was sucessfully updated, false otherwise
      */
+    
     @Override
     public boolean updateRoomStatus(String roomNumber, String floor, String status) {
         return updateStatus(roomNumber, floor, status);

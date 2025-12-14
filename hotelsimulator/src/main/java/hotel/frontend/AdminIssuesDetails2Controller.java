@@ -17,11 +17,14 @@ import javafx.scene.layout.VBox;
  * Controller class for the admin issues view.  Show a list of staff members to assign to the issue.
  * @author Justin_Scott, 12/2/2025
  */
+
 public class AdminIssuesDetails2Controller {
     private Hotel hotel = new Hotel();
+
     /**
-    * Holds the list of buttons representing staff members.
-    */
+     * Holds the list of buttons representing staff members.
+     */
+
     @FXML
     private VBox buttonsAreaBoxStaff;
    
@@ -38,9 +41,11 @@ public class AdminIssuesDetails2Controller {
     }
 
     /**
-     *initializer method for AdminManageStaffController to read staff members from file and display them as buttons in the defined VBox.
-     * uses a while(s.hasNext()) loop to run until the file is empty.
-    */
+     *Initializer method for AdminManageStaffController to read staff members from file and display 
+     *them as buttons in the defined VBox.
+     *uses a while(s.hasNext()) loop to run until the file is empty.
+     */
+
     @FXML
     public void initialize() {
         buttonsAreaBoxStaff.getChildren().addAll(buttonlist);

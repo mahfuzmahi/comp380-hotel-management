@@ -1,5 +1,10 @@
 package hotel.backend;
-
+/**
+ * Purpose of this .java file was to run methods within the terminal 
+ * Checking for the functionality of the Hotel class without running the 
+ * entire software 
+ * @author Michael Garcia, Mahfuz Ahmed 
+ */
 class Main{
   public static void main(String[] args){
    /* 

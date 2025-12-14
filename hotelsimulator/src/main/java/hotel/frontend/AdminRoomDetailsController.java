@@ -13,14 +13,18 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
  
 /**
- * Controller class for the admin room details view. Contains methods to initialize the view by reading and displaying details of the selected room.
+ * Controller class for the admin room details view. Contains methods to initialize the view by 
+ * reading and displaying details of the selected room.
  * @author Justin_Scott, 11/20/2025
  */
+
 public class AdminRoomDetailsController {
-        private Hotel hotel = new Hotel();
+    private Hotel hotel = new Hotel();
+
     /**
      *Label to display the room position (number and floor).
      */
+
     @FXML
     private Label roomPositionLabel;
 
@@ -29,15 +33,18 @@ public class AdminRoomDetailsController {
 
     @FXML
     private Label costLabel;
+
     /**
      *Label to display the renter information of the room.
      */
+
     @FXML
     private Label renterLabel;
 
     /**
      *Holds the list of buttons representing actions related to the room (evicting or viewing renter).
      */
+
     @FXML
     private HBox buttonsAreaBoxRooms;
 
@@ -46,8 +53,9 @@ public class AdminRoomDetailsController {
     List<Button> buttonlist = new ArrayList<>();
 
     /**
-     *initializer method for AdminRoomDetailsController to read and display details of the selected room.
+     *Initializer method for AdminRoomDetailsController to read and display details of the selected room.
      */
+    
     @FXML
     public void initialize()
     {

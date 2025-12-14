@@ -22,6 +22,7 @@ package hotel.backend;
  * @author Mahfuz Ahmed, Michael Garcia
  * @version 2.0
  */
+
 public interface HotelSystem {
 
     /**
@@ -31,6 +32,7 @@ public interface HotelSystem {
      * @param password The password to verify
      * @return true if information matches the customer account in the text file, false otherwise.
      */
+
     boolean Login(String username, String password);
 
 
@@ -41,6 +43,7 @@ public interface HotelSystem {
      * @param password The administrator password to verify
      * @return true if the credentials match an administrator account in admins.txt, false otherwise.
      */
+
     boolean adminLogin(String username, String password);
 
      /**
@@ -53,6 +56,7 @@ public interface HotelSystem {
      * @param bankInfo The bank information of the customer
      * @return true if account creation succeeds, false if validation fails
      */
+
     boolean CreateAccount(String username, String password, String email, String phone, String bankInfo); 
 
      /**
@@ -66,6 +70,7 @@ public interface HotelSystem {
      * @param phone Phone number the administrator provides 
      * @return true if admin account is successfully created and saved to file, false otherwise
      */
+
     boolean CreateAdmin(String username, String password, String email, String phone); 
     
     /**
@@ -80,9 +85,10 @@ public interface HotelSystem {
      * @param bankInfo The new bank information (optional, empty string keepss current bank info)
      * @return true if the account was successfully updated, false otherwise. 
      */
+
     boolean updateAccount(String username, String password, String email, String phone, String bankInfo);
 
-        /**
+    /**
      * Records payment transactions in the payments.txt file
      * 
      * @param customer The username of the customer making the payment
@@ -90,6 +96,7 @@ public interface HotelSystem {
      * @param method The payment method such as credit, debit, cash, etc.
      * @return true if payment was successful, false otherwise
      */
+
     boolean Payment(String customer, double amount, String method); 
 
     /**
@@ -99,6 +106,7 @@ public interface HotelSystem {
      * @param roomNumber The room number to be reserved
      * @return true if reservation was successful, false otherwise
      */
+
     boolean Reservation(String customer, String roomNumber); 
 
     /**
@@ -112,6 +120,7 @@ public interface HotelSystem {
      * @param paymentMethod The payment method such as credit, debit or cash
      * @return true if the room rental and payment were successfully processed, false otherwise
      */
+
     boolean rentRoomProcess(String customer, String roomNumber, String floor, String paymentMethod);
 
     /**
@@ -121,6 +130,7 @@ public interface HotelSystem {
      * @param password The password of employee to verify
      * @return true if information matches employee account on employees.txt file, false otherwise
      */
+
     boolean Employee(String username, String password);
 
     /**
@@ -132,6 +142,7 @@ public interface HotelSystem {
      * @param role Role of the employee such as housekeeper, receptionist, manager
      * @return true if account is successfully created and saved to file, false otherwise 
      */
+
     boolean createEmployeeAccount(String username, String password, String name, String role);
 
     /**
@@ -141,6 +152,7 @@ public interface HotelSystem {
      * @param status The new housekeeping status such as clean, dirty, or maintenance
      * @return true is the status was successfully updated, false otherwise.
      */
+
     boolean Housekeeping(String roomNumber, String status); 
 
     /**
@@ -148,6 +160,7 @@ public interface HotelSystem {
      * 
      * @param report The report text to be saved
      */
+
     void Manager(String report);
 
     /** 
@@ -159,6 +172,7 @@ public interface HotelSystem {
      * @param floor The floor in which the room number and customer are located 
      * @return true if issue report was successfully saved to file, false if not 
      */
+
     boolean reportIssue(String username, String issue, String roomNumber, String floor);
 
     /**
@@ -168,6 +182,7 @@ public interface HotelSystem {
      * @param assignedEmployee The employee who is assigned to the issue
      * @return true if the employee was successfully assigned, false otherwise
      */
+
     boolean assignEmployeeToIssue(int lineIndex, String assignedEmployee);
     
     /**
@@ -176,6 +191,7 @@ public interface HotelSystem {
      * Uses BufferedReader for line-by-line file reading.
      * Output: Prints all the reservation records to the console/main customer page.
      */
+
     void viewReservations(); 
 
     /**
@@ -187,5 +203,6 @@ public interface HotelSystem {
      * @param status The new status value, must either be "TRUE" or "FALSE"
      * @return true if the room status was sucessfully updated, false otherwise
      */
+    
     boolean updateRoomStatus(String roomNumber, String floor, String status); 
 }

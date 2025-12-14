@@ -16,11 +16,13 @@ import javafx.scene.layout.VBox;
  * Controller class for the admin manage staff view. Contains methods to initialize the view by reading staff members from file and displaying them as buttons in the defined VBox.
  * @author Justin_Scott, 11/20/2025, 12/3/25
  */
+
 public class AdminManageStaffController{
    
     /**
-    * Holds the list of buttons representing staff members.
-    */
+     * Holds the list of buttons representing staff members.
+     */
+
     @FXML
     private VBox buttonsAreaBoxStaff;
    
@@ -34,7 +36,8 @@ public class AdminManageStaffController{
     /**
      *initializer method for AdminManageStaffController to read staff members from file and display them as buttons in the defined VBox.
      * uses a while(s.hasNext()) loop to run until the file is empty.
-    */
+     */
+   
     @FXML
     public void initialize() {
         buttonsAreaBoxStaff.getChildren().addAll(buttonlist);

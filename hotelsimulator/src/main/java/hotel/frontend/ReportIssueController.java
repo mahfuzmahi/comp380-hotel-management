@@ -13,8 +13,9 @@ import javafx.scene.control.TextField;
  * Controller for the Report Issue feature.
  * Username is auto-filled from the logged-in user and cannot be edited.
  *
- * Author: Jose Mendiola
+ * @author Jose Mendiola
  */
+
 public class ReportIssueController {
 
     @FXML
@@ -35,6 +36,7 @@ public class ReportIssueController {
     /**
      * Initialize: auto-fill logged-in username and lock the field.
      */
+
     @FXML
     private void initialize() {
         String currentUser = App.getCurrentUser();
@@ -51,6 +53,7 @@ public class ReportIssueController {
     /**
      * Handles the submit action when a user reports an issue.
      */
+    
     @FXML
     private void handleSubmit() {
 

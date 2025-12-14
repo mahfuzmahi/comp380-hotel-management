@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
  * Controller class for the landing page view. Contains methods to handle scene switching to login, create account, and guest views.
  * @author Justin_Scott, 11/6/2025
  */
+
 public class LandingPageController {
 
     @FXML

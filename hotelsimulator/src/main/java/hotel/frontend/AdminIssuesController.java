@@ -16,11 +16,13 @@ import javafx.scene.layout.VBox;
  * Controller class for the first issues view and create the list of issues reported by guests.
  * @author Justin_Scott, 11/10/2025
  */
+
 public class AdminIssuesController {
 
      /**
-     * holds the list of buttons representing issues reported by guests. 
-     */
+      * Holds the list of buttons representing issues reported by guests. 
+      */
+
     @FXML
     private VBox buttonsAreaBoxIssues;
 
@@ -34,7 +36,8 @@ public class AdminIssuesController {
     /**
      * initializer method for AdminIssuesController to read reported issues from file and display them as buttons in the defined VBox.
      * uses a while(s.hasNext()) loop to run until the file is empty.
-    */
+     */
+
     @FXML
     public void initialize() {
         buttonsAreaBoxIssues.getChildren().addAll(buttonlist);

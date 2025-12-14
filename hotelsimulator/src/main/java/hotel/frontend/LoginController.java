@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
  * Controller class for the login view. Contains methods to handle user input for logging in and scene switching upon successful login.
  * @author Justin_Scott, 11/6/2025
  */
+
 public class LoginController {
     
     //instance of hotel to access backend methods
@@ -35,6 +36,7 @@ public class LoginController {
      * @param event The ActionEvent triggered by clicking the submit button.
      * @throws IOException If there is an error switching scenes.
      */
+    
     @FXML
     private void handleSubmitButton(ActionEvent event) throws IOException{
         //this is where the sign in data is collected
