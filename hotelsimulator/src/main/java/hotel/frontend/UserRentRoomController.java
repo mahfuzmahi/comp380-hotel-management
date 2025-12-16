@@ -33,6 +33,7 @@ public class UserRentRoomController implements Initializable {
 
     @FXML
     private VBox roomsBox;
+    private final Hotel hotel = new Hotel(); 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
